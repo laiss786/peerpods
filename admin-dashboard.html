@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — PeerPods</title>
+<style>
+  :root{
+    --navy:#1e293b;
+    --navy-dark:#0f1c2e;
+    --gold:#f2b33d;
+    --gold-dark:#dd9c22;
+    --cream:#f7f4ee;
+    --white:#ffffff;
+    --text-dark:#0f1c2e;
+    --text-gray:#5b6472;
+    --text-muted:#8b93a1;
+    --border:#e4e0d6;
+
+    --radius-sm:8px;
+    --radius-md:14px;
+    --radius-lg:20px;
+    --shadow-sm:0 1px 2px rgba(15,28,46,0.06);
+
+    --sidebar-w:236px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--text-dark);
+    background:var(--cream);
+    line-height:1.5;
+  }
+  a{text-decoration:none; color:inherit;}
+  button{font-family:inherit;}
+  .icon{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;display:block;flex-shrink:0;}
+
+  /* LAYOUT */
+  .app-shell{display:flex; min-height:100vh;}
+
+  .sidebar{
+    width:var(--sidebar-w);
+    flex-shrink:0;
+    background:var(--navy-dark);
+    color:var(--white);
+    display:flex;
+    flex-direction:column;
+    padding:24px 18px;
+    position:sticky;
+    top:0;
+    height:100vh;
+  }
+  .sidebar .logo{
+    font-size:19px;
+    font-weight:800;
+    color:var(--white);
+    letter-spacing:-0.5px;
+    padding:0 10px;
+    margin-bottom:6px;
+  }
+  .sidebar .logo span{color:var(--gold);}
+  .sidebar .env-tag{
+    font-size:11px;
+    color:var(--text-muted);
+    padding:0 10px;
+    margin-bottom:30px;
+    letter-spacing:.4px;
+    text-transform:uppercase;
+    font-weight:700;
+  }
+  .side-nav{flex:1;}
+  .side-nav a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:11px 12px;
+    border-radius:var(--radius-sm);
+    color:#c7cdd6;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:4px;
+    transition:background .15s ease, color .15s ease;
+  }
+  .side-nav a .icon{width:18px;height:18px;}
+  .side-nav a:hover{background:rgba(255,255,255,0.06); color:var(--white);}
+  .side-nav a.active{background:rgba(242,179,61,0.12); color:var(--gold);}
+
+  .side-bottom{border-top:1px solid rgba(255,255,255,0.08); padding-top:14px;}
+  .side-bottom a, .side-bottom button{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    width:100%;
+    padding:11px 12px;
+    border-radius:var(--radius-sm);
+    color:#c7cdd6;
+    font-size:14px;
+    font-weight:600;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    text-align:left;
+    transition:background .15s ease, color .15s ease;
+  }
+  .side-bottom a .icon, .side-bottom button .icon{width:18px;height:18px;}
+  .side-bottom a:hover, .side-bottom button:hover{background:rgba(255,255,255,0.06); color:var(--white);}
+
+  .main{
+    flex:1;
+    min-width:0;
+    padding:36px 40px 60px;
+  }
+  .page-head{margin-bottom:6px;}
+  .page-head h1{font-size:26px; font-weight:800; color:var(--navy-dark); margin-bottom:4px; letter-spacing:-0.4px;}
+  .page-head p{color:var(--text-gray); font-size:14px;}
+
+  .toolbar{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 0;
+  }
+  .toolbar .actions{display:flex; gap:10px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 18px;
+    border-radius:var(--radius-sm);
+    font-size:13.5px;
+    font-weight:700;
+    cursor:pointer;
+    border:1.5px solid var(--border);
+    background:var(--white);
+    color:var(--navy-dark);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .btn .icon{width:16px;height:16px;}
+  .btn:hover{border-color:var(--gold-dark);}
+  .btn-gold{background:var(--gold); border-color:var(--gold); color:var(--navy-dark);}
+  .btn-gold:hover{background:var(--gold-dark); border-color:var(--gold-dark);}
+  .btn-danger{color:#c0392b; border-color:#f0c4bd;}
+  .btn-danger:hover{background:#fdecea;}
+
+  /* STAT CARDS */
+  .stat-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:28px;
+  }
+  .stat-card{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:20px 22px;
+  }
+  .stat-card .label{font-size:12.5px; color:var(--text-gray); font-weight:600; margin-bottom:10px;}
+  .stat-card .value{font-size:26px; font-weight:800; color:var(--navy-dark);}
+  .stat-card .sub{font-size:12px; color:var(--text-gray); margin-top:6px;}
+
+  /* ANALYTICS */
+  .analytics-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-bottom:28px;
+  }
+  .panel{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:22px 24px;
+  }
+  .panel h3{font-size:15px; font-weight:800; color:var(--navy-dark); margin-bottom:18px;}
+  .bar-row{margin-bottom:14px;}
+  .bar-row:last-child{margin-bottom:0;}
+  .bar-label{display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; color:var(--text-dark); font-weight:600;}
+  .bar-label .count{color:var(--text-gray); font-weight:600;}
+  .bar-track{background:var(--cream); border-radius:6px; height:8px; overflow:hidden;}
+  .bar-fill{height:100%; background:var(--gold-dark); border-radius:6px;}
+  .empty-note{color:var(--text-gray); font-size:13px; text-align:center; padding:20px 0;}
+
+  /* TABLE */
+  .table-wrap{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    overflow:hidden;
+    margin-bottom:40px;
+  }
+  .table-head-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 22px;
+    border-bottom:1px solid var(--border);
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .table-head-row h3{font-size:15px; font-weight:800; color:var(--navy-dark);}
+  .search-wrap{position:relative; min-width:240px;}
+  .search-wrap .icon{position:absolute; left:13px; top:50%; transform:translateY(-50%); width:15px; height:15px; color:var(--text-muted);}
+  .search-input{
+    width:100%;
+    padding:9px 14px 9px 36px;
+    border:1.5px solid var(--border);
+    border-radius:var(--radius-sm);
+    font-size:13.5px;
+    font-family:inherit;
+  }
+  .search-input:focus{outline:none; border-color:var(--gold-dark);}
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  thead th{
+    text-align:left;
+    padding:11px 18px;
+    background:var(--cream);
+    color:var(--text-gray);
+    font-weight:700;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+    white-space:nowrap;
+  }
+  tbody td{
+    padding:13px 18px;
+    border-top:1px solid var(--border);
+    color:var(--text-dark);
+    white-space:nowrap;
+  }
+  tbody tr:hover{background:#fbfaf7;}
+  .domain-chip{
+    display:inline-block;
+    background:#fbeed9;
+    color:#a3671b;
+    padding:4px 10px;
+    border-radius:var(--radius-sm);
+    font-size:11.5px;
+    font-weight:700;
+  }
+  .phase-chip{
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:var(--radius-sm);
+    font-size:11.5px;
+    font-weight:700;
+    background:#e7f0fd;
+    color:#2952a3;
+  }
+  .table-scroll{overflow-x:auto;}
+  .empty-state{
+    text-align:center;
+    padding:60px 24px;
+    color:var(--text-gray);
+  }
+  .empty-state .icon-wrap{
+    width:52px;height:52px;
+    background:var(--cream);
+    color:var(--text-muted);
+    border-radius:var(--radius-md);
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 16px;
+  }
+  .empty-state h4{font-size:16px; color:var(--navy-dark); margin-bottom:8px;}
+  .empty-state p{font-size:13.5px; max-width:400px; margin:0 auto 20px;}
+
+  /* CONTENT MANAGER (Domains / Mentors) */
+  .form-panel{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:24px 26px;
+    margin-bottom:20px;
+  }
+  .form-panel h3{font-size:15px; font-weight:800; color:var(--navy-dark); margin-bottom:18px;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;}
+  .form-row.form-row-1{grid-template-columns:1fr;}
+  .form-row .field{margin-bottom:0;}
+  .field label{display:block; font-weight:700; font-size:12.5px; color:var(--navy-dark); margin-bottom:7px;}
+  .field input[type=text], .field input[type=color], .field select{
+    width:100%;
+    padding:10px 13px;
+    border:1.5px solid var(--border);
+    border-radius:var(--radius-sm);
+    font-size:13.5px;
+    font-family:inherit;
+    color:var(--text-dark);
+    background:var(--white);
+  }
+  .field input:focus, .field select:focus{outline:none; border-color:var(--gold-dark);}
+  .field input[type=color]{padding:4px; height:40px; cursor:pointer;}
+  .icon-picker{display:flex; align-items:center; gap:10px;}
+  .icon-picker select{flex:1;}
+  .form-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:6px;}
+  .icon-preview{
+    width:40px;height:40px;
+    background:var(--navy-dark);
+    color:var(--gold);
+    border-radius:var(--radius-sm);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .icon-preview .icon{width:18px;height:18px;}
+  .row-icon{
+    width:32px;height:32px;
+    background:var(--cream);
+    color:var(--gold-dark);
+    border-radius:var(--radius-sm);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .row-icon .icon{width:16px;height:16px;}
+  .avatar-sm{
+    width:34px;height:34px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--white);
+    font-weight:800;
+    font-size:12px;
+  }
+  .actions-cell{text-align:right; white-space:nowrap;}
+  .icon-btn{
+    background:transparent;
+    border:1.5px solid var(--border);
+    border-radius:var(--radius-sm);
+    width:32px;height:32px;
+    display:inline-flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    color:var(--text-gray);
+    margin-left:6px;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .icon-btn .icon{width:15px;height:15px;}
+  .icon-btn:hover{border-color:var(--gold-dark); color:var(--navy-dark);}
+  .icon-btn.danger:hover{border-color:#f0c4bd; background:#fdecea; color:#c0392b;}
+
+  @media(max-width:1000px){
+    .app-shell{flex-direction:column;}
+    .sidebar{
+      width:100%;
+      height:auto;
+      position:static;
+      flex-direction:row;
+      align-items:center;
+      padding:14px 20px;
+      gap:16px;
+    }
+    .sidebar .logo, .sidebar .env-tag{margin-bottom:0;}
+    .sidebar .env-tag{display:none;}
+    .side-nav{flex:1; display:flex; gap:4px;}
+    .side-nav a{margin-bottom:0;}
+    .side-bottom{border-top:none; padding-top:0; display:flex; gap:4px;}
+    .main{padding:26px 20px 50px;}
+    .stat-grid{grid-template-columns:1fr 1fr;}
+    .analytics-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:640px){
+    .side-nav{display:none;}
+    .stat-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
+  <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+  <symbol id="i-bar-chart" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+  <symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l4 4V6l-4 4H4a1 1 0 0 0-1 1z"/><path d="M14 8a4 4 0 0 1 0 8"/><path d="M17.5 5.5a8 8 0 0 1 0 13"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+  <symbol id="i-dollar" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M5 7h14M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/><path d="M8 21h8"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13c0-5 5-11 13-11 0 8-4 13-11 13z"/><path d="M4 20l7-7"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></symbol>
+  <symbol id="i-landmark" viewBox="0 0 24 24"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 21 8 3 8"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 19 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/><line x1="20" y1="15" x2="23" y2="15"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+</svg>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="logo">Peer<span>Pods</span>.</div>
+    <div class="env-tag">Admin Panel</div>
+    <nav class="side-nav">
+      <a href="#overview" class="active"><svg class="icon"><use href="#i-grid"/></svg> Overview</a>
+      <a href="#applications"><svg class="icon"><use href="#i-list"/></svg> Applications</a>
+      <a href="#domains-manager"><svg class="icon"><use href="#i-tag"/></svg> Domains</a>
+      <a href="#mentors-manager"><svg class="icon"><use href="#i-users"/></svg> Mentors</a>
+    </nav>
+    <div class="side-bottom">
+      <a href="index.html"><svg class="icon"><use href="#i-external"/></svg> View Site</a>
+      <button onclick="logout()"><svg class="icon"><use href="#i-logout"/></svg> Log Out</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="page-head" id="overview">
+      <h1>Applications Dashboard</h1>
+      <p>See who applied, and get a quick read on domain and year-of-study trends.</p>
+    </div>
+
+    <div class="toolbar">
+      <div class="actions">
+        <button class="btn" onclick="loadSampleData()"><svg class="icon"><use href="#i-database"/></svg> Load Sample Data</button>
+        <button class="btn btn-danger" onclick="clearAllData()"><svg class="icon"><use href="#i-trash"/></svg> Clear All Data</button>
+      </div>
+      <div class="actions">
+        <button class="btn btn-gold" onclick="exportCSV()"><svg class="icon"><use href="#i-download"/></svg> Export CSV</button>
+      </div>
+    </div>
+
+    <div class="stat-grid" id="statGrid"></div>
+
+    <div class="analytics-grid">
+      <div class="panel">
+        <h3>Applications by Domain</h3>
+        <div id="domainBars"></div>
+      </div>
+      <div class="panel">
+        <h3>Applications by Year of Study</h3>
+        <div id="yearBars"></div>
+      </div>
+    </div>
+
+    <div class="table-wrap" id="applications">
+      <div class="table-head-row">
+        <h3>All Applications</h3>
+        <div class="search-wrap">
+          <svg class="icon"><use href="#i-search"/></svg>
+          <input type="text" class="search-input" id="searchInput" placeholder="Search by name, email, college, domain..." oninput="renderTable()">
+        </div>
+      </div>
+      <div id="tableArea"></div>
+    </div>
+
+    <div class="page-head" id="domains-manager">
+      <h1>Domains</h1>
+      <p>Manage the career domains shown on the site — they also populate the application form.</p>
+    </div>
+    <div class="toolbar">
+      <div class="actions"></div>
+      <div class="actions">
+        <button class="btn btn-gold" onclick="showDomainForm()"><svg class="icon"><use href="#i-plus"/></svg> Add Domain</button>
+      </div>
+    </div>
+    <div class="form-panel" id="domainFormPanel" style="display:none;">
+      <h3 id="domainFormTitle">Add Domain</h3>
+      <input type="hidden" id="domainEditId">
+      <div class="form-row">
+        <div class="field">
+          <label>Domain Name</label>
+          <input type="text" id="domainLabel" placeholder="e.g. Cybersecurity">
+        </div>
+        <div class="field">
+          <label>Icon</label>
+          <div class="icon-picker">
+            <div class="icon-preview" id="domainIconPreview"><svg class="icon"><use href="#i-code"/></svg></div>
+            <select id="domainIconSelect" onchange="updateDomainIconPreview()"></select>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" onclick="hideDomainForm()">Cancel</button>
+        <button class="btn btn-gold" onclick="saveDomainForm()">Save Domain</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <div class="table-head-row"><h3>All Domains</h3></div>
+      <div id="domainListArea"></div>
+    </div>
+
+    <div class="page-head" id="mentors-manager">
+      <h1>Mentors</h1>
+      <p>Manage the mentor profiles shown on the site.</p>
+    </div>
+    <div class="toolbar">
+      <div class="actions"></div>
+      <div class="actions">
+        <button class="btn btn-gold" onclick="showMentorForm()"><svg class="icon"><use href="#i-plus"/></svg> Add Mentor</button>
+      </div>
+    </div>
+    <div class="form-panel" id="mentorFormPanel" style="display:none;">
+      <h3 id="mentorFormTitle">Add Mentor</h3>
+      <input type="hidden" id="mentorEditId">
+      <div class="form-row">
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" id="mentorName" placeholder="e.g. Riya Sharma">
+        </div>
+        <div class="field">
+          <label>Role / Title</label>
+          <input type="text" id="mentorRole" placeholder="e.g. Product Manager">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Company</label>
+          <input type="text" id="mentorCompany" placeholder="e.g. Flipkart">
+        </div>
+        <div class="field">
+          <label>Badge Code (2–3 letters)</label>
+          <input type="text" id="mentorBadge" maxlength="3" placeholder="e.g. FK">
+        </div>
+      </div>
+      <div class="form-row form-row-1">
+        <div class="field">
+          <label>Domain Tag</label>
+          <input type="text" id="mentorDomainTag" placeholder="e.g. PRODUCT">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Avatar Color</label>
+          <input type="color" id="mentorAvatarColor" value="#1e3a5f">
+        </div>
+        <div class="field">
+          <label>Badge Color</label>
+          <input type="color" id="mentorBadgeColor" value="#2563eb">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" onclick="hideMentorForm()">Cancel</button>
+        <button class="btn btn-gold" onclick="saveMentorForm()">Save Mentor</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <div class="table-head-row"><h3>All Mentors</h3></div>
+      <div id="mentorListArea"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---- Auth guard ----
+  if (sessionStorage.getItem('peerpods_admin_auth') !== 'true') {
+    window.location.href = 'admin-login.html';
+  }
+
+  function logout(){
+    sessionStorage.removeItem('peerpods_admin_auth');
+    window.location.href = 'admin-login.html';
+  }
+
+  function getApplications(){
+    try{
+      return JSON.parse(localStorage.getItem('peerpods_applications') || '[]');
+    }catch(e){ return []; }
+  }
+
+  function saveApplications(list){
+    localStorage.setItem('peerpods_applications', JSON.stringify(list));
+  }
+
+  function formatDate(iso){
+    var d = new Date(iso);
+    return d.toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'}) + ' · ' +
+           d.toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'});
+  }
+
+  function escapeHtml(str){
+    return String(str || '').replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  function renderStats(){
+    var apps = getApplications();
+    var total = apps.length;
+
+    var todayStr = new Date().toDateString();
+    var todayCount = apps.filter(function(a){
+      return new Date(a.submittedAt).toDateString() === todayStr;
+    }).length;
+
+    var domainCounts = {};
+    var yearCounts = {};
+    apps.forEach(function(a){
+      domainCounts[a.domain] = (domainCounts[a.domain] || 0) + 1;
+      yearCounts[a.yearOfStudy] = (yearCounts[a.yearOfStudy] || 0) + 1;
+    });
+
+    var topDomain = Object.keys(domainCounts).sort(function(x,y){ return domainCounts[y]-domainCounts[x]; })[0];
+    var topYear = Object.keys(yearCounts).sort(function(x,y){ return yearCounts[y]-yearCounts[x]; })[0];
+
+    var html = '';
+    html += statCard('Total Applications', total, 'All-time submissions');
+    html += statCard('Today', todayCount, new Date().toLocaleDateString('en-IN', {day:'numeric', month:'short'}));
+    html += statCard('Top Domain', topDomain || '—', topDomain ? (domainCounts[topDomain] + ' applicants') : 'No data yet');
+    html += statCard('Top Year of Study', topYear || '—', topYear ? (yearCounts[topYear] + ' applicants') : 'No data yet');
+    document.getElementById('statGrid').innerHTML = html;
+
+    renderBars('domainBars', domainCounts, total);
+    renderBars('yearBars', yearCounts, total);
+  }
+
+  function statCard(label, value, sub){
+    return '<div class="stat-card"><div class="label">' + escapeHtml(label) + '</div>' +
+           '<div class="value">' + escapeHtml(value) + '</div>' +
+           '<div class="sub">' + escapeHtml(sub) + '</div></div>';
+  }
+
+  function renderBars(containerId, counts, total){
+    var el = document.getElementById(containerId);
+    var keys = Object.keys(counts).sort(function(a,b){ return counts[b]-counts[a]; });
+    if (!keys.length){
+      el.innerHTML = '<div class="empty-note">No applications yet.</div>';
+      return;
+    }
+    var html = '';
+    keys.forEach(function(k){
+      var pct = total ? Math.round((counts[k]/total)*100) : 0;
+      html += '<div class="bar-row">' +
+                '<div class="bar-label"><span>' + escapeHtml(k) + '</span><span class="count">' + counts[k] + ' (' + pct + '%)</span></div>' +
+                '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%"></div></div>' +
+              '</div>';
+    });
+    el.innerHTML = html;
+  }
+
+  function renderTable(){
+    var apps = getApplications().slice().sort(function(a,b){
+      return new Date(b.submittedAt) - new Date(a.submittedAt);
+    });
+    var q = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+    if (q){
+      apps = apps.filter(function(a){
+        return (a.fullName+' '+a.email+' '+a.college+' '+a.domain+' '+a.yearOfStudy).toLowerCase().indexOf(q) !== -1;
+      });
+    }
+
+    var area = document.getElementById('tableArea');
+    if (!apps.length){
+      area.innerHTML = '<div class="empty-state">' +
+        '<div class="icon-wrap"><svg class="icon"><use href="#i-inbox"/></svg></div>' +
+        '<h4>No applications found</h4>' +
+        '<p>Once students submit the application form, their details will show up here. You can also load sample data to preview the dashboard.</p>' +
+        '<button class="btn btn-gold" onclick="loadSampleData()"><svg class="icon"><use href="#i-database"/></svg> Load Sample Data</button>' +
+        '</div>';
+      return;
+    }
+
+    var rows = apps.map(function(a){
+      return '<tr>' +
+        '<td>' + escapeHtml(a.fullName) + '</td>' +
+        '<td>' + escapeHtml(a.email) + '</td>' +
+        '<td>+91 ' + escapeHtml(a.phone) + '</td>' +
+        '<td>' + escapeHtml(a.college) + '</td>' +
+        '<td><span class="domain-chip">' + escapeHtml(a.domain) + '</span></td>' +
+        '<td>' + escapeHtml(a.yearOfStudy) + '</td>' +
+        '<td><span class="phase-chip">' + escapeHtml(a.phase || '—') + '</span></td>' +
+        '<td>' + formatDate(a.submittedAt) + '</td>' +
+      '</tr>';
+    }).join('');
+
+    area.innerHTML = '<div class="table-scroll"><table>' +
+      '<thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>College</th><th>Domain</th><th>Year</th><th>Phase</th><th>Submitted</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table></div>';
+  }
+
+  function refreshAll(){
+    renderStats();
+    renderTable();
+  }
+
+  function exportCSV(){
+    var apps = getApplications();
+    if (!apps.length){ alert('No applications to export yet.'); return; }
+    var headers = ['Full Name','Email','Phone','College','Domain','Year of Study','Phase','Submitted At'];
+    var rows = apps.map(function(a){
+      return [a.fullName, a.email, '+91 '+a.phone, a.college, a.domain, a.yearOfStudy, a.phase, a.submittedAt]
+        .map(function(v){ return '"' + String(v||'').replace(/"/g,'""') + '"'; }).join(',');
+    });
+    var csv = headers.join(',') + '\n' + rows.join('\n');
+    var blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'peerpods_applications_' + new Date().toISOString().slice(0,10) + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function clearAllData(){
+    if (!confirm('This will permanently delete all stored applications on this device. Continue?')) return;
+    localStorage.removeItem('peerpods_applications');
+    refreshAll();
+  }
+
+  function loadSampleData(){
+    var domains = ['Software Engineering','Data Analytics','Marketing','Product Management','Finance','AI & Automation','Product Design'];
+    var years = ['1st Year','2nd Year','3rd Year','4th Year','Graduate'];
+    var phases = ['Phase 1 — Explore','Phase 2 — Build'];
+    var names = ['Riya Sharma','Aarav Sharma','Priya Menon','Rohan Iyer','Ananya Gupta','Vikram Reddy','Sneha Kapoor','Karthik Nair','Divya Pillai','Arjun Nambiar'];
+    var colleges = ['Loyola College, Chennai','St. Xavier\'s, Mumbai','NIT Calicut','Christ University, Bengaluru','Symbiosis, Pune'];
+
+    var apps = getApplications();
+    for (var i=0; i<10; i++){
+      var name = names[Math.floor(Math.random()*names.length)];
+      var daysAgo = Math.floor(Math.random()*10);
+      var date = new Date();
+      date.setDate(date.getDate() - daysAgo);
+      apps.push({
+        id: 'sample_' + Date.now() + '_' + i,
+        fullName: name,
+        email: name.toLowerCase().replace(' ','.') + '@gmail.com',
+        phone: '9' + Math.floor(100000000 + Math.random()*899999999),
+        college: colleges[Math.floor(Math.random()*colleges.length)],
+        domain: domains[Math.floor(Math.random()*domains.length)],
+        yearOfStudy: years[Math.floor(Math.random()*years.length)],
+        phase: phases[Math.floor(Math.random()*phases.length)],
+        submittedAt: date.toISOString()
+      });
+    }
+    saveApplications(apps);
+    refreshAll();
+  }
+
+  // ---- Domains & Mentors data (shared with public site via localStorage) ----
+  var DOMAINS_KEY = 'peerpods_domains';
+  var MENTORS_KEY = 'peerpods_mentors';
+
+  var DEFAULT_DOMAINS = [
+    {id:'dom_swe', label:'Software Engineering', icon:'i-code'},
+    {id:'dom_data', label:'Data Analytics', icon:'i-bar-chart'},
+    {id:'dom_mkt', label:'Marketing', icon:'i-megaphone'},
+    {id:'dom_pm', label:'Product Management', icon:'i-package'},
+    {id:'dom_design', label:'Product Design', icon:'i-pen'},
+    {id:'dom_fin', label:'Finance', icon:'i-dollar'},
+    {id:'dom_law', label:'Law', icon:'i-scale'},
+    {id:'dom_health', label:'Healthcare', icon:'i-heart'},
+    {id:'dom_esg', label:'Sustainability & ESG', icon:'i-leaf'},
+    {id:'dom_csr', label:'CSR', icon:'i-gift'},
+    {id:'dom_policy', label:'Public Policy', icon:'i-landmark'},
+    {id:'dom_startup', label:'Entrepreneurship', icon:'i-rocket'},
+    {id:'dom_ai', label:'AI & Automation', icon:'i-cpu'},
+    {id:'dom_content', label:'Content Creation', icon:'i-edit'},
+    {id:'dom_healthadmin', label:'Healthcare Admin', icon:'i-briefcase'}
+  ];
+
+  var DEFAULT_MENTORS = [
+    {id:'men_1', name:'Aarav Sharma', role:'Investment Banking Analyst', company:'Goldman Sachs', badge:'GS', badgeColor:'#0b5c3f', avatarColor:'#1e3a5f', domainTag:'FINANCE'},
+    {id:'men_2', name:'Priya Menon', role:'Senior Data Analyst', company:'Swiggy', badge:'SW', badgeColor:'#f97316', avatarColor:'#c2410c', domainTag:'DATA ANALYTICS'},
+    {id:'men_3', name:'Rohan Iyer', role:'Growth Marketing Lead', company:'Razorpay', badge:'RP', badgeColor:'#0284c7', avatarColor:'#0e7490', domainTag:'MARKETING'},
+    {id:'men_4', name:'Ananya Gupta', role:'Product Manager', company:'Zomato', badge:'ZM', badgeColor:'#dc2626', avatarColor:'#9f1239', domainTag:'PRODUCT'},
+    {id:'men_5', name:'Vikram Reddy', role:'Software Engineer II', company:'Microsoft', badge:'MS', badgeColor:'#2563eb', avatarColor:'#1d4ed8', domainTag:'ENGINEERING'},
+    {id:'men_6', name:'Sneha Kapoor', role:'UX Designer', company:'CRED', badge:'CR', badgeColor:'#111827', avatarColor:'#0f172a', domainTag:'DESIGN'}
+  ];
+
+  var DOMAIN_ICONS = [
+    ['i-code','Code'], ['i-bar-chart','Bar Chart'], ['i-megaphone','Megaphone'],
+    ['i-package','Package'], ['i-pen','Pen'], ['i-dollar','Dollar'],
+    ['i-scale','Scale'], ['i-heart','Heart'], ['i-leaf','Leaf'],
+    ['i-gift','Gift'], ['i-landmark','Landmark'], ['i-rocket','Rocket'],
+    ['i-cpu','CPU'], ['i-edit','Edit'], ['i-briefcase','Briefcase'],
+    ['i-star','Star'], ['i-layers','Layers'], ['i-tag','Tag']
+  ];
+
+  function getDomains(){
+    try{
+      var raw = localStorage.getItem(DOMAINS_KEY);
+      if (!raw){ localStorage.setItem(DOMAINS_KEY, JSON.stringify(DEFAULT_DOMAINS)); return DEFAULT_DOMAINS.slice(); }
+      return JSON.parse(raw);
+    }catch(e){ return DEFAULT_DOMAINS.slice(); }
+  }
+  function saveDomains(list){ localStorage.setItem(DOMAINS_KEY, JSON.stringify(list)); }
+
+  function getMentors(){
+    try{
+      var raw = localStorage.getItem(MENTORS_KEY);
+      if (!raw){ localStorage.setItem(MENTORS_KEY, JSON.stringify(DEFAULT_MENTORS)); return DEFAULT_MENTORS.slice(); }
+      return JSON.parse(raw);
+    }catch(e){ return DEFAULT_MENTORS.slice(); }
+  }
+  function saveMentors(list){ localStorage.setItem(MENTORS_KEY, JSON.stringify(list)); }
+
+  function getInitials(name){
+    var parts = String(name || '').trim().split(/\s+/);
+    var a = parts[0] ? parts[0][0] : '';
+    var b = parts.length > 1 ? parts[parts.length - 1][0] : '';
+    return (a + b).toUpperCase();
+  }
+
+  function shadeColor(hex, percent){
+    var f = parseInt(String(hex).slice(1), 16);
+    if (isNaN(f)) return hex;
+    var t = percent < 0 ? 0 : 255;
+    var p = percent < 0 ? percent * -1 : percent;
+    var R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
+    return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 +
+      (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
+  }
+
+  // ---- Domains manager ----
+  function populateDomainIconSelect(){
+    var sel = document.getElementById('domainIconSelect');
+    sel.innerHTML = DOMAIN_ICONS.map(function(o){ return '<option value="' + o[0] + '">' + o[1] + '</option>'; }).join('');
+  }
+
+  function updateDomainIconPreview(){
+    var sel = document.getElementById('domainIconSelect').value;
+    document.getElementById('domainIconPreview').innerHTML = '<svg class="icon"><use href="#' + sel + '"/></svg>';
+  }
+
+  function showDomainForm(domain){
+    document.getElementById('domainFormPanel').style.display = 'block';
+    document.getElementById('domainFormTitle').textContent = domain ? 'Edit Domain' : 'Add Domain';
+    document.getElementById('domainEditId').value = domain ? domain.id : '';
+    document.getElementById('domainLabel').value = domain ? domain.label : '';
+    document.getElementById('domainIconSelect').value = domain ? domain.icon : 'i-code';
+    updateDomainIconPreview();
+    document.getElementById('domainFormPanel').scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  function hideDomainForm(){
+    document.getElementById('domainFormPanel').style.display = 'none';
+    document.getElementById('domainLabel').value = '';
+    document.getElementById('domainEditId').value = '';
+  }
+
+  function saveDomainForm(){
+    var label = document.getElementById('domainLabel').value.trim();
+    if (!label){ alert('Please enter a domain name.'); return; }
+    var icon = document.getElementById('domainIconSelect').value;
+    var editId = document.getElementById('domainEditId').value;
+    var domains = getDomains();
+    if (editId){
+      domains = domains.map(function(d){ return d.id === editId ? {id:d.id, label:label, icon:icon} : d; });
+    } else {
+      domains.push({id:'dom_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6), label:label, icon:icon});
+    }
+    saveDomains(domains);
+    hideDomainForm();
+    renderDomainList();
+  }
+
+  function editDomain(id){
+    var d = getDomains().filter(function(x){ return x.id === id; })[0];
+    if (d) showDomainForm(d);
+  }
+
+  function deleteDomain(id){
+    if (!confirm('Delete this domain? It will be removed from the site and the application form.')) return;
+    saveDomains(getDomains().filter(function(d){ return d.id !== id; }));
+    renderDomainList();
+  }
+
+  function renderDomainList(){
+    var area = document.getElementById('domainListArea');
+    var domains = getDomains();
+    if (!domains.length){
+      area.innerHTML = '<div class="empty-state">' +
+        '<div class="icon-wrap"><svg class="icon"><use href="#i-inbox"/></svg></div>' +
+        '<h4>No domains yet</h4>' +
+        '<p>Add a domain to make it available on the site and application form.</p>' +
+        '</div>';
+      return;
+    }
+    var rows = domains.map(function(d){
+      return '<tr>' +
+        '<td><div class="row-icon"><svg class="icon"><use href="#' + escapeHtml(d.icon) + '"/></svg></div></td>' +
+        '<td>' + escapeHtml(d.label) + '</td>' +
+        '<td class="actions-cell">' +
+          '<button class="icon-btn" title="Edit" onclick="editDomain(\'' + d.id + '\')"><svg class="icon"><use href="#i-pen"/></svg></button>' +
+          '<button class="icon-btn danger" title="Delete" onclick="deleteDomain(\'' + d.id + '\')"><svg class="icon"><use href="#i-trash"/></svg></button>' +
+        '</td>' +
+      '</tr>';
+    }).join('');
+    area.innerHTML = '<div class="table-scroll"><table>' +
+      '<thead><tr><th></th><th>Domain</th><th style="text-align:right;">Actions</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table></div>';
+  }
+
+  // ---- Mentors manager ----
+  function showMentorForm(mentor){
+    document.getElementById('mentorFormPanel').style.display = 'block';
+    document.getElementById('mentorFormTitle').textContent = mentor ? 'Edit Mentor' : 'Add Mentor';
+    document.getElementById('mentorEditId').value = mentor ? mentor.id : '';
+    document.getElementById('mentorName').value = mentor ? mentor.name : '';
+    document.getElementById('mentorRole').value = mentor ? mentor.role : '';
+    document.getElementById('mentorCompany').value = mentor ? mentor.company : '';
+    document.getElementById('mentorBadge').value = mentor ? mentor.badge : '';
+    document.getElementById('mentorDomainTag').value = mentor ? mentor.domainTag : '';
+    document.getElementById('mentorAvatarColor').value = mentor ? mentor.avatarColor : '#1e3a5f';
+    document.getElementById('mentorBadgeColor').value = mentor ? mentor.badgeColor : '#2563eb';
+    document.getElementById('mentorFormPanel').scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  function hideMentorForm(){
+    document.getElementById('mentorFormPanel').style.display = 'none';
+    ['mentorName','mentorRole','mentorCompany','mentorBadge','mentorDomainTag','mentorEditId'].forEach(function(id){
+      document.getElementById(id).value = '';
+    });
+  }
+
+  function saveMentorForm(){
+    var name = document.getElementById('mentorName').value.trim();
+    var role = document.getElementById('mentorRole').value.trim();
+    var company = document.getElementById('mentorCompany').value.trim();
+    var badge = document.getElementById('mentorBadge').value.trim().toUpperCase();
+    var domainTag = document.getElementById('mentorDomainTag').value.trim().toUpperCase();
+    var avatarColor = document.getElementById('mentorAvatarColor').value;
+    var badgeColor = document.getElementById('mentorBadgeColor').value;
+    if (!name || !role || !company || !badge || !domainTag){ alert('Please fill in all fields.'); return; }
+    var editId = document.getElementById('mentorEditId').value;
+    var mentors = getMentors();
+    var record = {name:name, role:role, company:company, badge:badge, badgeColor:badgeColor, avatarColor:avatarColor, domainTag:domainTag};
+    if (editId){
+      mentors = mentors.map(function(m){ return m.id === editId ? Object.assign({id:m.id}, record) : m; });
+    } else {
+      mentors.push(Object.assign({id:'men_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6)}, record));
+    }
+    saveMentors(mentors);
+    hideMentorForm();
+    renderMentorList();
+  }
+
+  function editMentor(id){
+    var m = getMentors().filter(function(x){ return x.id === id; })[0];
+    if (m) showMentorForm(m);
+  }
+
+  function deleteMentor(id){
+    if (!confirm('Delete this mentor from the site?')) return;
+    saveMentors(getMentors().filter(function(m){ return m.id !== id; }));
+    renderMentorList();
+  }
+
+  function renderMentorList(){
+    var area = document.getElementById('mentorListArea');
+    var mentors = getMentors();
+    if (!mentors.length){
+      area.innerHTML = '<div class="empty-state">' +
+        '<div class="icon-wrap"><svg class="icon"><use href="#i-inbox"/></svg></div>' +
+        '<h4>No mentors yet</h4>' +
+        '<p>Add a mentor profile to feature them on the site.</p>' +
+        '</div>';
+      return;
+    }
+    var rows = mentors.map(function(m){
+      var grad = 'linear-gradient(135deg,' + m.avatarColor + ',' + shadeColor(m.avatarColor, -0.35) + ')';
+      return '<tr>' +
+        '<td><div class="avatar-sm" style="background:' + grad + ';">' + escapeHtml(getInitials(m.name)) + '</div></td>' +
+        '<td>' + escapeHtml(m.name) + '</td>' +
+        '<td>' + escapeHtml(m.role) + '</td>' +
+        '<td>' + escapeHtml(m.company) + '</td>' +
+        '<td><span class="domain-chip">' + escapeHtml(m.domainTag) + '</span></td>' +
+        '<td class="actions-cell">' +
+          '<button class="icon-btn" title="Edit" onclick="editMentor(\'' + m.id + '\')"><svg class="icon"><use href="#i-pen"/></svg></button>' +
+          '<button class="icon-btn danger" title="Delete" onclick="deleteMentor(\'' + m.id + '\')"><svg class="icon"><use href="#i-trash"/></svg></button>' +
+        '</td>' +
+      '</tr>';
+    }).join('');
+    area.innerHTML = '<div class="table-scroll"><table>' +
+      '<thead><tr><th></th><th>Name</th><th>Role</th><th>Company</th><th>Domain</th><th style="text-align:right;">Actions</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table></div>';
+  }
+
+  populateDomainIconSelect();
+  renderDomainList();
+  renderMentorList();
+  refreshAll();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="PeerPods helps students explore careers through real job simulations and conversations with industry professionals — before committing years to a path.">
+<title>PeerPods — Experience Before You Decide</title>
+<style>
+  :root{
+    --navy:#1e293b;
+    --navy-dark:#0f1c2e;
+    --navy-mid:#16273f;
+    --gold:#f2b33d;
+    --gold-dark:#dd9c22;
+    --cream:#f7f4ee;
+    --white:#ffffff;
+    --text-dark:#0f1c2e;
+    --text-gray:#5b6472;
+    --text-muted:#8b93a1;
+    --border:#e4e0d6;
+
+    --radius-sm:8px;
+    --radius-md:14px;
+    --radius-lg:20px;
+
+    --shadow-sm:0 1px 2px rgba(15,28,46,0.06);
+    --shadow-md:0 6px 20px rgba(15,28,46,0.08);
+    --shadow-lg:0 16px 40px rgba(15,28,46,0.14);
+
+    --container:1160px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--text-dark);
+    background:var(--white);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  ul{list-style:none;}
+  button{font-family:inherit;}
+  .container{max-width:var(--container);margin:0 auto;padding:0 24px;}
+
+  .icon{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;display:block;flex-shrink:0;}
+
+  /* BUTTONS */
+  .btn-primary, .btn-outline{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-weight:700;
+    font-size:15px;
+    padding:13px 26px;
+    border-radius:var(--radius-sm);
+    border:1.5px solid transparent;
+    cursor:pointer;
+    transition:background .15s ease, border-color .15s ease, transform .1s ease, box-shadow .15s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:var(--gold);
+    color:var(--navy-dark);
+    box-shadow:0 4px 14px rgba(242,179,61,0.28);
+  }
+  .btn-primary:hover{background:var(--gold-dark); transform:translateY(-1px); box-shadow:0 6px 18px rgba(242,179,61,0.36);}
+  .btn-outline{
+    background:transparent;
+    border-color:rgba(255,255,255,0.28);
+    color:var(--white);
+  }
+  .btn-outline:hover{border-color:var(--gold); color:var(--gold);}
+  .btn-lg{padding:16px 34px; font-size:16px;}
+
+  /* NAVBAR */
+  header.navbar{
+    background:var(--navy-dark);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 32px;
+    position:sticky;
+    top:0;
+    z-index:100;
+  }
+  .logo{
+    font-size:21px;
+    font-weight:800;
+    color:var(--white);
+    letter-spacing:-0.5px;
+  }
+  .logo span{color:var(--gold);}
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:34px;
+  }
+  .nav-links a{
+    color:#c7cdd6;
+    font-size:14.5px;
+    font-weight:600;
+    transition:color .15s ease;
+  }
+  .nav-links a:hover{color:var(--white);}
+  .nav-right{display:flex; align-items:center; gap:18px;}
+  .nav-toggle{
+    display:none;
+    background:transparent;
+    border:none;
+    color:var(--white);
+    cursor:pointer;
+    padding:6px;
+  }
+  .mobile-panel{
+    display:none;
+    background:var(--navy-dark);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    padding:8px 24px 20px;
+  }
+  .mobile-panel.open{display:block;}
+  .mobile-panel a{
+    display:block;
+    color:#c7cdd6;
+    font-size:15px;
+    font-weight:600;
+    padding:12px 0;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .mobile-panel .btn-primary{margin-top:16px; width:100%; justify-content:center;}
+
+  /* HERO */
+  .hero{
+    background:linear-gradient(180deg,#132238 0%, var(--navy-dark) 65%, #0b1520 100%);
+    color:var(--white);
+    text-align:center;
+    padding:88px 24px 72px;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.03);
+    border-radius:var(--radius-sm);
+    padding:9px 18px;
+    font-size:13.5px;
+    font-weight:600;
+    color:#dfe3e9;
+    margin-bottom:34px;
+  }
+  .badge .dot{
+    width:7px;height:7px;border-radius:50%;background:var(--gold);
+  }
+  .hero h1{
+    font-size:54px;
+    font-weight:800;
+    letter-spacing:-1.5px;
+    max-width:900px;
+    margin:0 auto 26px;
+    line-height:1.12;
+  }
+  .hero h1 .accent{color:var(--gold);}
+  .hero p.sub{
+    font-size:17.5px;
+    color:#b9c1cc;
+    max-width:660px;
+    margin:0 auto 28px;
+  }
+  .tagline{
+    font-size:17px;
+    font-weight:700;
+    margin-bottom:40px;
+    letter-spacing:.2px;
+  }
+  .tagline .g1{color:var(--gold);}
+  .tagline .g2{color:#5cc2ef;}
+  .tagline .g3{color:var(--white);}
+
+  .pill-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    color:#d9dde3;
+    margin-top:44px;
+  }
+  .pill{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border:1px solid rgba(255,255,255,0.12);
+    background:rgba(255,255,255,0.03);
+    border-radius:var(--radius-sm);
+    padding:10px 18px;
+    font-size:14px;
+    font-weight:600;
+  }
+  .pill .icon{width:16px;height:16px; color:var(--gold);}
+  .pill-arrow{color:var(--text-muted); font-size:15px;}
+
+  /* SECTION */
+  .section{padding:96px 24px;}
+  .section.cream{background:var(--cream);}
+  .eyebrow{
+    text-align:center;
+    color:var(--gold-dark);
+    font-weight:700;
+    letter-spacing:1.4px;
+    font-size:12.5px;
+    text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  h2.section-title{
+    text-align:center;
+    font-size:36px;
+    font-weight:800;
+    letter-spacing:-0.8px;
+    max-width:800px;
+    margin:0 auto 22px;
+    line-height:1.28;
+    color:var(--navy-dark);
+  }
+  p.section-sub{
+    text-align:center;
+    color:var(--text-gray);
+    font-size:16.5px;
+    max-width:700px;
+    margin:0 auto 18px;
+  }
+
+  /* WHAT WE DO */
+  .card-grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+    max-width:1140px;
+    margin:52px auto 0;
+  }
+  .card{
+    background:var(--white);
+    border-radius:var(--radius-md);
+    padding:34px 28px;
+    box-shadow:var(--shadow-sm);
+    border:1px solid var(--border);
+  }
+  .card-icon{
+    width:50px;height:50px;
+    background:var(--navy-dark);
+    color:var(--gold);
+    border-radius:var(--radius-sm);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:20px;
+  }
+  .card-icon .icon{width:22px;height:22px;}
+  .card h3{font-size:19px; font-weight:700; margin-bottom:10px; color:var(--navy-dark);}
+  .card p{color:var(--text-gray); font-size:14.5px; line-height:1.65;}
+
+  /* HOW IT WORKS */
+  .steps-wrap{
+    max-width:1140px;
+    margin:52px auto 0;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    position:relative;
+  }
+  .step{position:relative; padding-top:6px;}
+  .step-num{
+    width:44px;height:44px;
+    background:var(--navy-dark);
+    color:var(--gold);
+    font-weight:800;
+    font-size:16px;
+    border-radius:var(--radius-sm);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:18px;
+  }
+  .step-line{
+    position:absolute;
+    top:22px; left:44px; right:-16px;
+    height:1.5px;
+    background:repeating-linear-gradient(to right, var(--border) 0 6px, transparent 6px 12px);
+  }
+  .step:last-child .step-line{display:none;}
+  .step-icon{color:var(--gold-dark); margin-bottom:14px;}
+  .step h3{font-size:17px; font-weight:700; margin-bottom:10px; color:var(--navy-dark);}
+  .step p{color:var(--text-gray); font-size:14px; line-height:1.65;}
+
+  /* OUTCOMES SPLIT */
+  .split-wrap{
+    max-width:1140px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    align-items:stretch;
+  }
+  .split-left{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:48px 44px;
+  }
+  .split-left .eyebrow{text-align:left; margin-bottom:14px;}
+  .split-left h2{
+    font-size:29px;
+    font-weight:800;
+    color:var(--navy-dark);
+    letter-spacing:-0.5px;
+    margin-bottom:28px;
+    line-height:1.25;
+  }
+  .gain-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:18px;
+  }
+  .gain-icon{
+    width:38px;height:38px;
+    background:var(--cream);
+    color:var(--gold-dark);
+    border-radius:var(--radius-sm);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .gain-icon .icon{width:18px;height:18px;}
+  .gain-item p{font-size:15px; color:#33404f; font-weight:500;}
+
+  .split-right{
+    background:var(--navy-dark);
+    color:var(--white);
+    border-radius:var(--radius-lg);
+    padding:52px 44px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  }
+  .split-right .eyebrow{color:var(--gold); margin-bottom:10px;}
+  .big-number{
+    font-size:72px;
+    font-weight:800;
+    line-height:1;
+    margin-bottom:8px;
+    letter-spacing:-1px;
+  }
+  .big-number .white{color:var(--white);}
+  .big-number .gold{color:var(--gold);}
+  .split-right h3{font-size:22px; font-weight:700; margin-bottom:16px;}
+  .split-right p{color:#b9c1cc; font-size:14.5px; max-width:380px; margin:0 auto 28px; line-height:1.65;}
+
+  /* DOMAINS */
+  .domain-grid{
+    max-width:1140px;
+    margin:48px auto 0;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+  }
+  .domain-pill{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:16px 18px;
+    font-weight:600;
+    font-size:14.5px;
+    color:var(--navy-dark);
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .domain-pill:hover{border-color:var(--gold-dark); box-shadow:var(--shadow-sm);}
+  .domain-pill .icon{width:18px;height:18px; color:var(--gold-dark); flex-shrink:0;}
+  .domain-note{
+    text-align:center;
+    color:var(--text-gray);
+    margin-top:30px;
+    font-size:14.5px;
+  }
+
+  /* MENTORS */
+  .mentor-grid{
+    max-width:1140px;
+    margin:48px auto 0;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+  }
+  .mentor-card{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:30px 22px;
+    text-align:center;
+    box-shadow:var(--shadow-sm);
+  }
+  .avatar{
+    width:58px;height:58px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;
+    color:var(--white);
+    font-size:16px;
+    margin:0 auto 16px;
+  }
+  .mentor-card h3{font-size:16px; font-weight:700; margin-bottom:4px; color:var(--navy-dark);}
+  .mentor-card .role{color:var(--text-gray); font-size:13.5px; margin-bottom:14px;}
+  .company-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    font-weight:600;
+    color:#33404f;
+    margin-bottom:14px;
+  }
+  .company-badge{
+    width:20px;height:20px;
+    border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--white);
+    font-size:9.5px;
+    font-weight:800;
+  }
+  .domain-tag{
+    display:inline-block;
+    background:var(--cream);
+    color:var(--gold-dark);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.4px;
+    padding:5px 12px;
+    border-radius:var(--radius-sm);
+  }
+
+  /* WHY STUDENTS JOIN - dark */
+  .section.dark{
+    background:var(--navy-dark);
+    color:var(--white);
+  }
+  .section.dark .eyebrow{color:var(--gold);}
+  .section.dark h2.section-title{color:var(--white);}
+  .why-grid{
+    max-width:1000px;
+    margin:48px auto 0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+  .why-card{
+    display:flex;
+    gap:18px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:var(--radius-md);
+    padding:28px;
+  }
+  .why-icon{
+    width:44px;height:44px;
+    background:rgba(242,179,61,0.12);
+    color:var(--gold);
+    border-radius:var(--radius-sm);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .why-icon .icon{width:20px;height:20px;}
+  .why-card h3{font-size:17px; font-weight:700; margin-bottom:8px;}
+  .why-card p{color:#aeb6c2; font-size:14px; line-height:1.65;}
+
+  /* APPLICATION FORM */
+  .app-header{
+    text-align:center;
+    padding:76px 24px 20px;
+  }
+  .app-header .eyebrow{color:var(--gold-dark); display:flex; align-items:center; justify-content:center; gap:6px;}
+  .app-header h2{
+    font-size:34px;
+    font-weight:800;
+    color:var(--navy-dark);
+    letter-spacing:-0.5px;
+    line-height:1.3;
+    margin-bottom:18px;
+  }
+  .app-header p{color:var(--text-gray); font-size:15.5px; max-width:640px; margin:0 auto;}
+
+  .phase-grid{
+    max-width:900px;
+    margin:44px auto 0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    padding:0 24px;
+  }
+  .phase-card{
+    border:1.5px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:26px;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .phase-card.selected{border-color:var(--gold-dark); background:#fdf8ee;}
+  .phase-icon{color:var(--gold-dark); margin-bottom:14px;}
+  .phase-card h3{font-size:17px; font-weight:700; margin-bottom:9px; color:var(--navy-dark);}
+  .phase-card p{color:var(--text-gray); font-size:14px; line-height:1.6;}
+
+  .form-card-wrap{
+    max-width:620px;
+    margin:44px auto 60px;
+    padding:0 24px;
+  }
+  .form-card{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-lg);
+    padding:40px 36px 36px;
+  }
+  .form-card h3{
+    font-size:21px;
+    font-weight:800;
+    color:var(--navy-dark);
+    margin-bottom:26px;
+  }
+  .form-success{
+    display:none;
+    align-items:center;
+    gap:10px;
+    background:#eaf7ee;
+    border:1px solid #bfe6c9;
+    color:#1e6b3a;
+    border-radius:var(--radius-sm);
+    padding:14px 16px;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:22px;
+  }
+  .form-success .icon{width:18px;height:18px; flex-shrink:0;}
+  .field{margin-bottom:20px;}
+  .field label{
+    display:block;
+    font-weight:700;
+    font-size:14px;
+    color:var(--navy-dark);
+    margin-bottom:8px;
+  }
+  .field label .req{color:#3b6fd6;}
+  .field input, .field select{
+    width:100%;
+    padding:13px 15px;
+    border:1.5px solid var(--border);
+    border-radius:var(--radius-sm);
+    font-size:14.5px;
+    color:var(--text-dark);
+    font-family:inherit;
+    background:var(--white);
+  }
+  .field input:focus, .field select:focus{outline:none; border-color:var(--gold-dark);}
+  .field input::placeholder{color:#a9b0ba;}
+  .field .hint{font-size:12.5px; color:var(--text-gray); margin-top:6px;}
+  .field .hint a{color:#3b6fd6; font-weight:600;}
+  .phone-field{display:flex; gap:10px;}
+  .phone-code{
+    background:var(--cream);
+    border:1.5px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:13px 15px;
+    font-weight:600;
+    color:var(--text-dark);
+    flex-shrink:0;
+  }
+  .checkbox-field{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin-bottom:24px;
+    font-size:14px;
+    color:#33404f;
+  }
+  .checkbox-field input{width:17px; height:17px; margin-top:2px; flex-shrink:0;}
+  .submit-btn{
+    width:100%;
+    padding:16px;
+    background:var(--gold);
+    color:var(--navy-dark);
+    font-weight:800;
+    font-size:15.5px;
+    border:none;
+    border-radius:var(--radius-sm);
+    cursor:pointer;
+    box-shadow:0 4px 14px rgba(242,179,61,0.28);
+    transition:background .15s ease, box-shadow .15s ease;
+  }
+  .submit-btn:hover{background:var(--gold-dark); box-shadow:0 6px 18px rgba(242,179,61,0.36);}
+
+  /* FOOTER */
+  footer{
+    background:var(--navy-dark);
+    color:var(--white);
+    text-align:center;
+    padding:52px 24px;
+    border-top:1px solid rgba(255,255,255,0.06);
+  }
+  footer .admin-link{margin-top:20px;}
+  footer .admin-link a{
+    color:var(--text-muted);
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:.3px;
+    border-bottom:1px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  footer .admin-link a:hover{color:var(--gold); border-color:var(--gold);}
+  footer .logo{margin-bottom:14px; justify-content:center; display:inline-block;}
+  footer .tag{color:#9aa2ae; font-size:14.5px; margin-bottom:10px;}
+  footer .copy{color:#5f6b7a; font-size:12.5px;}
+
+  @media (max-width: 900px){
+    .nav-links{display:none;}
+    .nav-toggle{display:inline-flex;}
+    .card-grid-3, .steps-wrap, .domain-grid, .mentor-grid, .why-grid, .phase-grid{grid-template-columns:1fr 1fr;}
+    .split-wrap{grid-template-columns:1fr;}
+    .hero h1{font-size:36px;}
+    .step-line{display:none;}
+  }
+  @media (max-width: 600px){
+    .card-grid-3, .steps-wrap, .domain-grid, .mentor-grid, .why-grid, .phase-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:29px;}
+    header.navbar{padding:14px 20px;}
+    .section{padding:64px 20px;}
+  }
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6.5L4.5 19a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 9.5V3"/><path d="M7.5 15h9"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.5.4.8 1 .8 1.6v.5h5.4v-.5c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+  <symbol id="i-check-square" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+  <symbol id="i-bar-chart" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+  <symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l4 4V6l-4 4H4a1 1 0 0 0-1 1z"/><path d="M14 8a4 4 0 0 1 0 8"/><path d="M17.5 5.5a8 8 0 0 1 0 13"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+  <symbol id="i-dollar" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M5 7h14M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/><path d="M8 21h8"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13c0-5 5-11 13-11 0 8-4 13-11 13z"/><path d="M4 20l7-7"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></symbol>
+  <symbol id="i-landmark" viewBox="0 0 24 24"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 21 8 3 8"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 19 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/><line x1="20" y1="15" x2="23" y2="15"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+  <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21V10l5 3V10l5 3V7l5 4v10z"/><path d="M3 21h18"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="i-trending" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+</svg>
+
+<header class="navbar">
+  <div class="logo">Peer<span>Pods</span>.</div>
+  <nav class="nav-links">
+    <a href="#what-we-do">What We Do</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#domains">Domains</a>
+    <a href="#mentors">Mentors</a>
+  </nav>
+  <div class="nav-right">
+    <a href="#apply" class="btn-primary">Apply Now</a>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleMobileNav()">
+      <svg class="icon" id="menuIconOpen"><use href="#i-menu"/></svg>
+      <svg class="icon" id="menuIconClose" style="display:none"><use href="#i-x"/></svg>
+    </button>
+  </div>
+</header>
+<div class="mobile-panel" id="mobilePanel">
+  <a href="#what-we-do" onclick="toggleMobileNav()">What We Do</a>
+  <a href="#how-it-works" onclick="toggleMobileNav()">How It Works</a>
+  <a href="#domains" onclick="toggleMobileNav()">Domains</a>
+  <a href="#mentors" onclick="toggleMobileNav()">Mentors</a>
+  <a href="#apply" class="btn-primary" onclick="toggleMobileNav()">Apply Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge"><span class="dot"></span> Now Accepting Student Applications</div>
+  <h1>Experience <span class="accent">Before You Decide</span>.</h1>
+  <p class="sub">Learn the basics, complete real job simulations, and interact with industry professionals to understand what a career is truly like — before committing years of your life to it.</p>
+  <div class="tagline"><span class="g1">Explore.</span> <span class="g2">Experience.</span> <span class="g3">Decide.</span></div>
+  <a href="#apply" class="btn-primary btn-lg">Start Your Career Exploration →</a>
+  <div class="pill-row">
+    <div class="pill"><svg class="icon"><use href="#i-user"/></svg> Confused</div>
+    <span class="pill-arrow">→</span>
+    <div class="pill"><svg class="icon"><use href="#i-message"/></svg> Talk to a Pro</div>
+    <span class="pill-arrow">→</span>
+    <div class="pill"><svg class="icon"><use href="#i-flask"/></svg> Try the Job</div>
+    <span class="pill-arrow">→</span>
+    <div class="pill"><svg class="icon"><use href="#i-bulb"/></svg> Get Clarity</div>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section class="section cream" id="what-we-do">
+  <div class="eyebrow">WHAT WE DO</div>
+  <h2 class="section-title">PeerPods helps you explore careers before choosing them.</h2>
+  <p class="section-sub">Most students pick careers based on what their parents suggest or what their friends are doing. Very few actually know what the job looks like from the inside.</p>
+  <p class="section-sub">PeerPods connects you with real professionals in your domain of interest. You talk to them, ask real questions, and complete a mini simulation of their actual work — so you can decide with confidence.</p>
+
+  <div class="card-grid-3">
+    <div class="card">
+      <div class="card-icon"><svg class="icon"><use href="#i-message"/></svg></div>
+      <h3>Career Conversations</h3>
+      <p>Talk directly with a professional currently working in your field of interest. Ask anything. Get honest answers.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><svg class="icon"><use href="#i-flask"/></svg></div>
+      <h3>Job Simulations</h3>
+      <p>Complete a short real-world task from that profession. Experience the work before committing to it.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><svg class="icon"><use href="#i-bulb"/></svg></div>
+      <h3>Career Clarity</h3>
+      <p>Leave with a clear understanding of whether the career is right for you — and what your next steps should be.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+  <div class="eyebrow">HOW IT WORKS</div>
+  <h2 class="section-title">Experience Before You Decide</h2>
+  <p class="section-sub">Choosing a career shouldn't be based on guesswork. PeerPods helps students explore careers through a structured <strong>7-day experience</strong> that combines learning, practice, and professional interaction.</p>
+
+  <div class="steps-wrap">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-line"></div>
+      <div class="step-icon"><svg class="icon"><use href="#i-book"/></svg></div>
+      <h3>Learn the Basics</h3>
+      <p>Build a foundational understanding of your chosen career — the core skills, tools, responsibilities, and industry knowledge required for the role.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-line"></div>
+      <div class="step-icon"><svg class="icon"><use href="#i-flask"/></svg></div>
+      <h3>Experience a Job Simulation</h3>
+      <p>Apply what you've learned through a hands-on simulation designed to replicate real-world tasks and challenges faced by professionals in the field.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-line"></div>
+      <div class="step-icon"><svg class="icon"><use href="#i-target"/></svg></div>
+      <h3>Discover Your Fit</h3>
+      <p>Reflect on your experience, assess your interests and strengths, and gain clarity on whether the career aligns with your goals and aspirations.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-icon"><svg class="icon"><use href="#i-users"/></svg></div>
+      <h3>Connect with Industry Professionals</h3>
+      <p>Engage with professionals currently in the role. Ask questions, hear real career stories, and gain insights that go beyond textbooks and online videos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES / 7 DAYS -->
+<section class="section cream">
+  <div class="split-wrap">
+    <div class="split-left">
+      <div class="eyebrow">WHAT YOU'LL GAIN</div>
+      <h2>Outcomes that actually move you forward.</h2>
+
+      <div class="gain-item">
+        <div class="gain-icon"><svg class="icon"><use href="#i-target"/></svg></div>
+        <p>Career clarity before committing to a degree or profession</p>
+      </div>
+      <div class="gain-item">
+        <div class="gain-icon"><svg class="icon"><use href="#i-tool"/></svg></div>
+        <p>Practical exposure through real-world simulations</p>
+      </div>
+      <div class="gain-item">
+        <div class="gain-icon"><svg class="icon"><use href="#i-check-square"/></svg></div>
+        <p>Understanding of the key skills required for the role</p>
+      </div>
+      <div class="gain-item">
+        <div class="gain-icon"><svg class="icon"><use href="#i-users"/></svg></div>
+        <p>Direct access to industry professionals</p>
+      </div>
+      <div class="gain-item">
+        <div class="gain-icon"><svg class="icon"><use href="#i-sparkle"/></svg></div>
+        <p>Greater confidence in your career decisions</p>
+      </div>
+    </div>
+
+    <div class="split-right">
+      <div class="eyebrow">THE OUTCOME</div>
+      <div class="big-number"><span class="white">7 </span><span class="gold">days</span></div>
+      <h3>From curiosity to clarity.</h3>
+      <p>A focused week of learning, doing, and talking to the people already living the career you're considering.</p>
+      <a href="#apply" class="btn-primary">Start Your 7 Days →</a>
+    </div>
+  </div>
+</section>
+
+<!-- DOMAINS -->
+<section class="section" id="domains">
+  <div class="eyebrow">AVAILABLE DOMAINS</div>
+  <h2 class="section-title">Which career are you curious about?</h2>
+  <p class="section-sub">Choose any domain when you apply. We will match you with the right mentor.</p>
+
+  <div class="domain-grid" id="domainGrid"></div>
+  <p class="domain-note">Don't see your domain? Apply anyway — we are adding new ones every week.</p>
+</section>
+
+<!-- MENTORS -->
+<section class="section cream" id="mentors">
+  <h2 class="section-title">Learn From People Already Doing the Job</h2>
+  <p class="section-sub">Real professionals from real companies, here to give you an honest look at their career.</p>
+
+  <div class="mentor-grid" id="mentorGrid"></div>
+</section>
+
+<!-- WHY STUDENTS JOIN -->
+<section class="section dark">
+  <div class="eyebrow">WHY STUDENTS JOIN</div>
+  <h2 class="section-title">Stop guessing. Start exploring.</h2>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon"><svg class="icon"><use href="#i-target"/></svg></div>
+      <div>
+        <h3>Get Career Clarity</h3>
+        <p>Know exactly which career fits you before you commit to it.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><svg class="icon"><use href="#i-factory"/></svg></div>
+      <div>
+        <h3>Real Industry Exposure</h3>
+        <p>Learn from people actually doing the job — not textbooks or YouTube.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><svg class="icon"><use href="#i-zap"/></svg></div>
+      <div>
+        <h3>Hands-On Experience</h3>
+        <p>Real job simulations and tasks — not just theory or passive videos.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><svg class="icon"><use href="#i-trending"/></svg></div>
+      <div>
+        <h3>Get Ahead Early</h3>
+        <p>Most students figure this out in year 3. You will know in week 1.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATION -->
+<section id="apply">
+  <div class="app-header">
+    <div class="eyebrow"><svg class="icon" style="width:14px;height:14px;"><use href="#i-sparkle"/></svg> STUDENT APPLICATION</div>
+    <h2>Reserve Your Spot.<br>Begin Your 7-Day Experience.</h2>
+    <p>Fill in your details below. We will match you with the right career mentor and reach out within 2–3 business days.</p>
+  </div>
+
+  <div class="phase-grid">
+    <div class="phase-card selected" data-phase="Phase 1 — Explore" onclick="selectPhase(this)">
+      <div class="phase-icon"><svg class="icon"><use href="#i-search"/></svg></div>
+      <h3>Phase 1 — Explore</h3>
+      <p>I am confused or curious. I want to explore a career with a real professional.</p>
+    </div>
+    <div class="phase-card" data-phase="Phase 2 — Build" onclick="selectPhase(this)">
+      <div class="phase-icon"><svg class="icon"><use href="#i-rocket"/></svg></div>
+      <h3>Phase 2 — Build</h3>
+      <p>I know my domain. I want to build skills with peers and a domain expert.</p>
+    </div>
+  </div>
+
+  <div class="form-card-wrap">
+    <div class="form-card">
+      <h3>Tell us about yourself</h3>
+      <div class="form-success" id="formSuccess"><svg class="icon"><use href="#i-check-circle"/></svg> Application submitted! We'll reach out within 2–3 business days.</div>
+      <form id="applicationForm" onsubmit="return handleApplicationSubmit(event);">
+        <div class="field">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" id="fullName" placeholder="e.g. Riya Sharma" required>
+        </div>
+        <div class="field">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="yourname@gmail.com" required>
+          <div class="hint">We will send your confirmation <a href="#">here</a></div>
+        </div>
+        <div class="field">
+          <label>Phone Number <span class="req">*</span></label>
+          <div class="phone-field">
+            <div class="phone-code">+91</div>
+            <input type="tel" id="phone" placeholder="98765 43210" required>
+          </div>
+          <div class="hint">For WhatsApp updates from our team</div>
+        </div>
+        <div class="field">
+          <label>College / Institution <span class="req">*</span></label>
+          <input type="text" id="college" placeholder="e.g. Loyola College, Chennai" required>
+        </div>
+        <div class="field">
+          <label>Domain You Want to Explore <span class="req">*</span></label>
+          <select id="domain" required></select>
+        </div>
+        <div class="field">
+          <label>Year of Study <span class="req">*</span></label>
+          <select id="yearOfStudy" required>
+            <option value="" disabled selected>Select your year...</option>
+            <option>1st Year</option>
+            <option>2nd Year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+            <option>Graduate</option>
+          </select>
+        </div>
+        <div class="checkbox-field">
+          <input type="checkbox" id="agree" required>
+          <label for="agree">I agree to be contacted via WhatsApp and email about my application.</label>
+        </div>
+        <button type="submit" class="submit-btn">Submit My Application →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">Peer<span>Pods</span>.</div>
+  <div class="tag">Explore. Experience. Decide.</div>
+  <div class="copy">© 2026 PeerPods. India's Career Exploration Platform</div>
+  <div class="admin-link"><a href="admin-login.html">Admin Login →</a></div>
+</footer>
+
+<script>
+  // ---- Domains & Mentors data (shared with admin panel via localStorage) ----
+  var DOMAINS_KEY = 'peerpods_domains';
+  var MENTORS_KEY = 'peerpods_mentors';
+
+  var DEFAULT_DOMAINS = [
+    {id:'dom_swe', label:'Software Engineering', icon:'i-code'},
+    {id:'dom_data', label:'Data Analytics', icon:'i-bar-chart'},
+    {id:'dom_mkt', label:'Marketing', icon:'i-megaphone'},
+    {id:'dom_pm', label:'Product Management', icon:'i-package'},
+    {id:'dom_design', label:'Product Design', icon:'i-pen'},
+    {id:'dom_fin', label:'Finance', icon:'i-dollar'},
+    {id:'dom_law', label:'Law', icon:'i-scale'},
+    {id:'dom_health', label:'Healthcare', icon:'i-heart'},
+    {id:'dom_esg', label:'Sustainability & ESG', icon:'i-leaf'},
+    {id:'dom_csr', label:'CSR', icon:'i-gift'},
+    {id:'dom_policy', label:'Public Policy', icon:'i-landmark'},
+    {id:'dom_startup', label:'Entrepreneurship', icon:'i-rocket'},
+    {id:'dom_ai', label:'AI & Automation', icon:'i-cpu'},
+    {id:'dom_content', label:'Content Creation', icon:'i-edit'},
+    {id:'dom_healthadmin', label:'Healthcare Admin', icon:'i-briefcase'}
+  ];
+
+  var DEFAULT_MENTORS = [
+    {id:'men_1', name:'Aarav Sharma', role:'Investment Banking Analyst', company:'Goldman Sachs', badge:'GS', badgeColor:'#0b5c3f', avatarColor:'#1e3a5f', domainTag:'FINANCE'},
+    {id:'men_2', name:'Priya Menon', role:'Senior Data Analyst', company:'Swiggy', badge:'SW', badgeColor:'#f97316', avatarColor:'#c2410c', domainTag:'DATA ANALYTICS'},
+    {id:'men_3', name:'Rohan Iyer', role:'Growth Marketing Lead', company:'Razorpay', badge:'RP', badgeColor:'#0284c7', avatarColor:'#0e7490', domainTag:'MARKETING'},
+    {id:'men_4', name:'Ananya Gupta', role:'Product Manager', company:'Zomato', badge:'ZM', badgeColor:'#dc2626', avatarColor:'#9f1239', domainTag:'PRODUCT'},
+    {id:'men_5', name:'Vikram Reddy', role:'Software Engineer II', company:'Microsoft', badge:'MS', badgeColor:'#2563eb', avatarColor:'#1d4ed8', domainTag:'ENGINEERING'},
+    {id:'men_6', name:'Sneha Kapoor', role:'UX Designer', company:'CRED', badge:'CR', badgeColor:'#111827', avatarColor:'#0f172a', domainTag:'DESIGN'}
+  ];
+
+  function getDomains(){
+    try{
+      var raw = localStorage.getItem(DOMAINS_KEY);
+      if (!raw){ localStorage.setItem(DOMAINS_KEY, JSON.stringify(DEFAULT_DOMAINS)); return DEFAULT_DOMAINS.slice(); }
+      return JSON.parse(raw);
+    }catch(e){ return DEFAULT_DOMAINS.slice(); }
+  }
+
+  function getMentors(){
+    try{
+      var raw = localStorage.getItem(MENTORS_KEY);
+      if (!raw){ localStorage.setItem(MENTORS_KEY, JSON.stringify(DEFAULT_MENTORS)); return DEFAULT_MENTORS.slice(); }
+      return JSON.parse(raw);
+    }catch(e){ return DEFAULT_MENTORS.slice(); }
+  }
+
+  function escapeHtml(str){
+    return String(str || '').replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  function getInitials(name){
+    var parts = String(name || '').trim().split(/\s+/);
+    var a = parts[0] ? parts[0][0] : '';
+    var b = parts.length > 1 ? parts[parts.length - 1][0] : '';
+    return (a + b).toUpperCase();
+  }
+
+  function shadeColor(hex, percent){
+    var f = parseInt(String(hex).slice(1), 16);
+    if (isNaN(f)) return hex;
+    var t = percent < 0 ? 0 : 255;
+    var p = percent < 0 ? percent * -1 : percent;
+    var R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
+    return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 +
+      (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
+  }
+
+  function renderDomainGrid(){
+    var wrap = document.getElementById('domainGrid');
+    if (!wrap) return;
+    var domains = getDomains();
+    wrap.innerHTML = domains.map(function(d){
+      return '<div class="domain-pill"><svg class="icon"><use href="#' + escapeHtml(d.icon) + '"/></svg> ' + escapeHtml(d.label) + '</div>';
+    }).join('');
+  }
+
+  function renderDomainSelect(){
+    var sel = document.getElementById('domain');
+    if (!sel) return;
+    var domains = getDomains();
+    var current = sel.value;
+    var html = '<option value="" disabled selected>Select a domain...</option>';
+    domains.forEach(function(d){
+      html += '<option>' + escapeHtml(d.label) + '</option>';
+    });
+    sel.innerHTML = html;
+    if (current) sel.value = current;
+  }
+
+  function renderMentors(){
+    var wrap = document.getElementById('mentorGrid');
+    if (!wrap) return;
+    var mentors = getMentors();
+    wrap.innerHTML = mentors.map(function(m){
+      var grad = 'linear-gradient(135deg,' + m.avatarColor + ',' + shadeColor(m.avatarColor, -0.35) + ')';
+      return '<div class="mentor-card">' +
+        '<div class="avatar" style="background:' + grad + ';">' + escapeHtml(getInitials(m.name)) + '</div>' +
+        '<h3>' + escapeHtml(m.name) + '</h3>' +
+        '<div class="role">' + escapeHtml(m.role) + '</div>' +
+        '<div class="company-tag"><span class="company-badge" style="background:' + escapeHtml(m.badgeColor) + ';">' + escapeHtml(m.badge) + '</span> ' + escapeHtml(m.company) + '</div>' +
+        '<br>' +
+        '<span class="domain-tag">' + escapeHtml(m.domainTag) + '</span>' +
+      '</div>';
+    }).join('');
+  }
+
+  renderDomainGrid();
+  renderDomainSelect();
+  renderMentors();
+
+  var selectedPhase = "Phase 1 — Explore";
+  function selectPhase(el){
+    document.querySelectorAll('.phase-card').forEach(function(c){ c.classList.remove('selected'); });
+    el.classList.add('selected');
+    selectedPhase = el.getAttribute('data-phase');
+  }
+
+  function toggleMobileNav(){
+    var panel = document.getElementById('mobilePanel');
+    var open = panel.classList.toggle('open');
+    document.getElementById('menuIconOpen').style.display = open ? 'none' : 'block';
+    document.getElementById('menuIconClose').style.display = open ? 'block' : 'none';
+  }
+
+  function handleApplicationSubmit(e){
+    e.preventDefault();
+    var application = {
+      id: 'app_' + Date.now() + '_' + Math.random().toString(36).slice(2,8),
+      fullName: document.getElementById('fullName').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      college: document.getElementById('college').value.trim(),
+      domain: document.getElementById('domain').value,
+      yearOfStudy: document.getElementById('yearOfStudy').value,
+      phase: selectedPhase,
+      submittedAt: new Date().toISOString()
+    };
+
+    var existing = [];
+    try{
+      existing = JSON.parse(localStorage.getItem('peerpods_applications') || '[]');
+    }catch(err){ existing = []; }
+    existing.push(application);
+    localStorage.setItem('peerpods_applications', JSON.stringify(existing));
+
+    document.getElementById('formSuccess').style.display = 'flex';
+    document.getElementById('applicationForm').reset();
+    document.querySelectorAll('.phase-card').forEach(function(c){ c.classList.remove('selected'); });
+    document.querySelector('.phase-card[data-phase="Phase 1 — Explore"]').classList.add('selected');
+    selectedPhase = "Phase 1 — Explore";
+    document.getElementById('formSuccess').scrollIntoView({behavior:'smooth', block:'center'});
+    return false;
+  }
+</script>
+
+</body>
+</html>
