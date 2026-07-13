@@ -356,7 +356,10 @@
     .analytics-grid{grid-template-columns:1fr;}
   }
   @media(max-width:640px){
-    .side-nav{display:none;}
+    .sidebar{flex-wrap:wrap; row-gap:10px;}
+    .side-nav{order:3; flex:1 1 100%; flex-wrap:wrap;}
+    .side-bottom{order:2;}
+    .side-nav a, .side-bottom a, .side-bottom button{padding:8px 10px; font-size:13px;}
     .stat-grid{grid-template-columns:1fr;}
     .form-row{grid-template-columns:1fr;}
   }
