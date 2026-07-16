@@ -4,41 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard — PeerPods</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#1b2456;
-    --navy-deep:#12173a;
-    --gold:#c99a2e;
-    --gold-deep:#9c7620;
-    --cream:#f1e9db;
+    --navy:#1e293b;
+    --navy-dark:#0f1c2e;
+    --gold:#f2b33d;
+    --gold-dark:#dd9c22;
+    --cream:#f7f4ee;
     --white:#ffffff;
-    --text-dark:#1b2456;
-    --text-gray:#5b6180;
-    --text-muted:#8a90b3;
-    --border:rgba(27,36,86,0.14);
-    --red:#c0392b;
+    --text-dark:#0f1c2e;
+    --text-gray:#5b6472;
+    --text-muted:#8b93a1;
+    --border:#e4e0d6;
 
-    --radius-sm:4px;
-    --radius-md:8px;
+    --radius-sm:8px;
+    --radius-md:14px;
+    --radius-lg:20px;
+    --shadow-sm:0 1px 2px rgba(15,28,46,0.06);
 
     --sidebar-w:236px;
   }
-  *{box-sizing:border-box;margin:0;padding:0;min-width:0;}
+  *{box-sizing:border-box;margin:0;padding:0;}
   body{
-    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     color:var(--text-dark);
     background:var(--cream);
     line-height:1.5;
-    overflow-x:hidden;
   }
   a{text-decoration:none; color:inherit;}
   button{font-family:inherit;}
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif;}
   .icon{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;display:block;flex-shrink:0;}
-  .mono{font-family:'IBM Plex Mono',monospace;}
 
   /* LAYOUT */
   .app-shell{display:flex; min-height:100vh;}
@@ -46,7 +41,7 @@
   .sidebar{
     width:var(--sidebar-w);
     flex-shrink:0;
-    background:var(--navy-deep);
+    background:var(--navy-dark);
     color:var(--white);
     display:flex;
     flex-direction:column;
@@ -55,25 +50,23 @@
     top:0;
     height:100vh;
   }
-  .sidebar .brand{
-    font-family:'Space Grotesk',sans-serif;
+  .sidebar .logo{
     font-size:19px;
-    font-weight:700;
+    font-weight:800;
     color:var(--white);
-    letter-spacing:-0.3px;
+    letter-spacing:-0.5px;
     padding:0 10px;
     margin-bottom:6px;
   }
-  .sidebar .brand span{color:var(--gold);}
+  .sidebar .logo span{color:var(--gold);}
   .sidebar .env-tag{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:10.5px;
+    font-size:11px;
     color:var(--text-muted);
     padding:0 10px;
     margin-bottom:30px;
-    letter-spacing:.1em;
+    letter-spacing:.4px;
     text-transform:uppercase;
-    font-weight:600;
+    font-weight:700;
   }
   .side-nav{flex:1;}
   .side-nav a{
@@ -82,7 +75,7 @@
     gap:12px;
     padding:11px 12px;
     border-radius:var(--radius-sm);
-    color:#a9b0d1;
+    color:#c7cdd6;
     font-size:14px;
     font-weight:600;
     margin-bottom:4px;
@@ -90,9 +83,9 @@
   }
   .side-nav a .icon{width:18px;height:18px;}
   .side-nav a:hover{background:rgba(255,255,255,0.06); color:var(--white);}
-  .side-nav a.active{background:rgba(201,154,46,0.14); color:var(--gold);}
+  .side-nav a.active{background:rgba(242,179,61,0.12); color:var(--gold);}
 
-  .side-bottom{border-top:1px solid rgba(255,255,255,0.1); padding-top:14px;}
+  .side-bottom{border-top:1px solid rgba(255,255,255,0.08); padding-top:14px;}
   .side-bottom a, .side-bottom button{
     display:flex;
     align-items:center;
@@ -100,7 +93,7 @@
     width:100%;
     padding:11px 12px;
     border-radius:var(--radius-sm);
-    color:#a9b0d1;
+    color:#c7cdd6;
     font-size:14px;
     font-weight:600;
     background:transparent;
@@ -118,16 +111,7 @@
     padding:36px 40px 60px;
   }
   .page-head{margin-bottom:6px;}
-  .page-head .eyebrow{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:11px;
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    color:var(--gold-deep);
-    font-weight:600;
-    margin-bottom:8px;
-  }
-  .page-head h1{font-size:25px; font-weight:700; color:var(--navy); margin-bottom:4px; letter-spacing:-0.3px;}
+  .page-head h1{font-size:26px; font-weight:800; color:var(--navy-dark); margin-bottom:4px; letter-spacing:-0.4px;}
   .page-head p{color:var(--text-gray); font-size:14px;}
 
   .toolbar{
@@ -145,21 +129,19 @@
     gap:8px;
     padding:10px 18px;
     border-radius:var(--radius-sm);
-    font-family:'Space Grotesk',sans-serif;
     font-size:13.5px;
-    font-weight:600;
+    font-weight:700;
     cursor:pointer;
     border:1.5px solid var(--border);
     background:var(--white);
-    color:var(--navy);
+    color:var(--navy-dark);
     transition:border-color .15s ease, background .15s ease;
-    white-space:nowrap;
   }
   .btn .icon{width:16px;height:16px;}
-  .btn:hover{border-color:var(--gold-deep);}
-  .btn-gold{background:var(--gold); border-color:var(--gold); color:var(--navy);}
-  .btn-gold:hover{background:var(--gold-deep); border-color:var(--gold-deep); color:var(--white);}
-  .btn-danger{color:var(--red); border-color:#f0c4bd;}
+  .btn:hover{border-color:var(--gold-dark);}
+  .btn-gold{background:var(--gold); border-color:var(--gold); color:var(--navy-dark);}
+  .btn-gold:hover{background:var(--gold-dark); border-color:var(--gold-dark);}
+  .btn-danger{color:#c0392b; border-color:#f0c4bd;}
   .btn-danger:hover{background:#fdecea;}
 
   /* STAT CARDS */
@@ -175,8 +157,8 @@
     border-radius:var(--radius-md);
     padding:20px 22px;
   }
-  .stat-card .label{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--text-gray); font-weight:600; margin-bottom:12px;}
-  .stat-card .value{font-family:'Space Grotesk',sans-serif; font-size:27px; font-weight:700; color:var(--navy);}
+  .stat-card .label{font-size:12.5px; color:var(--text-gray); font-weight:600; margin-bottom:10px;}
+  .stat-card .value{font-size:26px; font-weight:800; color:var(--navy-dark);}
   .stat-card .sub{font-size:12px; color:var(--text-gray); margin-top:6px;}
 
   /* ANALYTICS */
@@ -192,13 +174,13 @@
     border-radius:var(--radius-md);
     padding:22px 24px;
   }
-  .panel h3{font-size:14.5px; font-weight:700; color:var(--navy); margin-bottom:18px;}
+  .panel h3{font-size:15px; font-weight:800; color:var(--navy-dark); margin-bottom:18px;}
   .bar-row{margin-bottom:14px;}
   .bar-row:last-child{margin-bottom:0;}
   .bar-label{display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; color:var(--text-dark); font-weight:600;}
   .bar-label .count{color:var(--text-gray); font-weight:600;}
   .bar-track{background:var(--cream); border-radius:6px; height:8px; overflow:hidden;}
-  .bar-fill{height:100%; background:var(--gold);}
+  .bar-fill{height:100%; background:var(--gold-dark); border-radius:6px;}
   .empty-note{color:var(--text-gray); font-size:13px; text-align:center; padding:20px 0;}
 
   /* TABLE */
@@ -218,8 +200,8 @@
     gap:12px;
     flex-wrap:wrap;
   }
-  .table-head-row h3{font-size:14.5px; font-weight:700; color:var(--navy);}
-  .search-wrap{position:relative; min-width:240px; flex:1;}
+  .table-head-row h3{font-size:15px; font-weight:800; color:var(--navy-dark);}
+  .search-wrap{position:relative; min-width:240px;}
   .search-wrap .icon{position:absolute; left:13px; top:50%; transform:translateY(-50%); width:15px; height:15px; color:var(--text-muted);}
   .search-input{
     width:100%;
@@ -229,18 +211,17 @@
     font-size:13.5px;
     font-family:inherit;
   }
-  .search-input:focus{outline:none; border-color:var(--gold-deep);}
+  .search-input:focus{outline:none; border-color:var(--gold-dark);}
   table{width:100%; border-collapse:collapse; font-size:13px;}
   thead th{
     text-align:left;
     padding:11px 18px;
     background:var(--cream);
     color:var(--text-gray);
-    font-family:'IBM Plex Mono',monospace;
-    font-weight:600;
-    font-size:10.5px;
+    font-weight:700;
+    font-size:11px;
     text-transform:uppercase;
-    letter-spacing:.06em;
+    letter-spacing:.4px;
     white-space:nowrap;
   }
   tbody td{
@@ -249,11 +230,11 @@
     color:var(--text-dark);
     white-space:nowrap;
   }
-  tbody tr:hover{background:#fbfaf5;}
+  tbody tr:hover{background:#fbfaf7;}
   .domain-chip{
     display:inline-block;
-    background:var(--cream);
-    color:var(--gold-deep);
+    background:#fbeed9;
+    color:#a3671b;
     padding:4px 10px;
     border-radius:var(--radius-sm);
     font-size:11.5px;
@@ -265,8 +246,8 @@
     border-radius:var(--radius-sm);
     font-size:11.5px;
     font-weight:700;
-    background:rgba(27,36,86,0.08);
-    color:var(--navy);
+    background:#e7f0fd;
+    color:#2952a3;
   }
   .table-scroll{overflow-x:auto;}
   .empty-state{
@@ -282,7 +263,7 @@
     display:flex; align-items:center; justify-content:center;
     margin:0 auto 16px;
   }
-  .empty-state h4{font-size:16px; color:var(--navy); margin-bottom:8px; font-family:'Space Grotesk',sans-serif;}
+  .empty-state h4{font-size:16px; color:var(--navy-dark); margin-bottom:8px;}
   .empty-state p{font-size:13.5px; max-width:400px; margin:0 auto 20px;}
 
   /* CONTENT MANAGER (Domains / Mentors) */
@@ -293,11 +274,11 @@
     padding:24px 26px;
     margin-bottom:20px;
   }
-  .form-panel h3{font-size:14.5px; font-weight:700; color:var(--navy); margin-bottom:18px;}
+  .form-panel h3{font-size:15px; font-weight:800; color:var(--navy-dark); margin-bottom:18px;}
   .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;}
   .form-row.form-row-1{grid-template-columns:1fr;}
   .form-row .field{margin-bottom:0;}
-  .field label{display:block; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--text-gray); margin-bottom:7px;}
+  .field label{display:block; font-weight:700; font-size:12.5px; color:var(--navy-dark); margin-bottom:7px;}
   .field input[type=text], .field input[type=color], .field select{
     width:100%;
     padding:10px 13px;
@@ -308,14 +289,14 @@
     color:var(--text-dark);
     background:var(--white);
   }
-  .field input:focus, .field select:focus{outline:none; border-color:var(--gold-deep);}
+  .field input:focus, .field select:focus{outline:none; border-color:var(--gold-dark);}
   .field input[type=color]{padding:4px; height:40px; cursor:pointer;}
   .icon-picker{display:flex; align-items:center; gap:10px;}
   .icon-picker select{flex:1;}
-  .form-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:6px; flex-wrap:wrap;}
+  .form-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:6px;}
   .icon-preview{
     width:40px;height:40px;
-    background:var(--navy);
+    background:var(--navy-dark);
     color:var(--gold);
     border-radius:var(--radius-sm);
     display:flex; align-items:center; justify-content:center;
@@ -325,7 +306,7 @@
   .row-icon{
     width:32px;height:32px;
     background:var(--cream);
-    color:var(--gold-deep);
+    color:var(--gold-dark);
     border-radius:var(--radius-sm);
     display:flex; align-items:center; justify-content:center;
   }
@@ -335,9 +316,8 @@
     border-radius:50%;
     display:flex; align-items:center; justify-content:center;
     color:var(--white);
-    font-weight:700;
+    font-weight:800;
     font-size:12px;
-    font-family:'Space Grotesk',sans-serif;
   }
   .actions-cell{text-align:right; white-space:nowrap;}
   .icon-btn{
@@ -352,8 +332,8 @@
     transition:border-color .15s ease, color .15s ease, background .15s ease;
   }
   .icon-btn .icon{width:15px;height:15px;}
-  .icon-btn:hover{border-color:var(--gold-deep); color:var(--navy);}
-  .icon-btn.danger:hover{border-color:#f0c4bd; background:#fdecea; color:var(--red);}
+  .icon-btn:hover{border-color:var(--gold-dark); color:var(--navy-dark);}
+  .icon-btn.danger:hover{border-color:#f0c4bd; background:#fdecea; color:#c0392b;}
 
   @media(max-width:1000px){
     .app-shell{flex-direction:column;}
@@ -363,24 +343,25 @@
       position:static;
       flex-direction:row;
       align-items:center;
-      flex-wrap:wrap;
       padding:14px 20px;
-      gap:10px 16px;
+      gap:16px;
     }
-    .sidebar .brand, .sidebar .env-tag{margin-bottom:0;}
+    .sidebar .logo, .sidebar .env-tag{margin-bottom:0;}
     .sidebar .env-tag{display:none;}
-    .side-nav{display:flex; gap:4px; flex-wrap:wrap; flex:1 1 auto;}
+    .side-nav{flex:1; display:flex; gap:4px;}
     .side-nav a{margin-bottom:0;}
-    .side-bottom{border-top:none; padding-top:0; display:flex; gap:4px; flex-wrap:wrap;}
+    .side-bottom{border-top:none; padding-top:0; display:flex; gap:4px;}
     .main{padding:26px 20px 50px;}
     .stat-grid{grid-template-columns:1fr 1fr;}
     .analytics-grid{grid-template-columns:1fr;}
   }
   @media(max-width:640px){
+    .sidebar{flex-wrap:wrap; row-gap:10px;}
+    .side-nav{order:3; flex:1 1 100%; flex-wrap:wrap;}
+    .side-bottom{order:2;}
     .side-nav a, .side-bottom a, .side-bottom button{padding:8px 10px; font-size:13px;}
     .stat-grid{grid-template-columns:1fr;}
     .form-row{grid-template-columns:1fr;}
-    .btn{padding:9px 14px; font-size:13px;}
   }
 </style>
 </head>
@@ -420,7 +401,7 @@
 
 <div class="app-shell">
   <aside class="sidebar">
-    <div class="brand">Peer<span>Pods</span></div>
+    <div class="logo">Peer<span>Pods</span>.</div>
     <div class="env-tag">Admin Panel</div>
     <nav class="side-nav">
       <a href="#overview" class="active"><svg class="icon"><use href="#i-grid"/></svg> Overview</a>
@@ -436,7 +417,6 @@
 
   <div class="main">
     <div class="page-head" id="overview">
-      <div class="eyebrow">Overview</div>
       <h1>Applications Dashboard</h1>
       <p>See who applied, and get a quick read on domain and year-of-study trends.</p>
     </div>
@@ -476,7 +456,6 @@
     </div>
 
     <div class="page-head" id="domains-manager">
-      <div class="eyebrow">Content</div>
       <h1>Domains</h1>
       <p>Manage the career domains shown on the site — they also populate the application form.</p>
     </div>
@@ -513,7 +492,6 @@
     </div>
 
     <div class="page-head" id="mentors-manager">
-      <div class="eyebrow">Content</div>
       <h1>Mentors</h1>
       <p>Manage the mentor profiles shown on the site.</p>
     </div>
@@ -555,7 +533,7 @@
       <div class="form-row">
         <div class="field">
           <label>Avatar Color</label>
-          <input type="color" id="mentorAvatarColor" value="#1b2456">
+          <input type="color" id="mentorAvatarColor" value="#1e3a5f">
         </div>
         <div class="field">
           <label>Badge Color</label>
@@ -926,7 +904,7 @@
     document.getElementById('mentorCompany').value = mentor ? mentor.company : '';
     document.getElementById('mentorBadge').value = mentor ? mentor.badge : '';
     document.getElementById('mentorDomainTag').value = mentor ? mentor.domainTag : '';
-    document.getElementById('mentorAvatarColor').value = mentor ? mentor.avatarColor : '#1b2456';
+    document.getElementById('mentorAvatarColor').value = mentor ? mentor.avatarColor : '#1e3a5f';
     document.getElementById('mentorBadgeColor').value = mentor ? mentor.badgeColor : '#2563eb';
     document.getElementById('mentorFormPanel').scrollIntoView({behavior:'smooth', block:'center'});
   }
