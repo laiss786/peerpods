@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="PeerPods helps students explore careers through real job simulations and conversations with industry professionals — before committing years to a path.">
+<meta name="description" content="PeerPods gives students bite-sized 'pods' of trending courses — learn the basics, run a real simulation of the work, and get mentor access before committing years or big money to a career.">
 <title>PeerPods — Experience Before You Decide</title>
 <style>
   :root{
@@ -37,6 +37,7 @@
     background:var(--white);
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
   a{text-decoration:none;color:inherit;}
   img{max-width:100%;display:block;}
@@ -68,16 +69,16 @@
   .btn-primary:hover{background:var(--gold-dark); transform:translateY(-1px); box-shadow:0 6px 18px rgba(242,179,61,0.36);}
   .btn-outline{
     background:transparent;
-    border-color:rgba(255,255,255,0.28);
-    color:var(--white);
+    border-color:rgba(15,28,46,0.22);
+    color:var(--navy-dark);
   }
-  .btn-outline:hover{border-color:var(--gold); color:var(--gold);}
+  .btn-outline:hover{border-color:var(--gold-dark); color:var(--gold-dark);}
   .btn-lg{padding:16px 34px; font-size:16px;}
 
   /* NAVBAR */
   header.navbar{
-    background:var(--navy-dark);
-    border-bottom:1px solid rgba(255,255,255,0.06);
+    background:var(--white);
+    border-bottom:1px solid var(--border);
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -89,52 +90,52 @@
   .logo{
     font-size:21px;
     font-weight:800;
-    color:var(--white);
+    color:var(--navy-dark);
     letter-spacing:-0.5px;
   }
-  .logo span{color:var(--gold);}
+  .logo span{color:var(--gold-dark);}
   .nav-links{
     display:flex;
     align-items:center;
     gap:34px;
   }
   .nav-links a{
-    color:#c7cdd6;
+    color:var(--text-gray);
     font-size:14.5px;
     font-weight:600;
     transition:color .15s ease;
   }
-  .nav-links a:hover{color:var(--white);}
+  .nav-links a:hover{color:var(--navy-dark);}
   .nav-right{display:flex; align-items:center; gap:18px;}
   .nav-toggle{
     display:none;
     background:transparent;
     border:none;
-    color:var(--white);
+    color:var(--navy-dark);
     cursor:pointer;
     padding:6px;
   }
   .mobile-panel{
     display:none;
-    background:var(--navy-dark);
-    border-bottom:1px solid rgba(255,255,255,0.08);
+    background:var(--white);
+    border-bottom:1px solid var(--border);
     padding:8px 24px 20px;
   }
   .mobile-panel.open{display:block;}
   .mobile-panel a{
     display:block;
-    color:#c7cdd6;
+    color:var(--text-gray);
     font-size:15px;
     font-weight:600;
     padding:12px 0;
-    border-bottom:1px solid rgba(255,255,255,0.06);
+    border-bottom:1px solid var(--border);
   }
   .mobile-panel .btn-primary{margin-top:16px; width:100%; justify-content:center;}
 
   /* HERO */
   .hero{
-    background:linear-gradient(180deg,#132238 0%, var(--navy-dark) 65%, #0b1520 100%);
-    color:var(--white);
+    background:linear-gradient(180deg, var(--white) 0%, var(--cream) 100%);
+    color:var(--text-dark);
     text-align:center;
     padding:88px 24px 72px;
   }
@@ -142,17 +143,18 @@
     display:inline-flex;
     align-items:center;
     gap:9px;
-    border:1px solid rgba(255,255,255,0.18);
-    background:rgba(255,255,255,0.03);
+    border:1px solid var(--border);
+    background:var(--white);
     border-radius:var(--radius-sm);
     padding:9px 18px;
     font-size:13.5px;
     font-weight:600;
-    color:#dfe3e9;
+    color:var(--text-gray);
     margin-bottom:34px;
+    box-shadow:var(--shadow-sm);
   }
   .badge .dot{
-    width:7px;height:7px;border-radius:50%;background:var(--gold);
+    width:7px;height:7px;border-radius:50%;background:var(--gold-dark);
   }
   .hero h1{
     font-size:54px;
@@ -161,11 +163,12 @@
     max-width:900px;
     margin:0 auto 26px;
     line-height:1.12;
+    color:var(--navy-dark);
   }
-  .hero h1 .accent{color:var(--gold);}
+  .hero h1 .accent{color:var(--gold-dark);}
   .hero p.sub{
     font-size:17.5px;
-    color:#b9c1cc;
+    color:var(--text-gray);
     max-width:660px;
     margin:0 auto 28px;
   }
@@ -175,9 +178,9 @@
     margin-bottom:40px;
     letter-spacing:.2px;
   }
-  .tagline .g1{color:var(--gold);}
-  .tagline .g2{color:#5cc2ef;}
-  .tagline .g3{color:var(--white);}
+  .tagline .g1{color:var(--gold-dark);}
+  .tagline .g2{color:#2a7fa8;}
+  .tagline .g3{color:var(--navy-dark);}
 
   .pill-row{
     display:flex;
@@ -185,21 +188,22 @@
     justify-content:center;
     gap:12px;
     flex-wrap:wrap;
-    color:#d9dde3;
+    color:var(--text-dark);
     margin-top:44px;
   }
   .pill{
     display:flex;
     align-items:center;
     gap:8px;
-    border:1px solid rgba(255,255,255,0.12);
-    background:rgba(255,255,255,0.03);
+    border:1px solid var(--border);
+    background:var(--white);
     border-radius:var(--radius-sm);
     padding:10px 18px;
     font-size:14px;
     font-weight:600;
+    box-shadow:var(--shadow-sm);
   }
-  .pill .icon{width:16px;height:16px; color:var(--gold);}
+  .pill .icon{width:16px;height:16px; color:var(--gold-dark);}
   .pill-arrow{color:var(--text-muted); font-size:15px;}
 
   /* SECTION */
@@ -232,7 +236,7 @@
     margin:0 auto 18px;
   }
 
-  /* WHAT WE DO */
+  /* CARD GRID */
   .card-grid-3{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -259,17 +263,21 @@
   .card h3{font-size:19px; font-weight:700; margin-bottom:10px; color:var(--navy-dark);}
   .card p{color:var(--text-gray); font-size:14.5px; line-height:1.65;}
 
-  /* HOW IT WORKS */
-  .steps-wrap{
-    max-width:1140px;
-    margin:52px auto 0;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-    position:relative;
+  /* HOW IT WORKS — collapsible roadmap */
+  .roadmap{max-width:960px; margin:56px auto 0;}
+  .roadmap-item{position:relative; padding-left:66px; padding-bottom:36px;}
+  .roadmap-item:last-child{padding-bottom:0;}
+  .roadmap-item::before{
+    content:'';
+    position:absolute;
+    left:21px; top:44px; bottom:0;
+    width:2px;
+    background:var(--border);
   }
-  .step{position:relative; padding-top:6px;}
+  .roadmap-item:last-child::before{display:none;}
   .step-num{
+    position:absolute;
+    left:0; top:0;
     width:44px;height:44px;
     background:var(--navy-dark);
     color:var(--gold);
@@ -277,50 +285,56 @@
     font-size:16px;
     border-radius:var(--radius-sm);
     display:flex;align-items:center;justify-content:center;
-    margin-bottom:18px;
+    z-index:1;
   }
-  .step-line{
-    position:absolute;
-    top:22px; left:44px; right:-16px;
-    height:1.5px;
-    background:repeating-linear-gradient(to right, var(--border) 0 6px, transparent 6px 12px);
+  .roadmap-header{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    width:100%;
+    background:transparent;
+    border:none;
+    text-align:left;
+    cursor:pointer;
+    padding:2px 0 0;
+    font-family:inherit;
   }
-  .step:last-child .step-line{display:none;}
-  .step-icon{color:var(--gold-dark); margin-bottom:14px;}
-  .step h3{font-size:17px; font-weight:700; margin-bottom:10px; color:var(--navy-dark);}
-  .step p{color:var(--text-gray); font-size:14px; line-height:1.65;}
-
-  /* OUTCOMES SPLIT */
-  .split-wrap{
-    max-width:1140px;
-    margin:0 auto;
+  .roadmap-title{flex:1;}
+  .roadmap-title h3{font-size:19px; font-weight:800; margin-bottom:8px; color:var(--navy-dark); letter-spacing:-0.3px;}
+  .roadmap-title p{color:var(--text-gray); font-size:14.5px; line-height:1.7; max-width:640px;}
+  .roadmap-chevron{
+    color:var(--text-muted);
+    margin-top:4px;
+    flex-shrink:0;
+    transition:transform .25s ease;
+  }
+  .roadmap-item.open .roadmap-chevron{transform:rotate(180deg); color:var(--gold-dark);}
+  .roadmap-panel{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:24px;
-    align-items:stretch;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .35s ease;
   }
-  .split-left{
+  .roadmap-item.open .roadmap-panel{grid-template-rows:1fr;}
+  .roadmap-panel-inner{overflow:hidden; min-height:0;}
+  .roadmap-panel-content{padding-top:26px;}
+  @media (max-width:600px){
+    .roadmap-item{padding-left:50px; padding-bottom:28px;}
+    .roadmap-item::before{left:15px;}
+    .step-num{width:32px;height:32px; font-size:13px;}
+  }
+
+  /* POD DISCOVER TILES (step 1) */
+  .pod-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  .pod-tile{
     background:var(--white);
     border:1px solid var(--border);
-    border-radius:var(--radius-lg);
-    padding:48px 44px;
+    border-radius:var(--radius-md);
+    padding:20px 20px 18px;
+    transition:border-color .15s ease, box-shadow .15s ease;
   }
-  .split-left .eyebrow{text-align:left; margin-bottom:14px;}
-  .split-left h2{
-    font-size:29px;
-    font-weight:800;
-    color:var(--navy-dark);
-    letter-spacing:-0.5px;
-    margin-bottom:28px;
-    line-height:1.25;
-  }
-  .gain-item{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    margin-bottom:18px;
-  }
-  .gain-icon{
+  .pod-tile:hover{border-color:var(--gold-dark); box-shadow:var(--shadow-sm);}
+  .pod-tile-top{display:flex; align-items:center; gap:12px; margin-bottom:14px;}
+  .pod-tile-icon{
     width:38px;height:38px;
     background:var(--cream);
     color:var(--gold-dark);
@@ -328,67 +342,42 @@
     display:flex;align-items:center;justify-content:center;
     flex-shrink:0;
   }
-  .gain-icon .icon{width:18px;height:18px;}
-  .gain-item p{font-size:15px; color:#33404f; font-weight:500;}
+  .pod-tile-icon .icon{width:18px;height:18px;}
+  .pod-tile h4{font-size:15px; font-weight:700; color:var(--navy-dark);}
+  .pod-tile-more{
+    background:transparent;
+    border:none;
+    color:#2a7fa8;
+    font-weight:700;
+    font-size:13px;
+    cursor:pointer;
+    padding:0;
+  }
+  .pod-tile-more:hover{color:var(--gold-dark);}
 
-  .split-right{
-    background:var(--navy-dark);
-    color:var(--white);
-    border-radius:var(--radius-lg);
-    padding:52px 44px;
-    text-align:center;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-  }
-  .split-right .eyebrow{color:var(--gold); margin-bottom:10px;}
-  .big-number{
-    font-size:72px;
-    font-weight:800;
-    line-height:1;
-    margin-bottom:8px;
-    letter-spacing:-1px;
-  }
-  .big-number .white{color:var(--white);}
-  .big-number .gold{color:var(--gold);}
-  .split-right h3{font-size:22px; font-weight:700; margin-bottom:16px;}
-  .split-right p{color:#b9c1cc; font-size:14.5px; max-width:380px; margin:0 auto 28px; line-height:1.65;}
-
-  /* DOMAINS */
-  .domain-grid{
-    max-width:1140px;
-    margin:48px auto 0;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:14px;
-  }
-  .domain-pill{
-    display:flex;
-    align-items:center;
-    gap:12px;
+  /* SIMULATION TILES (step 3) */
+  .sim-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  .sim-tile{
     background:var(--white);
     border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:20px;
+  }
+  .sim-tile-top{display:flex; align-items:center; gap:12px; margin-bottom:10px;}
+  .sim-tile-icon{
+    width:36px;height:36px;
+    background:var(--navy-dark);
+    color:var(--gold);
     border-radius:var(--radius-sm);
-    padding:16px 18px;
-    font-weight:600;
-    font-size:14.5px;
-    color:var(--navy-dark);
-    transition:border-color .15s ease, box-shadow .15s ease;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
   }
-  .domain-pill:hover{border-color:var(--gold-dark); box-shadow:var(--shadow-sm);}
-  .domain-pill .icon{width:18px;height:18px; color:var(--gold-dark); flex-shrink:0;}
-  .domain-note{
-    text-align:center;
-    color:var(--text-gray);
-    margin-top:30px;
-    font-size:14.5px;
-  }
+  .sim-tile-icon .icon{width:17px;height:17px;}
+  .sim-tile h4{font-size:14.5px; font-weight:700; color:var(--navy-dark);}
+  .sim-tile p{color:var(--text-gray); font-size:13px; line-height:1.6;}
 
   /* MENTORS */
   .mentor-grid{
-    max-width:1140px;
-    margin:48px auto 0;
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:20px;
@@ -440,39 +429,163 @@
     border-radius:var(--radius-sm);
   }
 
-  /* WHY STUDENTS JOIN - dark */
-  .section.dark{
-    background:var(--navy-dark);
-    color:var(--white);
+  @media (max-width:700px){
+    .pod-grid, .sim-grid{grid-template-columns:1fr 1fr;}
   }
-  .section.dark .eyebrow{color:var(--gold);}
-  .section.dark h2.section-title{color:var(--white);}
-  .why-grid{
-    max-width:1000px;
-    margin:48px auto 0;
+  @media (max-width:520px){
+    .pod-grid, .sim-grid{grid-template-columns:1fr;}
+  }
+
+  /* WHAT YOU'LL GAIN */
+  .split-wrap{
+    max-width:1140px;
+    margin:0 auto;
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:18px;
+    gap:24px;
+    align-items:stretch;
   }
-  .why-card{
+  .split-left{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:48px 44px;
+  }
+  .split-left .eyebrow{text-align:left; margin-bottom:14px;}
+  .split-left h2{
+    font-size:29px;
+    font-weight:800;
+    color:var(--navy-dark);
+    letter-spacing:-0.5px;
+    margin-bottom:28px;
+    line-height:1.25;
+  }
+  .gain-item{
     display:flex;
-    gap:18px;
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:var(--radius-md);
-    padding:28px;
+    align-items:center;
+    gap:14px;
+    margin-bottom:18px;
   }
-  .why-icon{
-    width:44px;height:44px;
-    background:rgba(242,179,61,0.12);
-    color:var(--gold);
+  .gain-item:last-child{margin-bottom:0;}
+  .gain-icon{
+    width:38px;height:38px;
+    background:var(--cream);
+    color:var(--gold-dark);
     border-radius:var(--radius-sm);
     display:flex;align-items:center;justify-content:center;
     flex-shrink:0;
   }
-  .why-icon .icon{width:20px;height:20px;}
-  .why-card h3{font-size:17px; font-weight:700; margin-bottom:8px;}
-  .why-card p{color:#aeb6c2; font-size:14px; line-height:1.65;}
+  .gain-icon .icon{width:18px;height:18px;}
+  .gain-item p{font-size:15px; color:#33404f; font-weight:500;}
+
+  .split-right{
+    background:var(--white);
+    border:1.5px solid var(--gold-dark);
+    border-radius:var(--radius-lg);
+    padding:52px 44px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    box-shadow:var(--shadow-md);
+  }
+  .split-right .eyebrow{color:var(--gold-dark); margin-bottom:10px;}
+  .big-number{
+    font-size:64px;
+    font-weight:800;
+    line-height:1;
+    margin-bottom:8px;
+    letter-spacing:-1px;
+    color:var(--navy-dark);
+  }
+  .big-number .gold{color:var(--gold-dark);}
+  .split-right h3{font-size:22px; font-weight:700; margin-bottom:16px; color:var(--navy-dark);}
+  .split-right p{color:var(--text-gray); font-size:14.5px; max-width:380px; margin:0 auto 28px; line-height:1.65;}
+
+  /* TESTIMONIALS MARQUEE */
+  .marquee-wrap{
+    overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    margin-top:52px;
+  }
+  .marquee-track{
+    display:flex;
+    gap:20px;
+    width:max-content;
+    animation:marquee 46s linear infinite;
+  }
+  .marquee-wrap:hover .marquee-track{animation-play-state:paused;}
+  @keyframes marquee{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .testimonial-card{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:26px;
+    width:320px;
+    flex-shrink:0;
+    box-shadow:var(--shadow-sm);
+  }
+  .testimonial-stars{display:flex; gap:3px; margin-bottom:14px;}
+  .testimonial-stars .icon{width:14px; height:14px; color:var(--gold-dark); fill:var(--gold-dark);}
+  .testimonial-card p.quote{font-size:14px; color:#33404f; line-height:1.65; margin-bottom:18px;}
+  .testimonial-name{font-size:13.5px; font-weight:700; color:var(--navy-dark);}
+  .testimonial-meta{font-size:12.5px; color:var(--text-muted);}
+
+  /* PRICING */
+  .pricing-grid{
+    max-width:900px;
+    margin:52px auto 0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+  }
+  .price-card{
+    position:relative;
+    background:var(--white);
+    border:1.5px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:44px 34px 36px;
+    text-align:center;
+  }
+  .price-card.featured{border-color:var(--gold-dark); box-shadow:var(--shadow-md);}
+  .price-badge{
+    position:absolute;
+    top:-13px; left:50%;
+    transform:translateX(-50%);
+    background:var(--gold);
+    color:var(--navy-dark);
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.3px;
+    padding:6px 16px;
+    border-radius:999px;
+    box-shadow:0 4px 10px rgba(242,179,61,0.4);
+  }
+  .price-icon{
+    width:46px;height:46px;
+    background:var(--navy-dark);
+    color:var(--gold);
+    border-radius:var(--radius-sm);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 18px;
+  }
+  .price-icon .icon{width:21px;height:21px;}
+  .price-card h3{font-size:19px; font-weight:800; color:var(--navy-dark); margin-bottom:6px;}
+  .price-amount{font-size:42px; font-weight:800; color:var(--navy-dark); margin:14px 0 4px;}
+  .price-amount .rupee{font-size:26px; vertical-align:2px; margin-right:2px;}
+  .price-per{font-size:13px; color:var(--text-gray); margin-bottom:18px;}
+  .price-card p.desc{color:var(--text-gray); font-size:14px; line-height:1.6; margin-bottom:24px;}
+  .price-features{text-align:left; margin-bottom:28px;}
+  .price-features li{display:flex; align-items:flex-start; gap:10px; margin-bottom:12px; font-size:13.5px; color:#33404f; font-weight:500;}
+  .price-features li:last-child{margin-bottom:0;}
+  .price-features .icon{width:16px;height:16px; color:var(--gold-dark); margin-top:2px; flex-shrink:0;}
+  .price-card .btn-primary{width:100%; justify-content:center;}
+  .pricing-note{max-width:640px; margin:28px auto 0; text-align:center; color:var(--text-gray); font-size:13.5px;}
 
   /* APPLICATION FORM */
   .app-header{
@@ -565,6 +678,7 @@
   .field input::placeholder{color:#a9b0ba;}
   .field .hint{font-size:12.5px; color:var(--text-gray); margin-top:6px;}
   .field .hint a{color:#3b6fd6; font-weight:600;}
+  .field .hint.hint-error{color:#c0392b; font-weight:600;}
   .phone-field{display:flex; gap:10px;}
   .phone-code{
     background:var(--cream);
@@ -598,16 +712,98 @@
     transition:background .15s ease, box-shadow .15s ease;
   }
   .submit-btn:hover{background:var(--gold-dark); box-shadow:0 6px 18px rgba(242,179,61,0.36);}
+  .submit-btn:disabled{opacity:.6; cursor:not-allowed;}
+
+  /* MODAL */
+  .modal-backdrop{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(15,28,46,0.55);
+    z-index:1000;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .modal-backdrop.open{display:flex;}
+  .modal-card{
+    background:var(--white);
+    border-radius:var(--radius-lg);
+    padding:36px 32px 32px;
+    max-width:440px;
+    width:100%;
+    position:relative;
+    box-shadow:var(--shadow-lg);
+  }
+  .modal-close{
+    position:absolute;
+    top:16px; right:16px;
+    background:transparent;
+    border:none;
+    color:var(--text-muted);
+    cursor:pointer;
+    padding:6px;
+  }
+  .modal-close:hover{color:var(--navy-dark);}
+  .modal-close .icon{width:18px;height:18px;}
+  .modal-icon{
+    width:48px;height:48px;
+    background:var(--navy-dark);
+    color:var(--gold);
+    border-radius:var(--radius-sm);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:18px;
+  }
+  .modal-icon .icon{width:22px;height:22px;}
+  .modal-card h3{font-size:20px; font-weight:800; color:var(--navy-dark); margin-bottom:12px;}
+  .modal-card p{font-size:14.5px; color:var(--text-gray); line-height:1.7; margin-bottom:24px;}
 
   /* FOOTER */
   footer{
-    background:var(--navy-dark);
-    color:var(--white);
+    background:var(--cream);
+    color:var(--text-dark);
     text-align:center;
-    padding:52px 24px;
-    border-top:1px solid rgba(255,255,255,0.06);
+    padding:52px 24px 36px;
+    border-top:3px solid var(--gold);
   }
-  footer .admin-link{margin-top:20px;}
+  footer .logo{margin-bottom:14px; justify-content:center; display:inline-block;}
+  footer .tag{color:var(--text-gray); font-size:14.5px; margin-bottom:22px;}
+  .footer-contact{
+    display:flex;
+    justify-content:center;
+    gap:28px;
+    flex-wrap:wrap;
+    margin-bottom:22px;
+  }
+  .footer-contact a{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:var(--text-dark);
+    font-weight:600;
+    font-size:14px;
+    transition:color .15s ease;
+  }
+  .footer-contact a:hover{color:var(--gold-dark);}
+  .footer-contact .icon{width:18px;height:18px; color:var(--gold-dark);}
+  .social-row{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-bottom:26px;
+  }
+  .social-row a{
+    width:38px;height:38px;
+    border-radius:50%;
+    border:1.5px solid var(--border);
+    background:var(--white);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-dark);
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .social-row a:hover{border-color:var(--gold-dark); color:var(--gold-dark);}
+  .social-row .icon{width:17px;height:17px;}
+  footer .admin-link{margin-top:6px;}
   footer .admin-link a{
     color:var(--text-muted);
     font-size:12.5px;
@@ -616,21 +812,18 @@
     border-bottom:1px solid transparent;
     transition:color .15s ease, border-color .15s ease;
   }
-  footer .admin-link a:hover{color:var(--gold); border-color:var(--gold);}
-  footer .logo{margin-bottom:14px; justify-content:center; display:inline-block;}
-  footer .tag{color:#9aa2ae; font-size:14.5px; margin-bottom:10px;}
-  footer .copy{color:#5f6b7a; font-size:12.5px;}
+  footer .admin-link a:hover{color:var(--gold-dark); border-color:var(--gold-dark);}
+  footer .copy{color:var(--text-muted); font-size:12.5px; margin-top:16px;}
 
   @media (max-width: 900px){
     .nav-links{display:none;}
     .nav-toggle{display:inline-flex;}
-    .card-grid-3, .steps-wrap, .domain-grid, .mentor-grid, .why-grid, .phase-grid{grid-template-columns:1fr 1fr;}
+    .card-grid-3, .mentor-grid, .phase-grid, .pricing-grid{grid-template-columns:1fr 1fr;}
     .split-wrap{grid-template-columns:1fr;}
     .hero h1{font-size:36px;}
-    .step-line{display:none;}
   }
   @media (max-width: 600px){
-    .card-grid-3, .steps-wrap, .domain-grid, .mentor-grid, .why-grid, .phase-grid{grid-template-columns:1fr;}
+    .card-grid-3, .mentor-grid, .phase-grid, .pricing-grid{grid-template-columns:1fr;}
     .hero h1{font-size:29px;}
     header.navbar{padding:14px 16px;}
     .logo{font-size:17px;}
@@ -641,6 +834,8 @@
     .btn-primary, .btn-outline{white-space:normal; text-align:center;}
     .nav-right .btn-primary{padding:9px 14px; font-size:13px; white-space:nowrap;}
     .hero .btn-lg{padding:15px 22px; font-size:15px;}
+    .testimonial-card{width:260px;}
+    .footer-contact{flex-direction:column; align-items:center; gap:14px;}
   }
 </style>
 </head>
@@ -671,9 +866,6 @@
   <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/><line x1="20" y1="15" x2="23" y2="15"/></symbol>
   <symbol id="i-edit" viewBox="0 0 24 24"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></symbol>
   <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
-  <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21V10l5 3V10l5 3V7l5 4v10z"/><path d="M3 21h18"/></symbol>
-  <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
-  <symbol id="i-trending" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></symbol>
   <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
@@ -681,18 +873,24 @@
   <symbol id="i-check-circle" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
   <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
   <symbol id="i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
 </svg>
 
 <header class="navbar">
   <div class="logo">Peer<span>Pods</span>.</div>
   <nav class="nav-links">
-    <a href="#what-we-do">What We Do</a>
+    <a href="#what-is-peerpods">What is PeerPods</a>
     <a href="#how-it-works">How It Works</a>
-    <a href="#domains">Domains</a>
-    <a href="#mentors">Mentors</a>
+    <a href="#what-youll-gain">What You'll Gain</a>
+    <a href="#pricing">Pricing</a>
   </nav>
   <div class="nav-right">
-    <a href="#apply" class="btn-primary">Apply Now</a>
+    <a href="#register" class="btn-primary">Register Now</a>
     <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleMobileNav()">
       <svg class="icon" id="menuIconOpen"><use href="#i-menu"/></svg>
       <svg class="icon" id="menuIconClose" style="display:none"><use href="#i-x"/></svg>
@@ -700,96 +898,144 @@
   </div>
 </header>
 <div class="mobile-panel" id="mobilePanel">
-  <a href="#what-we-do" onclick="toggleMobileNav()">What We Do</a>
+  <a href="#what-is-peerpods" onclick="toggleMobileNav()">What is PeerPods</a>
   <a href="#how-it-works" onclick="toggleMobileNav()">How It Works</a>
-  <a href="#domains" onclick="toggleMobileNav()">Domains</a>
-  <a href="#mentors" onclick="toggleMobileNav()">Mentors</a>
-  <a href="#apply" class="btn-primary" onclick="toggleMobileNav()">Apply Now</a>
+  <a href="#what-youll-gain" onclick="toggleMobileNav()">What You'll Gain</a>
+  <a href="#pricing" onclick="toggleMobileNav()">Pricing</a>
+  <a href="#register" class="btn-primary" onclick="toggleMobileNav()">Register Now</a>
 </div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="badge"><span class="dot"></span> Now Accepting Student Applications</div>
+  <div class="badge"><span class="dot"></span> Now Enrolling — Pods for Trending Careers</div>
   <h1>Experience <span class="accent">Before You Decide</span>.</h1>
-  <p class="sub">Learn the basics, complete real job simulations, and interact with industry professionals to understand what a career is truly like — before committing years of your life to it.</p>
+  <p class="sub">PeerPods breaks trending, in-demand courses into small "pods" — learn the basics, run a real simulation of the work, and decide with confidence before you spend years or serious money on it.</p>
   <div class="tagline"><span class="g1">Explore.</span> <span class="g2">Experience.</span> <span class="g3">Decide.</span></div>
-  <a href="#apply" class="btn-primary btn-lg">Start Your Career Exploration →</a>
+  <a href="#register" class="btn-primary btn-lg">Start With Your First Pod →</a>
   <div class="pill-row">
-    <div class="pill"><svg class="icon"><use href="#i-user"/></svg> Confused</div>
+    <div class="pill"><svg class="icon"><use href="#i-search"/></svg> Discover Your Fit</div>
     <span class="pill-arrow">→</span>
-    <div class="pill"><svg class="icon"><use href="#i-message"/></svg> Talk to a Pro</div>
+    <div class="pill"><svg class="icon"><use href="#i-book"/></svg> Learn Basics</div>
     <span class="pill-arrow">→</span>
-    <div class="pill"><svg class="icon"><use href="#i-flask"/></svg> Try the Job</div>
+    <div class="pill"><svg class="icon"><use href="#i-flask"/></svg> Simulate the Work</div>
     <span class="pill-arrow">→</span>
-    <div class="pill"><svg class="icon"><use href="#i-bulb"/></svg> Get Clarity</div>
+    <div class="pill"><svg class="icon"><use href="#i-users"/></svg> Meet a Mentor</div>
   </div>
 </section>
 
-<!-- WHAT WE DO -->
-<section class="section cream" id="what-we-do">
-  <div class="eyebrow">WHAT WE DO</div>
-  <h2 class="section-title">PeerPods helps you explore careers before choosing them.</h2>
-  <p class="section-sub">Most students pick careers based on what their parents suggest or what their friends are doing. Very few actually know what the job looks like from the inside.</p>
-  <p class="section-sub">PeerPods connects you with real professionals in your domain of interest. You talk to them, ask real questions, and complete a mini simulation of their actual work — so you can decide with confidence.</p>
+<!-- WHAT IS PEERPODS -->
+<section class="section" id="what-is-peerpods">
+  <div class="eyebrow">WHAT IS PEERPODS</div>
+  <h2 class="section-title">Pods: courses you can try before you commit to them.</h2>
+  <p class="section-sub">Most students commit years — and lakhs of rupees — to a field they've never actually experienced. PeerPods flips that. We break trending, in-demand courses into small "pods": short, structured experiences you can complete in days, not years.</p>
+  <p class="section-sub">Every pod teaches you the basics, drops you into a hands-on simulation of the real work, and — if you like what you feel — connects you with a mentor already working in that field, before you spend serious time or money going deeper.</p>
 
   <div class="card-grid-3">
     <div class="card">
-      <div class="card-icon"><svg class="icon"><use href="#i-message"/></svg></div>
-      <h3>Career Conversations</h3>
-      <p>Talk directly with a professional currently working in your field of interest. Ask anything. Get honest answers.</p>
+      <div class="card-icon"><svg class="icon"><use href="#i-package"/></svg></div>
+      <h3>Micro Courses</h3>
+      <p>Bite-sized modules covering exactly what a beginner needs to know about a trending field — no fluff, no semester-long syllabus.</p>
     </div>
     <div class="card">
       <div class="card-icon"><svg class="icon"><use href="#i-flask"/></svg></div>
-      <h3>Job Simulations</h3>
-      <p>Complete a short real-world task from that profession. Experience the work before committing to it.</p>
+      <h3>Real Simulations</h3>
+      <p>Every pod ends with a task modeled on real work in that field, so you feel the job — not just read about it.</p>
     </div>
     <div class="card">
-      <div class="card-icon"><svg class="icon"><use href="#i-bulb"/></svg></div>
-      <h3>Career Clarity</h3>
-      <p>Leave with a clear understanding of whether the career is right for you — and what your next steps should be.</p>
+      <div class="card-icon"><svg class="icon"><use href="#i-users"/></svg></div>
+      <h3>Mentor Access</h3>
+      <p>Curious enough to go further? Get connected with a working professional in that domain before committing bigger time or money.</p>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="section" id="how-it-works">
+<section class="section cream" id="how-it-works">
   <div class="eyebrow">HOW IT WORKS</div>
-  <h2 class="section-title">Experience Before You Decide</h2>
-  <p class="section-sub">Choosing a career shouldn't be based on guesswork. PeerPods helps students explore careers through a structured <strong>7-day experience</strong> that combines learning, practice, and professional interaction.</p>
+  <h2 class="section-title">From curiosity to clarity, in 4 steps</h2>
+  <p class="section-sub">Every PeerPod follows the same simple flow — pick a pod, learn the basics, do the work, then talk to someone who does it for real.</p>
 
-  <div class="steps-wrap">
-    <div class="step">
+  <div class="roadmap" id="roadmap">
+    <div class="roadmap-item open" data-step="1">
       <div class="step-num">1</div>
-      <div class="step-line"></div>
-      <div class="step-icon"><svg class="icon"><use href="#i-book"/></svg></div>
-      <h3>Learn the Basics</h3>
-      <p>Build a foundational understanding of your chosen career — the core skills, tools, responsibilities, and industry knowledge required for the role.</p>
+      <button class="roadmap-header" onclick="toggleRoadmapStep(this)">
+        <div class="roadmap-title">
+          <h3>Discover Your Fit</h3>
+          <p>Browse our pods across trending fields and pick the one that's pulling at your curiosity. Not sure? Tap "Learn More" on any pod to see exactly what's inside before you choose.</p>
+        </div>
+        <svg class="icon roadmap-chevron"><use href="#i-chevron-down"/></svg>
+      </button>
+      <div class="roadmap-panel">
+        <div class="roadmap-panel-inner">
+          <div class="roadmap-panel-content">
+            <div class="pod-grid" id="podDiscoverGrid"></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="step">
+
+    <div class="roadmap-item" data-step="2">
       <div class="step-num">2</div>
-      <div class="step-line"></div>
-      <div class="step-icon"><svg class="icon"><use href="#i-flask"/></svg></div>
-      <h3>Experience a Job Simulation</h3>
-      <p>Apply what you've learned through a hands-on simulation designed to replicate real-world tasks and challenges faced by professionals in the field.</p>
+      <button class="roadmap-header" onclick="toggleRoadmapStep(this)">
+        <div class="roadmap-title">
+          <h3>Learn the Basics</h3>
+          <p>Every pod opens with a short, focused crash course — just enough foundation to understand the tools, vocabulary, and core skills of that field, taught in plain language with no jargon-dumping.</p>
+        </div>
+        <svg class="icon roadmap-chevron"><use href="#i-chevron-down"/></svg>
+      </button>
+      <div class="roadmap-panel">
+        <div class="roadmap-panel-inner">
+          <div class="roadmap-panel-content">
+            <div class="card" style="max-width:640px;">
+              <div class="card-icon"><svg class="icon"><use href="#i-book"/></svg></div>
+              <h3>Built for absolute beginners</h3>
+              <p>No prior experience assumed. Each basics module is designed to get you from zero to "I get the general idea" in a couple of focused sessions — so you're actually ready for the simulation that follows.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="step">
+
+    <div class="roadmap-item" data-step="3">
       <div class="step-num">3</div>
-      <div class="step-line"></div>
-      <div class="step-icon"><svg class="icon"><use href="#i-target"/></svg></div>
-      <h3>Discover Your Fit</h3>
-      <p>Reflect on your experience, assess your interests and strengths, and gain clarity on whether the career aligns with your goals and aspirations.</p>
+      <button class="roadmap-header" onclick="toggleRoadmapStep(this)">
+        <div class="roadmap-title">
+          <h3>Simulation</h3>
+          <p>Then you do the job — a real, hands-on task modeled on actual work in that field. This is where "maybe I'd like this" turns into "I actually know what this feels like."</p>
+        </div>
+        <svg class="icon roadmap-chevron"><use href="#i-chevron-down"/></svg>
+      </button>
+      <div class="roadmap-panel">
+        <div class="roadmap-panel-inner">
+          <div class="roadmap-panel-content">
+            <div class="sim-grid" id="podSimulationGrid"></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="step">
+
+    <div class="roadmap-item" data-step="4">
       <div class="step-num">4</div>
-      <div class="step-icon"><svg class="icon"><use href="#i-users"/></svg></div>
-      <h3>Connect with Industry Professionals</h3>
-      <p>Engage with professionals currently in the role. Ask questions, hear real career stories, and gain insights that go beyond textbooks and online videos.</p>
+      <button class="roadmap-header" onclick="toggleRoadmapStep(this)">
+        <div class="roadmap-title">
+          <h3>Mentor Meet</h3>
+          <p>Liked what you experienced? We connect you with a mentor already working in that exact field — someone who's lived the day-to-day, not just the highlight reel — before you invest bigger time or money into it.</p>
+        </div>
+        <svg class="icon roadmap-chevron"><use href="#i-chevron-down"/></svg>
+      </button>
+      <div class="roadmap-panel">
+        <div class="roadmap-panel-inner">
+          <div class="roadmap-panel-content">
+            <div class="mentor-grid" id="mentorGrid"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- OUTCOMES / 7 DAYS -->
-<section class="section cream">
+<!-- WHAT YOU'LL GAIN -->
+<section class="section" id="what-youll-gain">
   <div class="split-wrap">
     <div class="split-left">
       <div class="eyebrow">WHAT YOU'LL GAIN</div>
@@ -797,109 +1043,104 @@
 
       <div class="gain-item">
         <div class="gain-icon"><svg class="icon"><use href="#i-target"/></svg></div>
-        <p>Career clarity before committing to a degree or profession</p>
+        <p>Real clarity on a field before spending years or big money on it</p>
       </div>
       <div class="gain-item">
         <div class="gain-icon"><svg class="icon"><use href="#i-tool"/></svg></div>
-        <p>Practical exposure through real-world simulations</p>
+        <p>Practical exposure through hands-on simulations, not just theory</p>
       </div>
       <div class="gain-item">
         <div class="gain-icon"><svg class="icon"><use href="#i-check-square"/></svg></div>
-        <p>Understanding of the key skills required for the role</p>
+        <p>A clear sense of the core skills the field actually requires</p>
       </div>
       <div class="gain-item">
         <div class="gain-icon"><svg class="icon"><use href="#i-users"/></svg></div>
-        <p>Direct access to industry professionals</p>
+        <p>Direct access to a mentor once you're ready to go deeper</p>
       </div>
       <div class="gain-item">
         <div class="gain-icon"><svg class="icon"><use href="#i-sparkle"/></svg></div>
-        <p>Greater confidence in your career decisions</p>
+        <p>Confidence to either dive in — or move on without regret</p>
       </div>
     </div>
 
     <div class="split-right">
       <div class="eyebrow">THE OUTCOME</div>
-      <div class="big-number"><span class="white">7 </span><span class="gold">days</span></div>
-      <h3>From curiosity to clarity.</h3>
-      <p>A focused week of learning, doing, and talking to the people already living the career you're considering.</p>
-      <a href="#apply" class="btn-primary">Start Your 7 Days →</a>
+      <div class="big-number"><span class="gold">1</span> pod</div>
+      <h3>From curious to clear.</h3>
+      <p>Every pod is built to get you from "I think I might like this" to "I know exactly what this job feels like" — fast.</p>
+      <a href="#pricing" class="btn-primary">See Pricing ↓</a>
     </div>
   </div>
 </section>
 
-<!-- DOMAINS -->
-<section class="section" id="domains">
-  <div class="eyebrow">AVAILABLE DOMAINS</div>
-  <h2 class="section-title">Which career are you curious about?</h2>
-  <p class="section-sub">Choose any domain when you apply. We will match you with the right mentor.</p>
-
-  <div class="domain-grid" id="domainGrid"></div>
-  <p class="domain-note">Don't see your domain? Apply anyway — we are adding new ones every week.</p>
-</section>
-
-<!-- MENTORS -->
-<section class="section cream" id="mentors">
-  <h2 class="section-title">Learn From People Already Doing the Job</h2>
-  <p class="section-sub">Real professionals from real companies, here to give you an honest look at their career.</p>
-
-  <div class="mentor-grid" id="mentorGrid"></div>
-</section>
-
-<!-- WHY STUDENTS JOIN -->
-<section class="section dark">
-  <div class="eyebrow">WHY STUDENTS JOIN</div>
-  <h2 class="section-title">Stop guessing. Start exploring.</h2>
-
-  <div class="why-grid">
-    <div class="why-card">
-      <div class="why-icon"><svg class="icon"><use href="#i-target"/></svg></div>
-      <div>
-        <h3>Get Career Clarity</h3>
-        <p>Know exactly which career fits you before you commit to it.</p>
-      </div>
-    </div>
-    <div class="why-card">
-      <div class="why-icon"><svg class="icon"><use href="#i-factory"/></svg></div>
-      <div>
-        <h3>Real Industry Exposure</h3>
-        <p>Learn from people actually doing the job — not textbooks or YouTube.</p>
-      </div>
-    </div>
-    <div class="why-card">
-      <div class="why-icon"><svg class="icon"><use href="#i-zap"/></svg></div>
-      <div>
-        <h3>Hands-On Experience</h3>
-        <p>Real job simulations and tasks — not just theory or passive videos.</p>
-      </div>
-    </div>
-    <div class="why-card">
-      <div class="why-icon"><svg class="icon"><use href="#i-trending"/></svg></div>
-      <div>
-        <h3>Get Ahead Early</h3>
-        <p>Most students figure this out in year 3. You will know in week 1.</p>
-      </div>
-    </div>
+<!-- TESTIMONIALS MARQUEE -->
+<section class="section cream" style="padding-bottom:80px;">
+  <div class="eyebrow">WHAT STUDENTS SAY</div>
+  <h2 class="section-title">Real students, real pods.</h2>
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="testimonialTrack"></div>
   </div>
 </section>
 
-<!-- APPLICATION -->
-<section id="apply">
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="eyebrow">PRICING</div>
+  <h2 class="section-title">Simple pricing. No long-term commitment.</h2>
+  <p class="section-sub">Pay per pod, or bundle up if you're still deciding between paths. Mentor connect becomes available once your simulation is complete.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-icon"><svg class="icon"><use href="#i-package"/></svg></div>
+      <h3>Single Pod</h3>
+      <div class="price-amount"><span class="rupee">₹</span>999</div>
+      <div class="price-per">one-time, per pod</div>
+      <p class="desc">Already know which field you're curious about? Start with one pod and get the full experience.</p>
+      <ul class="price-features">
+        <li><svg class="icon"><use href="#i-check-square"/></svg> 1 pod of your choice</li>
+        <li><svg class="icon"><use href="#i-check-square"/></svg> Basics + real simulation</li>
+        <li><svg class="icon"><use href="#i-check-square"/></svg> Certificate of completion</li>
+        <li><svg class="icon"><use href="#i-check-square"/></svg> Mentor connect available as add-on</li>
+      </ul>
+      <button class="btn-primary" onclick="goToPlan('Single Pod')">Start With One Pod →</button>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-badge">MOST POPULAR</div>
+      <div class="price-icon"><svg class="icon"><use href="#i-layers"/></svg></div>
+      <h3>3-Pod Bundle</h3>
+      <div class="price-amount"><span class="rupee">₹</span>2,499</div>
+      <div class="price-per">one-time, for 3 pods</div>
+      <p class="desc">Still deciding between a few fields? Explore three pods across different domains and compare how each one actually feels.</p>
+      <ul class="price-features">
+        <li><svg class="icon"><use href="#i-check-square"/></svg> Any 3 pods, mix &amp; match</li>
+        <li><svg class="icon"><use href="#i-check-square"/></svg> Basics + simulation for each</li>
+        <li><svg class="icon"><use href="#i-check-square"/></svg> Certificate for every pod</li>
+        <li><svg class="icon"><use href="#i-check-square"/></svg> Priority mentor connect</li>
+      </ul>
+      <button class="btn-primary" onclick="goToPlan('3-Pod Bundle')">Get the Bundle →</button>
+    </div>
+  </div>
+  <p class="pricing-note">Mentor connect is scheduled after your simulation is complete, once you actually know which field is worth going deeper into.</p>
+</section>
+
+<!-- REGISTRATION -->
+<section id="register">
   <div class="app-header">
-    <div class="eyebrow"><svg class="icon" style="width:14px;height:14px;"><use href="#i-sparkle"/></svg> STUDENT APPLICATION</div>
-    <h2>Reserve Your Spot.<br>Begin Your 7-Day Experience.</h2>
-    <p>Fill in your details below. We will match you with the right career mentor and reach out within 2–3 business days.</p>
+    <div class="eyebrow"><svg class="icon" style="width:14px;height:14px;"><use href="#i-sparkle"/></svg> REGISTRATION</div>
+    <h2>Reserve Your Pod.<br>Begin Your Experience.</h2>
+    <p>Fill in your details below. We will match you with the right pod and mentor, and reach out within 2–3 business days.</p>
   </div>
 
   <div class="phase-grid">
-    <div class="phase-card selected" data-phase="Phase 1 — Explore" onclick="selectPhase(this)">
-      <div class="phase-icon"><svg class="icon"><use href="#i-search"/></svg></div>
-      <h3>Phase 1 — Explore</h3>
-      <p>I am confused or curious. I want to explore a career with a real professional.</p>
+    <div class="phase-card selected" data-phase="Single Pod" onclick="selectPhase(this)">
+      <div class="phase-icon"><svg class="icon"><use href="#i-package"/></svg></div>
+      <h3>Single Pod — ₹999</h3>
+      <p>I know which pod I want. Sign me up for one field to explore.</p>
     </div>
-    <div class="phase-card" data-phase="Phase 2 — Build" onclick="selectPhase(this)">
-      <div class="phase-icon"><svg class="icon"><use href="#i-rocket"/></svg></div>
-      <h3>Phase 2 — Build</h3>
-      <p>I know my domain. I want to build skills with peers and a domain expert.</p>
+    <div class="phase-card" data-phase="3-Pod Bundle" onclick="selectPhase(this)">
+      <div class="phase-icon"><svg class="icon"><use href="#i-layers"/></svg></div>
+      <h3>3-Pod Bundle — ₹2,499</h3>
+      <p>I want to explore three pods across different fields before I commit.</p>
     </div>
   </div>
 
@@ -915,7 +1156,7 @@
         <div class="field">
           <label>Email Address <span class="req">*</span></label>
           <input type="email" id="email" placeholder="yourname@gmail.com" required>
-          <div class="hint">We will send your confirmation <a href="#">here</a></div>
+          <div class="hint">We will send your confirmation here</div>
         </div>
         <div class="field">
           <label>Phone Number <span class="req">*</span></label>
@@ -926,16 +1167,30 @@
           <div class="hint">For WhatsApp updates from our team</div>
         </div>
         <div class="field">
-          <label>College / Institution <span class="req">*</span></label>
-          <input type="text" id="college" placeholder="e.g. Loyola College, Chennai" required>
+          <label>College / Institution</label>
+          <input type="text" id="college" placeholder="e.g. Loyola College, Chennai">
+        </div>
+        <div class="field" id="singlePodField">
+          <label>Which Pod Do You Want to Try?</label>
+          <select id="domain" class="pod-select"></select>
+        </div>
+        <div id="bundlePodFields" style="display:none;">
+          <div class="field">
+            <label>Pod 1</label>
+            <select id="domainBundle1" class="pod-select"></select>
+          </div>
+          <div class="field">
+            <label>Pod 2</label>
+            <select id="domainBundle2" class="pod-select"></select>
+          </div>
+          <div class="field">
+            <label>Pod 3</label>
+            <select id="domainBundle3" class="pod-select"></select>
+          </div>
         </div>
         <div class="field">
-          <label>Domain You Want to Explore <span class="req">*</span></label>
-          <select id="domain" required></select>
-        </div>
-        <div class="field">
-          <label>Year of Study <span class="req">*</span></label>
-          <select id="yearOfStudy" required>
+          <label>Year of Study</label>
+          <select id="yearOfStudy">
             <option value="" disabled selected>Select your year...</option>
             <option>1st Year</option>
             <option>2nd Year</option>
@@ -943,6 +1198,15 @@
             <option>4th Year</option>
             <option>Graduate</option>
           </select>
+        </div>
+        <div class="checkbox-field">
+          <input type="checkbox" id="hasInfluencerCode" onchange="toggleInfluencerField()">
+          <label for="hasInfluencerCode">I have an influencer code</label>
+        </div>
+        <div class="field" id="influencerCodeField" style="display:none;">
+          <label>Influencer Code <span class="req">*</span></label>
+          <input type="text" id="influencerCode" placeholder="e.g. RIYA10">
+          <div class="hint" id="influencerCodeHint"></div>
         </div>
         <div class="checkbox-field">
           <input type="checkbox" id="agree" required>
@@ -954,60 +1218,51 @@
   </div>
 </section>
 
+<!-- POD DETAIL MODAL -->
+<div class="modal-backdrop" id="podModalBackdrop" onclick="if(event.target===this) closePodModal()">
+  <div class="modal-card">
+    <button class="modal-close" aria-label="Close" onclick="closePodModal()"><svg class="icon"><use href="#i-x"/></svg></button>
+    <div class="modal-icon" id="podModalIcon"></div>
+    <h3 id="podModalTitle"></h3>
+    <p id="podModalDesc"></p>
+    <a href="#register" class="btn-primary" onclick="closePodModal()">Register for This Pod →</a>
+  </div>
+</div>
+
 <footer>
   <div class="logo">Peer<span>Pods</span>.</div>
   <div class="tag">Explore. Experience. Decide.</div>
-  <div class="copy">© 2026 PeerPods. India's Career Exploration Platform</div>
+
+  <div class="footer-contact">
+    <a href="tel:+916238905826"><svg class="icon"><use href="#i-phone"/></svg> +91 6238905826</a>
+    <a href="mailto:peerpodsindia@gmail.com"><svg class="icon"><use href="#i-mail"/></svg> peerpodsindia@gmail.com</a>
+  </div>
+
+  <div class="social-row">
+    <a href="#" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a>
+    <a href="#" aria-label="LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a>
+    <a href="#" aria-label="X (Twitter)"><svg class="icon"><use href="#i-x"/></svg></a>
+    <a href="#" aria-label="YouTube"><svg class="icon"><use href="#i-youtube"/></svg></a>
+  </div>
+
   <div class="admin-link"><a href="admin-login.html">Admin Login →</a></div>
+  <div class="copy">© 2026 PeerPods. India's Career Exploration Platform</div>
 </footer>
 
-<script>
-  // ---- Domains & Mentors data (shared with admin panel via localStorage) ----
-  var DOMAINS_KEY = 'peerpods_domains';
-  var MENTORS_KEY = 'peerpods_mentors';
+<script type="module">
+  import { db } from './firebase-config.js';
+  import { collection, getDocs, doc, getDoc, addDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-  var DEFAULT_DOMAINS = [
-    {id:'dom_swe', label:'Software Engineering', icon:'i-code'},
-    {id:'dom_data', label:'Data Analytics', icon:'i-bar-chart'},
-    {id:'dom_mkt', label:'Marketing', icon:'i-megaphone'},
-    {id:'dom_pm', label:'Product Management', icon:'i-package'},
-    {id:'dom_design', label:'Product Design', icon:'i-pen'},
-    {id:'dom_fin', label:'Finance', icon:'i-dollar'},
-    {id:'dom_law', label:'Law', icon:'i-scale'},
-    {id:'dom_health', label:'Healthcare', icon:'i-heart'},
-    {id:'dom_esg', label:'Sustainability & ESG', icon:'i-leaf'},
-    {id:'dom_csr', label:'CSR', icon:'i-gift'},
-    {id:'dom_policy', label:'Public Policy', icon:'i-landmark'},
-    {id:'dom_startup', label:'Entrepreneurship', icon:'i-rocket'},
-    {id:'dom_ai', label:'AI & Automation', icon:'i-cpu'},
-    {id:'dom_content', label:'Content Creation', icon:'i-edit'},
-    {id:'dom_healthadmin', label:'Healthcare Admin', icon:'i-briefcase'}
+  var TESTIMONIALS = [
+    {name:'Ananya R.', meta:'2nd Year · Christ University', quote:"I picked Product Design because it sounded fun. The simulation showed me I actually hate wireframing — saved me from a semester I would've regretted."},
+    {name:'Karthik S.', meta:'3rd Year · NIT Calicut', quote:'The Data Analytics pod was the first time anyone explained what analysts actually do all day. Ten minutes in and it finally clicked.'},
+    {name:'Divya P.', meta:'Graduate · Loyola College', quote:'Talking to a mentor after the simulation made the decision easy — I knew exactly what I was signing up for.'},
+    {name:'Arjun N.', meta:'3rd Year · Symbiosis, Pune', quote:'I went in confused about Product Management and came out with a one-pager I was actually proud of.'},
+    {name:"Meera V.", meta:"1st Year · St. Xavier's, Mumbai", quote:'The Software Engineering pod felt like a real work day, not a tutorial. That\'s the difference.'},
+    {name:'Rohit K.', meta:'4th Year · Christ University', quote:"PeerPods didn't tell me what to choose — it let me feel it for myself."},
+    {name:'Sanya T.', meta:'2nd Year · NIT Calicut', quote:"Cheaper and faster than a whole semester of guessing. Wish I'd found this in Year 1."},
+    {name:'Vivaan J.', meta:'Graduate · Loyola College', quote:'The mentor conversation after my pod was more useful than a whole career counseling session.'}
   ];
-
-  var DEFAULT_MENTORS = [
-    {id:'men_1', name:'Aarav Sharma', role:'Investment Banking Analyst', company:'Goldman Sachs', badge:'GS', badgeColor:'#0b5c3f', avatarColor:'#1e3a5f', domainTag:'FINANCE'},
-    {id:'men_2', name:'Priya Menon', role:'Senior Data Analyst', company:'Swiggy', badge:'SW', badgeColor:'#f97316', avatarColor:'#c2410c', domainTag:'DATA ANALYTICS'},
-    {id:'men_3', name:'Rohan Iyer', role:'Growth Marketing Lead', company:'Razorpay', badge:'RP', badgeColor:'#0284c7', avatarColor:'#0e7490', domainTag:'MARKETING'},
-    {id:'men_4', name:'Ananya Gupta', role:'Product Manager', company:'Zomato', badge:'ZM', badgeColor:'#dc2626', avatarColor:'#9f1239', domainTag:'PRODUCT'},
-    {id:'men_5', name:'Vikram Reddy', role:'Software Engineer II', company:'Microsoft', badge:'MS', badgeColor:'#2563eb', avatarColor:'#1d4ed8', domainTag:'ENGINEERING'},
-    {id:'men_6', name:'Sneha Kapoor', role:'UX Designer', company:'CRED', badge:'CR', badgeColor:'#111827', avatarColor:'#0f172a', domainTag:'DESIGN'}
-  ];
-
-  function getDomains(){
-    try{
-      var raw = localStorage.getItem(DOMAINS_KEY);
-      if (!raw){ localStorage.setItem(DOMAINS_KEY, JSON.stringify(DEFAULT_DOMAINS)); return DEFAULT_DOMAINS.slice(); }
-      return JSON.parse(raw);
-    }catch(e){ return DEFAULT_DOMAINS.slice(); }
-  }
-
-  function getMentors(){
-    try{
-      var raw = localStorage.getItem(MENTORS_KEY);
-      if (!raw){ localStorage.setItem(MENTORS_KEY, JSON.stringify(DEFAULT_MENTORS)); return DEFAULT_MENTORS.slice(); }
-      return JSON.parse(raw);
-    }catch(e){ return DEFAULT_MENTORS.slice(); }
-  }
 
   function escapeHtml(str){
     return String(str || '').replace(/[&<>"']/g, function(c){
@@ -1032,33 +1287,58 @@
       (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
   }
 
-  function renderDomainGrid(){
-    var wrap = document.getElementById('domainGrid');
+  var domainsCache = [];
+  var mentorsCache = [];
+
+  async function loadPodsAndMentors(){
+    var podsSnap = await getDocs(collection(db, 'pods'));
+    domainsCache = podsSnap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
+    var mentorsSnap = await getDocs(collection(db, 'mentors'));
+    mentorsCache = mentorsSnap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
+  }
+
+  function renderPodDiscoverGrid(){
+    var wrap = document.getElementById('podDiscoverGrid');
     if (!wrap) return;
-    var domains = getDomains();
-    wrap.innerHTML = domains.map(function(d){
-      return '<div class="domain-pill"><svg class="icon"><use href="#' + escapeHtml(d.icon) + '"/></svg> ' + escapeHtml(d.label) + '</div>';
+    wrap.innerHTML = domainsCache.map(function(d){
+      return '<div class="pod-tile">' +
+        '<div class="pod-tile-top">' +
+          '<div class="pod-tile-icon"><svg class="icon"><use href="#' + escapeHtml(d.icon) + '"/></svg></div>' +
+          '<h4>' + escapeHtml(d.label) + '</h4>' +
+        '</div>' +
+        '<button class="pod-tile-more" onclick="openPodModal(\'' + d.id + '\')">Learn More →</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  function renderPodSimulationGrid(){
+    var wrap = document.getElementById('podSimulationGrid');
+    if (!wrap) return;
+    wrap.innerHTML = domainsCache.map(function(d){
+      return '<div class="sim-tile">' +
+        '<div class="sim-tile-top">' +
+          '<div class="sim-tile-icon"><svg class="icon"><use href="#' + escapeHtml(d.icon) + '"/></svg></div>' +
+          '<h4>' + escapeHtml(d.label) + '</h4>' +
+        '</div>' +
+        '<p>' + escapeHtml(d.task || '') + '</p>' +
+      '</div>';
     }).join('');
   }
 
   function renderDomainSelect(){
-    var sel = document.getElementById('domain');
-    if (!sel) return;
-    var domains = getDomains();
-    var current = sel.value;
-    var html = '<option value="" disabled selected>Select a domain...</option>';
-    domains.forEach(function(d){
+    var html = '<option value="" disabled selected>Select a pod...</option>';
+    domainsCache.forEach(function(d){
       html += '<option>' + escapeHtml(d.label) + '</option>';
     });
-    sel.innerHTML = html;
-    if (current) sel.value = current;
+    document.querySelectorAll('.pod-select').forEach(function(sel){
+      sel.innerHTML = html;
+    });
   }
 
   function renderMentors(){
     var wrap = document.getElementById('mentorGrid');
     if (!wrap) return;
-    var mentors = getMentors();
-    wrap.innerHTML = mentors.map(function(m){
+    wrap.innerHTML = mentorsCache.map(function(m){
       var grad = 'linear-gradient(135deg,' + m.avatarColor + ',' + shadeColor(m.avatarColor, -0.35) + ')';
       return '<div class="mentor-card">' +
         '<div class="avatar" style="background:' + grad + ';">' + escapeHtml(getInitials(m.name)) + '</div>' +
@@ -1071,16 +1351,122 @@
     }).join('');
   }
 
-  renderDomainGrid();
-  renderDomainSelect();
-  renderMentors();
+  function renderTestimonials(){
+    var track = document.getElementById('testimonialTrack');
+    if (!track) return;
+    var doubled = TESTIMONIALS.concat(TESTIMONIALS);
+    track.innerHTML = doubled.map(function(t){
+      var stars = '';
+      for (var i=0;i<5;i++){ stars += '<svg class="icon"><use href="#i-star"/></svg>'; }
+      return '<div class="testimonial-card">' +
+        '<div class="testimonial-stars">' + stars + '</div>' +
+        '<p class="quote">"' + escapeHtml(t.quote) + '"</p>' +
+        '<div class="testimonial-name">' + escapeHtml(t.name) + '</div>' +
+        '<div class="testimonial-meta">' + escapeHtml(t.meta) + '</div>' +
+      '</div>';
+    }).join('');
+  }
 
-  var selectedPhase = "Phase 1 — Explore";
+  function openPodModal(id){
+    var d = domainsCache.filter(function(x){ return x.id === id; })[0];
+    if (!d) return;
+    document.getElementById('podModalIcon').innerHTML = '<svg class="icon"><use href="#' + escapeHtml(d.icon) + '"/></svg>';
+    document.getElementById('podModalTitle').textContent = d.label;
+    document.getElementById('podModalDesc').textContent = d.description || '';
+    document.getElementById('podModalBackdrop').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePodModal(){
+    document.getElementById('podModalBackdrop').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closePodModal();
+  });
+
+  function toggleRoadmapStep(headerEl){
+    var item = headerEl.closest('.roadmap-item');
+    item.classList.toggle('open');
+  }
+  window.toggleRoadmapStep = toggleRoadmapStep;
+  window.openPodModal = openPodModal;
+  window.closePodModal = closePodModal;
+
+  async function init(){
+    await loadPodsAndMentors();
+    renderPodDiscoverGrid();
+    renderPodSimulationGrid();
+    renderDomainSelect();
+    renderMentors();
+    renderTestimonials();
+  }
+  init();
+
+  var selectedPhase = "Single Pod";
   function selectPhase(el){
     document.querySelectorAll('.phase-card').forEach(function(c){ c.classList.remove('selected'); });
     el.classList.add('selected');
     selectedPhase = el.getAttribute('data-phase');
+    updatePodFieldsVisibility();
   }
+  window.selectPhase = selectPhase;
+
+  function updatePodFieldsVisibility(){
+    var isBundle = selectedPhase === '3-Pod Bundle';
+    document.getElementById('singlePodField').style.display = isBundle ? 'none' : 'block';
+    document.getElementById('bundlePodFields').style.display = isBundle ? 'block' : 'none';
+  }
+  updatePodFieldsVisibility();
+
+  function toggleInfluencerField(){
+    var checked = document.getElementById('hasInfluencerCode').checked;
+    document.getElementById('influencerCodeField').style.display = checked ? 'block' : 'none';
+    if (!checked){
+      document.getElementById('influencerCode').value = '';
+      clearInfluencerError();
+    }
+  }
+  window.toggleInfluencerField = toggleInfluencerField;
+
+  function showInfluencerError(msg){
+    var hint = document.getElementById('influencerCodeHint');
+    hint.textContent = msg;
+    hint.classList.add('hint-error');
+    document.getElementById('influencerCode').style.borderColor = '#c0392b';
+  }
+
+  function clearInfluencerError(){
+    var hint = document.getElementById('influencerCodeHint');
+    hint.textContent = '';
+    hint.classList.remove('hint-error');
+    document.getElementById('influencerCode').style.borderColor = '';
+  }
+
+  async function validateInfluencerCode(){
+    var checked = document.getElementById('hasInfluencerCode').checked;
+    if (!checked) return { valid:true, code:'' };
+    var entered = document.getElementById('influencerCode').value.trim().toUpperCase();
+    if (!entered){
+      showInfluencerError('Please enter your influencer code.');
+      return { valid:false };
+    }
+    var snap = await getDoc(doc(db, 'influencerCodes', entered));
+    if (!snap.exists()){
+      showInfluencerError("We couldn't find that influencer code. Double-check and try again.");
+      return { valid:false };
+    }
+    clearInfluencerError();
+    return { valid:true, code: entered };
+  }
+
+  function goToPlan(planName){
+    var target = document.querySelector('.phase-card[data-phase="' + planName + '"]');
+    if (target) selectPhase(target);
+    document.getElementById('register').scrollIntoView({behavior:'smooth'});
+  }
+  window.goToPlan = goToPlan;
 
   function toggleMobileNav(){
     var panel = document.getElementById('mobilePanel');
@@ -1088,36 +1474,51 @@
     document.getElementById('menuIconOpen').style.display = open ? 'none' : 'block';
     document.getElementById('menuIconClose').style.display = open ? 'block' : 'none';
   }
+  window.toggleMobileNav = toggleMobileNav;
 
-  function handleApplicationSubmit(e){
+  async function handleApplicationSubmit(e){
     e.preventDefault();
+    var submitBtn = document.querySelector('.submit-btn');
+    submitBtn.disabled = true;
+
+    var influencerCheck = await validateInfluencerCode();
+    if (!influencerCheck.valid){ submitBtn.disabled = false; return false; }
+
+    var isBundle = selectedPhase === '3-Pod Bundle';
+    var domains = isBundle
+      ? [document.getElementById('domainBundle1').value, document.getElementById('domainBundle2').value, document.getElementById('domainBundle3').value].filter(Boolean)
+      : [document.getElementById('domain').value].filter(Boolean);
+
     var application = {
-      id: 'app_' + Date.now() + '_' + Math.random().toString(36).slice(2,8),
       fullName: document.getElementById('fullName').value.trim(),
       email: document.getElementById('email').value.trim(),
       phone: document.getElementById('phone').value.trim(),
       college: document.getElementById('college').value.trim(),
-      domain: document.getElementById('domain').value,
+      domains: domains,
       yearOfStudy: document.getElementById('yearOfStudy').value,
       phase: selectedPhase,
+      influencerCode: influencerCheck.code || '',
       submittedAt: new Date().toISOString()
     };
 
-    var existing = [];
     try{
-      existing = JSON.parse(localStorage.getItem('peerpods_applications') || '[]');
-    }catch(err){ existing = []; }
-    existing.push(application);
-    localStorage.setItem('peerpods_applications', JSON.stringify(existing));
-
-    document.getElementById('formSuccess').style.display = 'flex';
-    document.getElementById('applicationForm').reset();
-    document.querySelectorAll('.phase-card').forEach(function(c){ c.classList.remove('selected'); });
-    document.querySelector('.phase-card[data-phase="Phase 1 — Explore"]').classList.add('selected');
-    selectedPhase = "Phase 1 — Explore";
-    document.getElementById('formSuccess').scrollIntoView({behavior:'smooth', block:'center'});
+      await addDoc(collection(db, 'applications'), application);
+      document.getElementById('formSuccess').style.display = 'flex';
+      document.getElementById('applicationForm').reset();
+      document.querySelectorAll('.phase-card').forEach(function(c){ c.classList.remove('selected'); });
+      document.querySelector('.phase-card[data-phase="Single Pod"]').classList.add('selected');
+      selectedPhase = "Single Pod";
+      updatePodFieldsVisibility();
+      document.getElementById('influencerCodeField').style.display = 'none';
+      clearInfluencerError();
+      document.getElementById('formSuccess').scrollIntoView({behavior:'smooth', block:'center'});
+    }catch(err){
+      alert('Something went wrong submitting your application. Please try again.');
+    }
+    submitBtn.disabled = false;
     return false;
   }
+  window.handleApplicationSubmit = handleApplicationSubmit;
 </script>
 
 </body>

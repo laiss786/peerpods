@@ -292,7 +292,8 @@
   .field input:focus, .field select:focus{outline:none; border-color:var(--gold-dark);}
   .field input[type=color]{padding:4px; height:40px; cursor:pointer;}
   .icon-picker{display:flex; align-items:center; gap:10px;}
-  .icon-picker select{flex:1;}
+  .icon-picker select, .icon-picker input{flex:1;}
+  .revenue-value{color:#1e6b3a; font-weight:800;}
   .form-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:6px;}
   .icon-preview{
     width:40px;height:40px;
@@ -406,8 +407,9 @@
     <nav class="side-nav">
       <a href="#overview" class="active"><svg class="icon"><use href="#i-grid"/></svg> Overview</a>
       <a href="#applications"><svg class="icon"><use href="#i-list"/></svg> Applications</a>
-      <a href="#domains-manager"><svg class="icon"><use href="#i-tag"/></svg> Domains</a>
+      <a href="#domains-manager"><svg class="icon"><use href="#i-tag"/></svg> Pods</a>
       <a href="#mentors-manager"><svg class="icon"><use href="#i-users"/></svg> Mentors</a>
+      <a href="#influencers-manager"><svg class="icon"><use href="#i-megaphone"/></svg> Influencers</a>
     </nav>
     <div class="side-bottom">
       <a href="index.html"><svg class="icon"><use href="#i-external"/></svg> View Site</a>
@@ -456,21 +458,21 @@
     </div>
 
     <div class="page-head" id="domains-manager">
-      <h1>Domains</h1>
-      <p>Manage the career domains shown on the site — they also populate the application form.</p>
+      <h1>Pods</h1>
+      <p>Manage the pods shown on the site — they also populate the registration form.</p>
     </div>
     <div class="toolbar">
       <div class="actions"></div>
       <div class="actions">
-        <button class="btn btn-gold" onclick="showDomainForm()"><svg class="icon"><use href="#i-plus"/></svg> Add Domain</button>
+        <button class="btn btn-gold" onclick="showDomainForm()"><svg class="icon"><use href="#i-plus"/></svg> Add Pod</button>
       </div>
     </div>
     <div class="form-panel" id="domainFormPanel" style="display:none;">
-      <h3 id="domainFormTitle">Add Domain</h3>
+      <h3 id="domainFormTitle">Add Pod</h3>
       <input type="hidden" id="domainEditId">
       <div class="form-row">
         <div class="field">
-          <label>Domain Name</label>
+          <label>Pod Name</label>
           <input type="text" id="domainLabel" placeholder="e.g. Cybersecurity">
         </div>
         <div class="field">
@@ -481,13 +483,25 @@
           </div>
         </div>
       </div>
+      <div class="form-row form-row-1">
+        <div class="field">
+          <label>Description (shown in "Learn More" popup)</label>
+          <input type="text" id="domainDescription" placeholder="e.g. Get hands-on with how real products are built...">
+        </div>
+      </div>
+      <div class="form-row form-row-1">
+        <div class="field">
+          <label>Simulation Task (shown on the simulation step tile)</label>
+          <input type="text" id="domainTask" placeholder="e.g. Debug and ship a small feature inside a live sample codebase.">
+        </div>
+      </div>
       <div class="form-actions">
         <button class="btn" onclick="hideDomainForm()">Cancel</button>
-        <button class="btn btn-gold" onclick="saveDomainForm()">Save Domain</button>
+        <button class="btn btn-gold" onclick="saveDomainForm()">Save Pod</button>
       </div>
     </div>
     <div class="table-wrap">
-      <div class="table-head-row"><h3>All Domains</h3></div>
+      <div class="table-head-row"><h3>All Pods</h3></div>
       <div id="domainListArea"></div>
     </div>
 
@@ -549,29 +563,75 @@
       <div class="table-head-row"><h3>All Mentors</h3></div>
       <div id="mentorListArea"></div>
     </div>
+
+    <div class="page-head" id="influencers-manager">
+      <h1>Influencers</h1>
+      <p>Create a unique code for each influencer and track how many registrations — and how much revenue — each one brings in.</p>
+    </div>
+    <div class="toolbar">
+      <div class="actions"></div>
+      <div class="actions">
+        <button class="btn btn-gold" onclick="showInfluencerForm()"><svg class="icon"><use href="#i-plus"/></svg> Add Influencer</button>
+      </div>
+    </div>
+    <div class="form-panel" id="influencerFormPanel" style="display:none;">
+      <h3 id="influencerFormTitle">Add Influencer</h3>
+      <input type="hidden" id="influencerEditId">
+      <div class="form-row">
+        <div class="field">
+          <label>Influencer Name</label>
+          <input type="text" id="influencerName" placeholder="e.g. Riya Sharma" oninput="maybeSuggestInfluencerCode()">
+        </div>
+        <div class="field">
+          <label>Unique Code</label>
+          <div class="icon-picker">
+            <input type="text" id="influencerCodeInput" placeholder="e.g. RIYA10" style="text-transform:uppercase;">
+            <button class="btn" type="button" onclick="generateInfluencerCode()">Generate</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" onclick="hideInfluencerForm()">Cancel</button>
+        <button class="btn btn-gold" onclick="saveInfluencerForm()">Save Influencer</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <div class="table-head-row"><h3>All Influencers</h3></div>
+      <div id="influencerListArea"></div>
+    </div>
   </div>
 </div>
 
-<script>
+<script type="module">
+  import { auth, db } from './firebase-config.js';
+  import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+  import {
+    collection, getDocs, getDoc, doc, addDoc, setDoc, updateDoc, deleteDoc,
+    onSnapshot, writeBatch
+  } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+  var PODS_COL = 'pods';
+  var MENTORS_COL = 'mentors';
+  var INFLUENCERS_COL = 'influencers';
+  var INFLUENCER_CODES_COL = 'influencerCodes';
+  var APPLICATIONS_COL = 'applications';
+  var PRICE_MAP = {'Single Pod': 999, '3-Pod Bundle': 2499};
+
+  var applicationsCache = [];
+
   // ---- Auth guard ----
-  if (sessionStorage.getItem('peerpods_admin_auth') !== 'true') {
-    window.location.href = 'admin-login.html';
-  }
+  onAuthStateChanged(auth, function(user){
+    if (!user){
+      window.location.href = 'admin-login.html';
+    } else {
+      initDashboard();
+    }
+  });
 
   function logout(){
-    sessionStorage.removeItem('peerpods_admin_auth');
-    window.location.href = 'admin-login.html';
+    signOut(auth).then(function(){ window.location.href = 'admin-login.html'; });
   }
-
-  function getApplications(){
-    try{
-      return JSON.parse(localStorage.getItem('peerpods_applications') || '[]');
-    }catch(e){ return []; }
-  }
-
-  function saveApplications(list){
-    localStorage.setItem('peerpods_applications', JSON.stringify(list));
-  }
+  window.logout = logout;
 
   function formatDate(iso){
     var d = new Date(iso);
@@ -585,8 +645,14 @@
     });
   }
 
+  function getAppDomains(a){
+    if (a.domains && a.domains.length) return a.domains;
+    if (a.domain) return [a.domain];
+    return [];
+  }
+
   function renderStats(){
-    var apps = getApplications();
+    var apps = applicationsCache;
     var total = apps.length;
 
     var todayStr = new Date().toDateString();
@@ -597,8 +663,12 @@
     var domainCounts = {};
     var yearCounts = {};
     apps.forEach(function(a){
-      domainCounts[a.domain] = (domainCounts[a.domain] || 0) + 1;
-      yearCounts[a.yearOfStudy] = (yearCounts[a.yearOfStudy] || 0) + 1;
+      getAppDomains(a).forEach(function(d){
+        if (!d) return;
+        domainCounts[d] = (domainCounts[d] || 0) + 1;
+      });
+      var year = a.yearOfStudy || 'Not specified';
+      yearCounts[year] = (yearCounts[year] || 0) + 1;
     });
 
     var topDomain = Object.keys(domainCounts).sort(function(x,y){ return domainCounts[y]-domainCounts[x]; })[0];
@@ -640,13 +710,15 @@
   }
 
   function renderTable(){
-    var apps = getApplications().slice().sort(function(a,b){
-      return new Date(b.submittedAt) - new Date(a.submittedAt);
+    var apps = applicationsCache.slice().sort(function(a,b){
+      var collegeCompare = (a.college || '').trim().toLowerCase().localeCompare((b.college || '').trim().toLowerCase());
+      if (collegeCompare !== 0) return collegeCompare;
+      return new Date(a.submittedAt) - new Date(b.submittedAt);
     });
     var q = (document.getElementById('searchInput').value || '').toLowerCase().trim();
     if (q){
       apps = apps.filter(function(a){
-        return (a.fullName+' '+a.email+' '+a.college+' '+a.domain+' '+a.yearOfStudy).toLowerCase().indexOf(q) !== -1;
+        return (a.fullName+' '+a.email+' '+a.college+' '+getAppDomains(a).join(' ')+' '+a.yearOfStudy+' '+(a.influencerCode||'')).toLowerCase().indexOf(q) !== -1;
       });
     }
 
@@ -662,34 +734,38 @@
     }
 
     var rows = apps.map(function(a){
+      var domainChips = getAppDomains(a).map(function(d){ return '<span class="domain-chip">' + escapeHtml(d) + '</span>'; }).join(' ') || '—';
       return '<tr>' +
         '<td>' + escapeHtml(a.fullName) + '</td>' +
         '<td>' + escapeHtml(a.email) + '</td>' +
         '<td>+91 ' + escapeHtml(a.phone) + '</td>' +
-        '<td>' + escapeHtml(a.college) + '</td>' +
-        '<td><span class="domain-chip">' + escapeHtml(a.domain) + '</span></td>' +
-        '<td>' + escapeHtml(a.yearOfStudy) + '</td>' +
+        '<td>' + escapeHtml(a.college || '—') + '</td>' +
+        '<td>' + domainChips + '</td>' +
+        '<td>' + escapeHtml(a.yearOfStudy || '—') + '</td>' +
         '<td><span class="phase-chip">' + escapeHtml(a.phase || '—') + '</span></td>' +
+        '<td>' + escapeHtml(a.influencerCode || '—') + '</td>' +
         '<td>' + formatDate(a.submittedAt) + '</td>' +
       '</tr>';
     }).join('');
 
     area.innerHTML = '<div class="table-scroll"><table>' +
-      '<thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>College</th><th>Domain</th><th>Year</th><th>Phase</th><th>Submitted</th></tr></thead>' +
+      '<thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>College</th><th>Domain(s)</th><th>Year</th><th>Phase</th><th>Influencer Code</th><th>Submitted</th></tr></thead>' +
       '<tbody>' + rows + '</tbody></table></div>';
   }
 
   function refreshAll(){
     renderStats();
     renderTable();
+    renderInfluencerList();
   }
+  window.renderTable = renderTable;
 
   function exportCSV(){
-    var apps = getApplications();
+    var apps = applicationsCache;
     if (!apps.length){ alert('No applications to export yet.'); return; }
-    var headers = ['Full Name','Email','Phone','College','Domain','Year of Study','Phase','Submitted At'];
+    var headers = ['Full Name','Email','Phone','College','Domain(s)','Year of Study','Phase','Influencer Code','Submitted At'];
     var rows = apps.map(function(a){
-      return [a.fullName, a.email, '+91 '+a.phone, a.college, a.domain, a.yearOfStudy, a.phase, a.submittedAt]
+      return [a.fullName, a.email, '+91 '+a.phone, a.college, getAppDomains(a).join('; '), a.yearOfStudy, a.phase, a.influencerCode, a.submittedAt]
         .map(function(v){ return '"' + String(v||'').replace(/"/g,'""') + '"'; }).join(',');
     });
     var csv = headers.join(',') + '\n' + rows.join('\n');
@@ -703,62 +779,71 @@
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
+  window.exportCSV = exportCSV;
 
-  function clearAllData(){
-    if (!confirm('This will permanently delete all stored applications on this device. Continue?')) return;
-    localStorage.removeItem('peerpods_applications');
-    refreshAll();
+  async function clearAllData(){
+    if (!confirm('This will permanently delete all applications from the database. Continue?')) return;
+    var snap = await getDocs(collection(db, APPLICATIONS_COL));
+    var batch = writeBatch(db);
+    snap.docs.forEach(function(d){ batch.delete(d.ref); });
+    await batch.commit();
   }
+  window.clearAllData = clearAllData;
 
-  function loadSampleData(){
-    var domains = ['Software Engineering','Data Analytics','Marketing','Product Management','Finance','AI & Automation','Product Design'];
+  async function loadSampleData(){
+    var domainPool = ['Software Engineering','Data Analytics','Marketing','Product Management','Finance','AI & Automation','Product Design'];
     var years = ['1st Year','2nd Year','3rd Year','4th Year','Graduate'];
-    var phases = ['Phase 1 — Explore','Phase 2 — Build'];
+    var phases = ['Single Pod','3-Pod Bundle'];
     var names = ['Riya Sharma','Aarav Sharma','Priya Menon','Rohan Iyer','Ananya Gupta','Vikram Reddy','Sneha Kapoor','Karthik Nair','Divya Pillai','Arjun Nambiar'];
     var colleges = ['Loyola College, Chennai','St. Xavier\'s, Mumbai','NIT Calicut','Christ University, Bengaluru','Symbiosis, Pune'];
+    var influencers = await getInfluencersAdmin();
 
-    var apps = getApplications();
+    var writes = [];
     for (var i=0; i<10; i++){
       var name = names[Math.floor(Math.random()*names.length)];
       var daysAgo = Math.floor(Math.random()*10);
       var date = new Date();
       date.setDate(date.getDate() - daysAgo);
-      apps.push({
-        id: 'sample_' + Date.now() + '_' + i,
+      var phase = phases[Math.floor(Math.random()*phases.length)];
+      var shuffled = domainPool.slice().sort(function(){ return Math.random() - 0.5; });
+      var domains = phase === '3-Pod Bundle' ? shuffled.slice(0,3) : shuffled.slice(0,1);
+      var influencerCode = '';
+      if (influencers.length && Math.random() < 0.3){
+        influencerCode = influencers[Math.floor(Math.random()*influencers.length)].code;
+      }
+      writes.push(addDoc(collection(db, APPLICATIONS_COL), {
         fullName: name,
         email: name.toLowerCase().replace(' ','.') + '@gmail.com',
         phone: '9' + Math.floor(100000000 + Math.random()*899999999),
         college: colleges[Math.floor(Math.random()*colleges.length)],
-        domain: domains[Math.floor(Math.random()*domains.length)],
+        domains: domains,
         yearOfStudy: years[Math.floor(Math.random()*years.length)],
-        phase: phases[Math.floor(Math.random()*phases.length)],
+        phase: phase,
+        influencerCode: influencerCode,
         submittedAt: date.toISOString()
-      });
+      }));
     }
-    saveApplications(apps);
-    refreshAll();
+    await Promise.all(writes);
   }
+  window.loadSampleData = loadSampleData;
 
-  // ---- Domains & Mentors data (shared with public site via localStorage) ----
-  var DOMAINS_KEY = 'peerpods_domains';
-  var MENTORS_KEY = 'peerpods_mentors';
-
+  // ---- Domains & Mentors data (shared with public site via Firestore) ----
   var DEFAULT_DOMAINS = [
-    {id:'dom_swe', label:'Software Engineering', icon:'i-code'},
-    {id:'dom_data', label:'Data Analytics', icon:'i-bar-chart'},
-    {id:'dom_mkt', label:'Marketing', icon:'i-megaphone'},
-    {id:'dom_pm', label:'Product Management', icon:'i-package'},
-    {id:'dom_design', label:'Product Design', icon:'i-pen'},
-    {id:'dom_fin', label:'Finance', icon:'i-dollar'},
-    {id:'dom_law', label:'Law', icon:'i-scale'},
-    {id:'dom_health', label:'Healthcare', icon:'i-heart'},
-    {id:'dom_esg', label:'Sustainability & ESG', icon:'i-leaf'},
-    {id:'dom_csr', label:'CSR', icon:'i-gift'},
-    {id:'dom_policy', label:'Public Policy', icon:'i-landmark'},
-    {id:'dom_startup', label:'Entrepreneurship', icon:'i-rocket'},
-    {id:'dom_ai', label:'AI & Automation', icon:'i-cpu'},
-    {id:'dom_content', label:'Content Creation', icon:'i-edit'},
-    {id:'dom_healthadmin', label:'Healthcare Admin', icon:'i-briefcase'}
+    {id:'dom_swe', label:'Software Engineering', icon:'i-code', description:'Get hands-on with how real products are built — reading code, understanding a feature request, and shipping a fix like a working engineer would.', task:'Debug and ship a small feature inside a live sample codebase.'},
+    {id:'dom_data', label:'Data Analytics', icon:'i-bar-chart', description:'Learn how analysts turn raw numbers into decisions — the tools, the questions to ask, and how insights actually get used by a business.', task:'Clean a messy dataset and present one insight that could change a decision.'},
+    {id:'dom_mkt', label:'Marketing', icon:'i-megaphone', description:'See how brands actually plan and run campaigns — audience research, messaging, and measuring what worked.', task:'Build a mini campaign brief and creative for a sample product launch.'},
+    {id:'dom_pm', label:'Product Management', icon:'i-package', description:"Understand how PMs decide what gets built next — balancing user needs, business goals, and engineering reality.", task:'Write a one-pager prioritizing 3 features for a sample app.'},
+    {id:'dom_design', label:'Product Design', icon:'i-pen', description:'Learn how designers turn a rough idea into something people can actually use — research, wireframes, and feedback loops.', task:'Redesign one screen of a sample app and justify your choices.'},
+    {id:'dom_fin', label:'Finance', icon:'i-dollar', description:"Get a feel for how analysts read a company's numbers and decide whether it's a good bet.", task:'Analyze a sample company\'s financials and pitch a buy, hold, or sell call.'},
+    {id:'dom_law', label:'Law', icon:'i-scale', description:'Step into how lawyers actually think through a case — reading facts, spotting issues, and building an argument.', task:'Draft a short legal opinion on a simplified case brief.'},
+    {id:'dom_health', label:'Healthcare', icon:'i-heart', description:'See what a day actually looks like for a healthcare professional — patient interaction, decisions, and pressure.', task:'Work through a simplified patient case and decide the next step.'},
+    {id:'dom_esg', label:'Sustainability & ESG', icon:'i-leaf', description:'Learn how companies measure and improve their environmental and social impact — beyond the buzzwords.', task:'Audit a sample company against 3 ESG criteria and suggest fixes.'},
+    {id:'dom_csr', label:'CSR', icon:'i-gift', description:'Understand how companies plan community and social impact programs that actually work.', task:'Design a small CSR initiative for a sample brand and its budget.'},
+    {id:'dom_policy', label:'Public Policy', icon:'i-landmark', description:'See how policy actually gets researched, drafted, and debated before it becomes law.', task:'Draft a one-page policy brief on a sample civic issue.'},
+    {id:'dom_startup', label:'Entrepreneurship', icon:'i-rocket', description:'Learn how founders validate an idea before spending a rupee building it.', task:"Pressure-test a sample startup idea and sketch its first 90 days."},
+    {id:'dom_ai', label:'AI & Automation', icon:'i-cpu', description:'Understand how AI tools actually get applied to real problems — not just the hype.', task:'Prompt and evaluate an AI tool to solve a sample business task.'},
+    {id:'dom_content', label:'Content Creation', icon:'i-edit', description:'Learn how creators plan, script, and package content that people actually want to watch.', task:'Script and storyboard a short-form video for a sample brand.'},
+    {id:'dom_healthadmin', label:'Healthcare Admin', icon:'i-briefcase', description:'See what runs behind the scenes in a hospital or clinic — operations, scheduling, and systems.', task:'Solve a sample patient-flow bottleneck for a small clinic.'}
   ];
 
   var DEFAULT_MENTORS = [
@@ -779,23 +864,37 @@
     ['i-star','Star'], ['i-layers','Layers'], ['i-tag','Tag']
   ];
 
-  function getDomains(){
-    try{
-      var raw = localStorage.getItem(DOMAINS_KEY);
-      if (!raw){ localStorage.setItem(DOMAINS_KEY, JSON.stringify(DEFAULT_DOMAINS)); return DEFAULT_DOMAINS.slice(); }
-      return JSON.parse(raw);
-    }catch(e){ return DEFAULT_DOMAINS.slice(); }
+  async function getDomains(){
+    var snap = await getDocs(collection(db, PODS_COL));
+    return snap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
   }
-  function saveDomains(list){ localStorage.setItem(DOMAINS_KEY, JSON.stringify(list)); }
 
-  function getMentors(){
-    try{
-      var raw = localStorage.getItem(MENTORS_KEY);
-      if (!raw){ localStorage.setItem(MENTORS_KEY, JSON.stringify(DEFAULT_MENTORS)); return DEFAULT_MENTORS.slice(); }
-      return JSON.parse(raw);
-    }catch(e){ return DEFAULT_MENTORS.slice(); }
+  async function seedDefaultPods(){
+    var writes = DEFAULT_DOMAINS.map(function(d){
+      var data = Object.assign({}, d);
+      delete data.id;
+      return setDoc(doc(db, PODS_COL, d.id), data);
+    });
+    await Promise.all(writes);
+    await renderDomainList();
   }
-  function saveMentors(list){ localStorage.setItem(MENTORS_KEY, JSON.stringify(list)); }
+  window.seedDefaultPods = seedDefaultPods;
+
+  async function getMentors(){
+    var snap = await getDocs(collection(db, MENTORS_COL));
+    return snap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
+  }
+
+  async function seedDefaultMentors(){
+    var writes = DEFAULT_MENTORS.map(function(m){
+      var data = Object.assign({}, m);
+      delete data.id;
+      return setDoc(doc(db, MENTORS_COL, m.id), data);
+    });
+    await Promise.all(writes);
+    await renderMentorList();
+  }
+  window.seedDefaultMentors = seedDefaultMentors;
 
   function getInitials(name){
     var parts = String(name || '').trim().split(/\s+/);
@@ -824,65 +923,81 @@
     var sel = document.getElementById('domainIconSelect').value;
     document.getElementById('domainIconPreview').innerHTML = '<svg class="icon"><use href="#' + sel + '"/></svg>';
   }
+  window.updateDomainIconPreview = updateDomainIconPreview;
 
   function showDomainForm(domain){
     document.getElementById('domainFormPanel').style.display = 'block';
-    document.getElementById('domainFormTitle').textContent = domain ? 'Edit Domain' : 'Add Domain';
+    document.getElementById('domainFormTitle').textContent = domain ? 'Edit Pod' : 'Add Pod';
     document.getElementById('domainEditId').value = domain ? domain.id : '';
     document.getElementById('domainLabel').value = domain ? domain.label : '';
+    document.getElementById('domainDescription').value = domain ? (domain.description || '') : '';
+    document.getElementById('domainTask').value = domain ? (domain.task || '') : '';
     document.getElementById('domainIconSelect').value = domain ? domain.icon : 'i-code';
     updateDomainIconPreview();
     document.getElementById('domainFormPanel').scrollIntoView({behavior:'smooth', block:'center'});
   }
+  window.showDomainForm = showDomainForm;
 
   function hideDomainForm(){
     document.getElementById('domainFormPanel').style.display = 'none';
     document.getElementById('domainLabel').value = '';
+    document.getElementById('domainDescription').value = '';
+    document.getElementById('domainTask').value = '';
     document.getElementById('domainEditId').value = '';
   }
+  window.hideDomainForm = hideDomainForm;
 
-  function saveDomainForm(){
+  async function saveDomainForm(){
     var label = document.getElementById('domainLabel').value.trim();
-    if (!label){ alert('Please enter a domain name.'); return; }
+    if (!label){ alert('Please enter a pod name.'); return; }
+    var description = document.getElementById('domainDescription').value.trim();
+    var task = document.getElementById('domainTask').value.trim();
     var icon = document.getElementById('domainIconSelect').value;
     var editId = document.getElementById('domainEditId').value;
-    var domains = getDomains();
+    var data = {label:label, icon:icon, description:description, task:task};
     if (editId){
-      domains = domains.map(function(d){ return d.id === editId ? {id:d.id, label:label, icon:icon} : d; });
+      await updateDoc(doc(db, PODS_COL, editId), data);
     } else {
-      domains.push({id:'dom_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6), label:label, icon:icon});
+      await addDoc(collection(db, PODS_COL), data);
     }
-    saveDomains(domains);
     hideDomainForm();
-    renderDomainList();
+    await renderDomainList();
   }
+  window.saveDomainForm = saveDomainForm;
 
-  function editDomain(id){
-    var d = getDomains().filter(function(x){ return x.id === id; })[0];
+  async function editDomain(id){
+    var domains = await getDomains();
+    var d = domains.filter(function(x){ return x.id === id; })[0];
     if (d) showDomainForm(d);
   }
+  window.editDomain = editDomain;
 
-  function deleteDomain(id){
-    if (!confirm('Delete this domain? It will be removed from the site and the application form.')) return;
-    saveDomains(getDomains().filter(function(d){ return d.id !== id; }));
-    renderDomainList();
+  async function deleteDomain(id){
+    if (!confirm('Delete this pod? It will be removed from the site and the registration form.')) return;
+    await deleteDoc(doc(db, PODS_COL, id));
+    await renderDomainList();
   }
+  window.deleteDomain = deleteDomain;
 
-  function renderDomainList(){
+  async function renderDomainList(){
     var area = document.getElementById('domainListArea');
-    var domains = getDomains();
+    var domains = await getDomains();
     if (!domains.length){
       area.innerHTML = '<div class="empty-state">' +
         '<div class="icon-wrap"><svg class="icon"><use href="#i-inbox"/></svg></div>' +
-        '<h4>No domains yet</h4>' +
-        '<p>Add a domain to make it available on the site and application form.</p>' +
+        '<h4>No pods yet</h4>' +
+        '<p>Add a pod to make it available on the site and registration form, or load the 15 starter pods to get going.</p>' +
+        '<button class="btn btn-gold" onclick="seedDefaultPods()"><svg class="icon"><use href="#i-database"/></svg> Load Starter Pods</button>' +
         '</div>';
       return;
     }
     var rows = domains.map(function(d){
+      var desc = d.description || '';
+      if (desc.length > 70) desc = desc.slice(0, 70) + '…';
       return '<tr>' +
         '<td><div class="row-icon"><svg class="icon"><use href="#' + escapeHtml(d.icon) + '"/></svg></div></td>' +
         '<td>' + escapeHtml(d.label) + '</td>' +
+        '<td style="color:var(--text-gray);">' + escapeHtml(desc) + '</td>' +
         '<td class="actions-cell">' +
           '<button class="icon-btn" title="Edit" onclick="editDomain(\'' + d.id + '\')"><svg class="icon"><use href="#i-pen"/></svg></button>' +
           '<button class="icon-btn danger" title="Delete" onclick="deleteDomain(\'' + d.id + '\')"><svg class="icon"><use href="#i-trash"/></svg></button>' +
@@ -890,7 +1005,7 @@
       '</tr>';
     }).join('');
     area.innerHTML = '<div class="table-scroll"><table>' +
-      '<thead><tr><th></th><th>Domain</th><th style="text-align:right;">Actions</th></tr></thead>' +
+      '<thead><tr><th></th><th>Pod</th><th>Description</th><th style="text-align:right;">Actions</th></tr></thead>' +
       '<tbody>' + rows + '</tbody></table></div>';
   }
 
@@ -908,6 +1023,7 @@
     document.getElementById('mentorBadgeColor').value = mentor ? mentor.badgeColor : '#2563eb';
     document.getElementById('mentorFormPanel').scrollIntoView({behavior:'smooth', block:'center'});
   }
+  window.showMentorForm = showMentorForm;
 
   function hideMentorForm(){
     document.getElementById('mentorFormPanel').style.display = 'none';
@@ -915,8 +1031,9 @@
       document.getElementById(id).value = '';
     });
   }
+  window.hideMentorForm = hideMentorForm;
 
-  function saveMentorForm(){
+  async function saveMentorForm(){
     var name = document.getElementById('mentorName').value.trim();
     var role = document.getElementById('mentorRole').value.trim();
     var company = document.getElementById('mentorCompany').value.trim();
@@ -926,37 +1043,40 @@
     var badgeColor = document.getElementById('mentorBadgeColor').value;
     if (!name || !role || !company || !badge || !domainTag){ alert('Please fill in all fields.'); return; }
     var editId = document.getElementById('mentorEditId').value;
-    var mentors = getMentors();
     var record = {name:name, role:role, company:company, badge:badge, badgeColor:badgeColor, avatarColor:avatarColor, domainTag:domainTag};
     if (editId){
-      mentors = mentors.map(function(m){ return m.id === editId ? Object.assign({id:m.id}, record) : m; });
+      await updateDoc(doc(db, MENTORS_COL, editId), record);
     } else {
-      mentors.push(Object.assign({id:'men_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6)}, record));
+      await addDoc(collection(db, MENTORS_COL), record);
     }
-    saveMentors(mentors);
     hideMentorForm();
-    renderMentorList();
+    await renderMentorList();
   }
+  window.saveMentorForm = saveMentorForm;
 
-  function editMentor(id){
-    var m = getMentors().filter(function(x){ return x.id === id; })[0];
+  async function editMentor(id){
+    var mentors = await getMentors();
+    var m = mentors.filter(function(x){ return x.id === id; })[0];
     if (m) showMentorForm(m);
   }
+  window.editMentor = editMentor;
 
-  function deleteMentor(id){
+  async function deleteMentor(id){
     if (!confirm('Delete this mentor from the site?')) return;
-    saveMentors(getMentors().filter(function(m){ return m.id !== id; }));
-    renderMentorList();
+    await deleteDoc(doc(db, MENTORS_COL, id));
+    await renderMentorList();
   }
+  window.deleteMentor = deleteMentor;
 
-  function renderMentorList(){
+  async function renderMentorList(){
     var area = document.getElementById('mentorListArea');
-    var mentors = getMentors();
+    var mentors = await getMentors();
     if (!mentors.length){
       area.innerHTML = '<div class="empty-state">' +
         '<div class="icon-wrap"><svg class="icon"><use href="#i-inbox"/></svg></div>' +
         '<h4>No mentors yet</h4>' +
-        '<p>Add a mentor profile to feature them on the site.</p>' +
+        '<p>Add a mentor profile to feature them on the site, or load the 6 starter mentors to get going.</p>' +
+        '<button class="btn btn-gold" onclick="seedDefaultMentors()"><svg class="icon"><use href="#i-database"/></svg> Load Starter Mentors</button>' +
         '</div>';
       return;
     }
@@ -979,10 +1099,138 @@
       '<tbody>' + rows + '</tbody></table></div>';
   }
 
-  populateDomainIconSelect();
-  renderDomainList();
-  renderMentorList();
-  refreshAll();
+  // ---- Influencers manager ----
+  async function getInfluencersAdmin(){
+    var snap = await getDocs(collection(db, INFLUENCERS_COL));
+    return snap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
+  }
+
+  function slugifyCode(name){
+    return String(name || '').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 6);
+  }
+
+  function generateInfluencerCode(){
+    var name = document.getElementById('influencerName').value;
+    var base = slugifyCode(name) || 'POD';
+    var code = base + Math.floor(10 + Math.random() * 90);
+    document.getElementById('influencerCodeInput').value = code;
+  }
+  window.generateInfluencerCode = generateInfluencerCode;
+
+  function maybeSuggestInfluencerCode(){
+    var input = document.getElementById('influencerCodeInput');
+    if (!input.value) generateInfluencerCode();
+  }
+  window.maybeSuggestInfluencerCode = maybeSuggestInfluencerCode;
+
+  function showInfluencerForm(influencer){
+    document.getElementById('influencerFormPanel').style.display = 'block';
+    document.getElementById('influencerFormTitle').textContent = influencer ? 'Edit Influencer' : 'Add Influencer';
+    document.getElementById('influencerEditId').value = influencer ? influencer.id : '';
+    document.getElementById('influencerName').value = influencer ? influencer.name : '';
+    document.getElementById('influencerCodeInput').value = influencer ? influencer.code : '';
+    document.getElementById('influencerFormPanel').scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  window.showInfluencerForm = showInfluencerForm;
+
+  function hideInfluencerForm(){
+    document.getElementById('influencerFormPanel').style.display = 'none';
+    document.getElementById('influencerName').value = '';
+    document.getElementById('influencerCodeInput').value = '';
+    document.getElementById('influencerEditId').value = '';
+  }
+  window.hideInfluencerForm = hideInfluencerForm;
+
+  async function saveInfluencerForm(){
+    var name = document.getElementById('influencerName').value.trim();
+    var code = document.getElementById('influencerCodeInput').value.trim().toUpperCase();
+    if (!name){ alert('Please enter the influencer\'s name.'); return; }
+    if (!code){ alert('Please enter or generate a unique code.'); return; }
+    var editId = document.getElementById('influencerEditId').value;
+
+    var existingCodeDoc = await getDoc(doc(db, INFLUENCER_CODES_COL, code));
+    if (existingCodeDoc.exists() && existingCodeDoc.data().influencerId !== editId){
+      alert('That code is already in use by another influencer. Please choose a different one.');
+      return;
+    }
+
+    if (editId){
+      var oldSnap = await getDoc(doc(db, INFLUENCERS_COL, editId));
+      var oldCode = oldSnap.exists() ? oldSnap.data().code : null;
+      await updateDoc(doc(db, INFLUENCERS_COL, editId), {name:name, code:code});
+      if (oldCode && oldCode !== code){
+        await deleteDoc(doc(db, INFLUENCER_CODES_COL, oldCode));
+      }
+      await setDoc(doc(db, INFLUENCER_CODES_COL, code), {influencerId: editId});
+    } else {
+      var ref = await addDoc(collection(db, INFLUENCERS_COL), {name:name, code:code});
+      await setDoc(doc(db, INFLUENCER_CODES_COL, code), {influencerId: ref.id});
+    }
+    hideInfluencerForm();
+    await renderInfluencerList();
+  }
+  window.saveInfluencerForm = saveInfluencerForm;
+
+  async function editInfluencer(id){
+    var influencers = await getInfluencersAdmin();
+    var i = influencers.filter(function(x){ return x.id === id; })[0];
+    if (i) showInfluencerForm(i);
+  }
+  window.editInfluencer = editInfluencer;
+
+  async function deleteInfluencer(id){
+    if (!confirm('Delete this influencer? Their code will no longer be accepted at registration.')) return;
+    var snap = await getDoc(doc(db, INFLUENCERS_COL, id));
+    var code = snap.exists() ? snap.data().code : null;
+    await deleteDoc(doc(db, INFLUENCERS_COL, id));
+    if (code) await deleteDoc(doc(db, INFLUENCER_CODES_COL, code));
+    await renderInfluencerList();
+  }
+  window.deleteInfluencer = deleteInfluencer;
+
+  async function renderInfluencerList(){
+    var area = document.getElementById('influencerListArea');
+    var influencers = await getInfluencersAdmin();
+    if (!influencers.length){
+      area.innerHTML = '<div class="empty-state">' +
+        '<div class="icon-wrap"><svg class="icon"><use href="#i-inbox"/></svg></div>' +
+        '<h4>No influencers yet</h4>' +
+        '<p>Add an influencer to generate a unique code they can share — it becomes available as an "Influencer Code" option at registration.</p>' +
+        '</div>';
+      return;
+    }
+    var apps = applicationsCache;
+    var rows = influencers.map(function(i){
+      var referred = apps.filter(function(a){ return a.influencerCode && a.influencerCode.toUpperCase() === i.code.toUpperCase(); });
+      var revenue = referred.reduce(function(sum, a){ return sum + (PRICE_MAP[a.phase] || 0); }, 0);
+      return '<tr>' +
+        '<td>' + escapeHtml(i.name) + '</td>' +
+        '<td><span class="domain-chip">' + escapeHtml(i.code) + '</span></td>' +
+        '<td>' + referred.length + '</td>' +
+        '<td class="revenue-value">₹' + revenue.toLocaleString('en-IN') + '</td>' +
+        '<td class="actions-cell">' +
+          '<button class="icon-btn" title="Edit" onclick="editInfluencer(\'' + i.id + '\')"><svg class="icon"><use href="#i-pen"/></svg></button>' +
+          '<button class="icon-btn danger" title="Delete" onclick="deleteInfluencer(\'' + i.id + '\')"><svg class="icon"><use href="#i-trash"/></svg></button>' +
+        '</td>' +
+      '</tr>';
+    }).join('');
+    area.innerHTML = '<div class="table-scroll"><table>' +
+      '<thead><tr><th>Name</th><th>Code</th><th>Applications Referred</th><th>Revenue Generated</th><th style="text-align:right;">Actions</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table></div>';
+  }
+
+  var dashboardStarted = false;
+  function initDashboard(){
+    if (dashboardStarted) return;
+    dashboardStarted = true;
+    populateDomainIconSelect();
+    renderDomainList();
+    renderMentorList();
+    onSnapshot(collection(db, APPLICATIONS_COL), function(snap){
+      applicationsCache = snap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
+      refreshAll();
+    });
+  }
 </script>
 
 </body>

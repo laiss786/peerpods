@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Pods and mentors: shown on the public site, only editable by a signed-in admin.
+    match /pods/{podId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /mentors/{mentorId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Influencer codes: the public registration form can look up ONE code by its
+    // exact id (a "get"), but cannot list/scan the whole collection. Only the
+    // admin can create/edit/delete codes.
+    match /influencerCodes/{code} {
+      allow get: if true;
+      allow list: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // Influencer names + revenue stats are private — admin only.
+    match /influencers/{influencerId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Applications: anyone can submit one (create), but only the signed-in
+    // admin can read, edit, or delete them. A submitter can never read back
+    // other applicants' data.
+    match /applications/{appId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+  }
+}
