@@ -8,10 +8,10 @@
 <style>
   :root{
     --navy:#1e293b;
-    --navy-dark:#0f1c2e;
+    --navy-dark:#0f1c3f;
     --navy-mid:#16273f;
-    --gold:#f2b33d;
-    --gold-dark:#dd9c22;
+    --gold:#d4a018;
+    --gold-dark:#b8860b;
     --cream:#f7f4ee;
     --white:#ffffff;
     --text-dark:#0f1c2e;
@@ -64,9 +64,9 @@
   .btn-primary{
     background:var(--gold);
     color:var(--navy-dark);
-    box-shadow:0 4px 14px rgba(242,179,61,0.28);
+    box-shadow:0 4px 14px rgba(212,160,24,0.28);
   }
-  .btn-primary:hover{background:var(--gold-dark); transform:translateY(-1px); box-shadow:0 6px 18px rgba(242,179,61,0.36);}
+  .btn-primary:hover{background:var(--gold-dark); transform:translateY(-1px); box-shadow:0 6px 18px rgba(212,160,24,0.36);}
   .btn-outline{
     background:transparent;
     border-color:rgba(15,28,46,0.22);
@@ -77,8 +77,8 @@
 
   /* NAVBAR */
   header.navbar{
-    background:var(--white);
-    border-bottom:1px solid var(--border);
+    background:var(--navy-dark);
+    border-bottom:1px solid rgba(255,255,255,0.08);
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -88,54 +88,57 @@
     z-index:100;
   }
   .logo{
-    font-size:21px;
-    font-weight:800;
-    color:var(--navy-dark);
-    letter-spacing:-0.5px;
+    display:inline-flex;
+    align-items:center;
   }
-  .logo span{color:var(--gold-dark);}
+  .logo-img{
+    height:32px;
+    width:auto;
+    border-radius:6px;
+    display:block;
+  }
   .nav-links{
     display:flex;
     align-items:center;
     gap:34px;
   }
   .nav-links a{
-    color:var(--text-gray);
+    color:#c7cdd6;
     font-size:14.5px;
     font-weight:600;
     transition:color .15s ease;
   }
-  .nav-links a:hover{color:var(--navy-dark);}
+  .nav-links a:hover{color:var(--white);}
   .nav-right{display:flex; align-items:center; gap:18px;}
   .nav-toggle{
     display:none;
     background:transparent;
     border:none;
-    color:var(--navy-dark);
+    color:var(--white);
     cursor:pointer;
     padding:6px;
   }
   .mobile-panel{
     display:none;
-    background:var(--white);
-    border-bottom:1px solid var(--border);
+    background:var(--navy-dark);
+    border-bottom:1px solid rgba(255,255,255,0.08);
     padding:8px 24px 20px;
   }
   .mobile-panel.open{display:block;}
   .mobile-panel a{
     display:block;
-    color:var(--text-gray);
+    color:#c7cdd6;
     font-size:15px;
     font-weight:600;
     padding:12px 0;
-    border-bottom:1px solid var(--border);
+    border-bottom:1px solid rgba(255,255,255,0.08);
   }
   .mobile-panel .btn-primary{margin-top:16px; width:100%; justify-content:center;}
 
   /* HERO */
   .hero{
-    background:linear-gradient(180deg, var(--white) 0%, var(--cream) 100%);
-    color:var(--text-dark);
+    background:linear-gradient(180deg, var(--navy-dark) 0%, #0a1330 100%);
+    color:var(--white);
     text-align:center;
     padding:88px 24px 72px;
   }
@@ -143,18 +146,17 @@
     display:inline-flex;
     align-items:center;
     gap:9px;
-    border:1px solid var(--border);
-    background:var(--white);
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.04);
     border-radius:var(--radius-sm);
     padding:9px 18px;
     font-size:13.5px;
     font-weight:600;
-    color:var(--text-gray);
+    color:#dfe3e9;
     margin-bottom:34px;
-    box-shadow:var(--shadow-sm);
   }
   .badge .dot{
-    width:7px;height:7px;border-radius:50%;background:var(--gold-dark);
+    width:7px;height:7px;border-radius:50%;background:var(--gold);
   }
   .hero h1{
     font-size:54px;
@@ -163,12 +165,12 @@
     max-width:900px;
     margin:0 auto 26px;
     line-height:1.12;
-    color:var(--navy-dark);
+    color:var(--white);
   }
-  .hero h1 .accent{color:var(--gold-dark);}
+  .hero h1 .accent{color:var(--gold);}
   .hero p.sub{
     font-size:17.5px;
-    color:var(--text-gray);
+    color:#b9c1cc;
     max-width:660px;
     margin:0 auto 28px;
   }
@@ -178,9 +180,9 @@
     margin-bottom:40px;
     letter-spacing:.2px;
   }
-  .tagline .g1{color:var(--gold-dark);}
-  .tagline .g2{color:#2a7fa8;}
-  .tagline .g3{color:var(--navy-dark);}
+  .tagline .g1{color:var(--gold);}
+  .tagline .g2{color:#5cc2ef;}
+  .tagline .g3{color:var(--white);}
 
   .pill-row{
     display:flex;
@@ -188,23 +190,22 @@
     justify-content:center;
     gap:12px;
     flex-wrap:wrap;
-    color:var(--text-dark);
+    color:var(--white);
     margin-top:44px;
   }
   .pill{
     display:flex;
     align-items:center;
     gap:8px;
-    border:1px solid var(--border);
-    background:var(--white);
+    border:1px solid rgba(255,255,255,0.14);
+    background:rgba(255,255,255,0.04);
     border-radius:var(--radius-sm);
     padding:10px 18px;
     font-size:14px;
     font-weight:600;
-    box-shadow:var(--shadow-sm);
   }
-  .pill .icon{width:16px;height:16px; color:var(--gold-dark);}
-  .pill-arrow{color:var(--text-muted); font-size:15px;}
+  .pill .icon{width:16px;height:16px; color:var(--gold);}
+  .pill-arrow{color:#8b93a1; font-size:15px;}
 
   /* SECTION */
   .section{padding:96px 24px;}
@@ -430,10 +431,23 @@
   }
 
   @media (max-width:700px){
-    .pod-grid, .sim-grid{grid-template-columns:1fr 1fr;}
-  }
-  @media (max-width:520px){
-    .pod-grid, .sim-grid{grid-template-columns:1fr;}
+    .pod-grid, .sim-grid, .mentor-grid{
+      display:flex;
+      grid-template-columns:unset;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      gap:12px;
+      padding-bottom:10px;
+      -webkit-overflow-scrolling:touch;
+    }
+    .pod-tile, .sim-tile{
+      flex:0 0 78%;
+      scroll-snap-align:start;
+    }
+    .mentor-card{
+      flex:0 0 68%;
+      scroll-snap-align:start;
+    }
   }
 
   /* WHAT YOU'LL GAIN */
@@ -564,7 +578,7 @@
     letter-spacing:.3px;
     padding:6px 16px;
     border-radius:999px;
-    box-shadow:0 4px 10px rgba(242,179,61,0.4);
+    box-shadow:0 4px 10px rgba(212,160,24,0.4);
   }
   .price-icon{
     width:46px;height:46px;
@@ -708,10 +722,10 @@
     border:none;
     border-radius:var(--radius-sm);
     cursor:pointer;
-    box-shadow:0 4px 14px rgba(242,179,61,0.28);
+    box-shadow:0 4px 14px rgba(212,160,24,0.28);
     transition:background .15s ease, box-shadow .15s ease;
   }
-  .submit-btn:hover{background:var(--gold-dark); box-shadow:0 6px 18px rgba(242,179,61,0.36);}
+  .submit-btn:hover{background:var(--gold-dark); box-shadow:0 6px 18px rgba(212,160,24,0.36);}
   .submit-btn:disabled{opacity:.6; cursor:not-allowed;}
 
   /* MODAL */
@@ -766,7 +780,8 @@
     padding:52px 24px 36px;
     border-top:3px solid var(--gold);
   }
-  footer .logo{margin-bottom:14px; justify-content:center; display:inline-block;}
+  footer .logo{margin-bottom:14px; justify-content:center; display:inline-flex;}
+  footer .logo-img{height:38px;}
   footer .tag{color:var(--text-gray); font-size:14.5px; margin-bottom:22px;}
   .footer-contact{
     display:flex;
@@ -823,19 +838,33 @@
     .hero h1{font-size:36px;}
   }
   @media (max-width: 600px){
-    .card-grid-3, .mentor-grid, .phase-grid, .pricing-grid{grid-template-columns:1fr;}
+    .card-grid-3, .phase-grid, .pricing-grid{grid-template-columns:1fr;}
     .hero h1{font-size:29px;}
     header.navbar{padding:14px 16px;}
-    .logo{font-size:17px;}
+    .logo-img{height:26px;}
     .nav-right{gap:10px;}
     .nav-toggle{padding:4px;}
     .nav-toggle .icon{width:20px; height:20px;}
-    .section{padding:64px 20px;}
+    .section{padding:44px 20px;}
     .btn-primary, .btn-outline{white-space:normal; text-align:center;}
     .nav-right .btn-primary{padding:9px 14px; font-size:13px; white-space:nowrap;}
     .hero .btn-lg{padding:15px 22px; font-size:15px;}
     .testimonial-card{width:260px;}
     .footer-contact{flex-direction:column; align-items:center; gap:14px;}
+
+    .hero{padding:40px 20px 36px;}
+    .badge{margin-bottom:22px; padding:7px 14px; font-size:12.5px;}
+    .hero p.sub{font-size:15.5px; margin-bottom:20px;}
+    .tagline{margin-bottom:24px; font-size:15px;}
+    .pill-row{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:26px;}
+    .pill{justify-content:center; padding:9px 10px; font-size:12.5px;}
+    .pill-arrow{display:none;}
+
+    .card, .price-card, .split-left, .split-right, .form-card{padding:22px 20px;}
+    .card-icon, .price-icon{width:42px; height:42px; margin-bottom:14px;}
+    .app-header{padding:44px 20px 12px;}
+    h2.section-title{font-size:26px;}
+    p.section-sub{font-size:14.5px;}
   }
 </style>
 </head>
@@ -882,7 +911,7 @@
 </svg>
 
 <header class="navbar">
-  <div class="logo">Peer<span>Pods</span>.</div>
+  <a href="#" class="logo"><img src="logo-transparent.png" alt="PeerPods" class="logo-img"></a>
   <nav class="nav-links">
     <a href="#what-is-peerpods">What is PeerPods</a>
     <a href="#how-it-works">How It Works</a>
@@ -956,7 +985,7 @@
   <p class="section-sub">Every PeerPod follows the same simple flow — pick a pod, learn the basics, do the work, then talk to someone who does it for real.</p>
 
   <div class="roadmap" id="roadmap">
-    <div class="roadmap-item open" data-step="1">
+    <div class="roadmap-item" data-step="1">
       <div class="step-num">1</div>
       <button class="roadmap-header" onclick="toggleRoadmapStep(this)">
         <div class="roadmap-title">
@@ -1154,8 +1183,8 @@
           <input type="text" id="fullName" placeholder="e.g. Riya Sharma" required>
         </div>
         <div class="field">
-          <label>Email Address <span class="req">*</span></label>
-          <input type="email" id="email" placeholder="yourname@gmail.com" required>
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="yourname@gmail.com">
           <div class="hint">We will send your confirmation here</div>
         </div>
         <div class="field">
@@ -1165,10 +1194,6 @@
             <input type="tel" id="phone" placeholder="98765 43210" required>
           </div>
           <div class="hint">For WhatsApp updates from our team</div>
-        </div>
-        <div class="field">
-          <label>College / Institution</label>
-          <input type="text" id="college" placeholder="e.g. Loyola College, Chennai">
         </div>
         <div class="field" id="singlePodField">
           <label>Which Pod Do You Want to Try?</label>
@@ -1230,7 +1255,7 @@
 </div>
 
 <footer>
-  <div class="logo">Peer<span>Pods</span>.</div>
+  <div class="logo"><img src="logo.png" alt="PeerPods" class="logo-img"></div>
   <div class="tag">Explore. Experience. Decide.</div>
 
   <div class="footer-contact">
@@ -1493,7 +1518,6 @@
       fullName: document.getElementById('fullName').value.trim(),
       email: document.getElementById('email').value.trim(),
       phone: document.getElementById('phone').value.trim(),
-      college: document.getElementById('college').value.trim(),
       domains: domains,
       yearOfStudy: document.getElementById('yearOfStudy').value,
       phase: selectedPhase,
