@@ -104,18 +104,19 @@
     font-weight:700;
     font-size:15px;
     padding:13px 26px;
-    border-radius:var(--radius-sm);
+    border-radius:10px;
     border:1.5px solid transparent;
     cursor:pointer;
-    transition:background .15s ease, border-color .15s ease, transform .1s ease, box-shadow .15s ease;
+    transition:background .15s ease, border-color .15s ease, transform .12s ease, box-shadow .12s ease;
     white-space:nowrap;
   }
   .btn-primary{
-    background:var(--gold);
+    background:linear-gradient(180deg, #e6bd3c, var(--gold));
     color:var(--navy-dark);
-    box-shadow:0 4px 14px rgba(212,160,21,0.28);
+    box-shadow:0 3px 0 var(--gold-dark), 0 4px 10px rgba(0,0,0,0.22);
   }
-  .btn-primary:hover{background:var(--gold-dark); transform:translateY(-1px); box-shadow:0 6px 18px rgba(212,160,21,0.36);}
+  .btn-primary:hover{transform:translateY(-1px); box-shadow:0 4px 0 var(--gold-dark), 0 6px 14px rgba(0,0,0,0.28);}
+  .btn-primary:active{transform:translateY(1px); box-shadow:0 1px 0 var(--gold-dark), 0 2px 6px rgba(0,0,0,0.22);}
   .btn-outline{
     background:transparent;
     border-color:rgba(15,28,46,0.22);
@@ -225,7 +226,7 @@
   }
   .hero-headline .hl-line{display:block;}
   .hero-headline .hl-dark{color:var(--navy-dark);}
-  .hero-headline .hl-gradient{color:var(--navy-dark);}
+  .hero-headline .hl-gradient{color:var(--gold);}
   .hero p.sub{
     font-size:16.5px;
     line-height:1.55;
@@ -252,13 +253,6 @@
     gap:22px;
     flex-wrap:wrap;
   }
-  .btn-navy{
-    background:var(--navy-dark);
-    color:var(--white);
-    border-radius:12px;
-    box-shadow:0 4px 14px rgba(15,28,63,0.28);
-  }
-  .btn-navy:hover{background:var(--navy-mid); box-shadow:0 6px 18px rgba(15,28,63,0.36);}
 
   /* SECTION */
   .section{padding:96px 24px;}
@@ -747,22 +741,77 @@
 
   .phase-grid{
     display:flex;
-    gap:10px;
-    margin-bottom:28px;
+    gap:12px;
+    margin-bottom:24px;
   }
   .phase-card{
+    position:relative;
     flex:1;
-    text-align:center;
-    border:1.5px solid var(--border);
-    border-radius:999px;
-    padding:11px 14px;
+    display:block;
+    text-align:left;
+    border:2px solid var(--border);
+    border-radius:14px;
+    padding:16px 14px;
     cursor:pointer;
-    transition:border-color .15s ease, background .15s ease;
+    background:var(--cream);
+    box-sizing:border-box;
+    transition:border-color .15s ease, background .15s ease, box-shadow .15s ease;
   }
-  .phase-card.selected{border-color:var(--gold-dark); background:#fdf8ee;}
-  .phase-card h3{font-size:13.5px; font-weight:700; color:var(--navy-dark);}
+  .phase-card:hover{border-color:#d8d3c4;}
+  .phase-card.selected{background:var(--navy-dark); border-color:var(--navy-dark); box-shadow:0 8px 20px rgba(15,28,63,0.22);}
+  .phase-card.selected:hover{border-color:var(--navy-dark);}
+  .phase-card h3{font-size:15.5px; font-weight:800; margin-bottom:4px; color:var(--navy-dark); transition:color .15s ease;}
+  .phase-card.selected h3{color:var(--white);}
+  .phase-sub{font-size:11.5px; font-weight:500; margin:0; color:var(--text-muted); transition:color .15s ease;}
+  .phase-card.selected .phase-sub{color:rgba(255,255,255,0.7);}
+  .phase-value-badge{
+    display:inline-block;
+    font-size:10.5px;
+    font-weight:700;
+    color:var(--gold-dark);
+    background:var(--gold-light);
+    padding:2px 8px;
+    border-radius:20px;
+  }
+  .phase-card input[type="radio"]{
+    position:absolute;
+    width:1px; height:1px;
+    opacity:0;
+    pointer-events:none;
+  }
+  .phase-radio-dot{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:absolute;
+    top:10px; right:10px;
+    width:18px; height:18px;
+    flex-shrink:0;
+    border-radius:50%;
+    border:1.5px solid #d8d4c9;
+    background:var(--white);
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .phase-radio-dot::after{
+    content:'';
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--navy-dark);
+    opacity:0;
+    transition:opacity .15s ease;
+  }
+  .phase-card.selected .phase-radio-dot{background:var(--gold); border-color:var(--gold);}
+  .phase-card.selected .phase-radio-dot::after{opacity:1;}
+  .phase-icon-shape{display:block; margin-bottom:12px;}
+  .phase-icon-shape.single{width:34px; height:26px; border-radius:8px; border:2px solid var(--navy-dark); transition:border-color .15s ease;}
+  .phase-icon-shape.bundle{display:flex; gap:4px;}
+  .phase-icon-shape.bundle span{width:10px; height:26px; border-radius:6px; border:2px solid var(--navy-dark); transition:border-color .15s ease;}
+  .phase-card.selected .phase-icon-shape.single,
+  .phase-card.selected .phase-icon-shape.bundle span{border-color:var(--gold);}
+  .phase-card:has(input:focus-visible){outline:2px solid var(--blue); outline-offset:2px;}
   @media (max-width:420px){
-    .phase-grid{flex-direction:column;}
+    .phase-card{padding:14px 12px;}
+    .phase-card h3{font-size:14.5px;}
   }
 
   .form-card-wrap{
@@ -773,7 +822,7 @@
   .form-card{
     background:var(--white);
     border:1px solid var(--border);
-    border-radius:var(--radius-lg);
+    border-radius:18px;
     box-shadow:var(--shadow-lg);
     padding:40px 36px 36px;
   }
@@ -798,25 +847,26 @@
   }
   .form-success .icon{width:18px;height:18px; flex-shrink:0;}
   .field{margin-bottom:20px;}
-  .field label{
+  .field > label{
     display:block;
     font-weight:700;
     font-size:14px;
     color:var(--navy-dark);
     margin-bottom:8px;
   }
-  .field label .req{color:#3b6fd6;}
+  .field > label .req{color:var(--gold-dark);}
   .field input, .field select{
     width:100%;
     padding:13px 15px;
     border:1.5px solid var(--border);
-    border-radius:var(--radius-sm);
+    border-radius:10px;
     font-size:14.5px;
     color:var(--text-dark);
     font-family:inherit;
     background:var(--white);
+    transition:border-color .15s ease;
   }
-  .field input:focus, .field select:focus{outline:none; border-color:var(--gold-dark);}
+  .field input:focus, .field select:focus{outline:none; border-color:var(--navy-dark);}
   .field input::placeholder{color:#a9b0ba;}
   .field .hint{font-size:12.5px; color:var(--text-gray); margin-top:6px;}
   .field .hint a{color:#3b6fd6; font-weight:600;}
@@ -825,7 +875,7 @@
   .phone-code{
     background:var(--cream);
     border:1.5px solid var(--border);
-    border-radius:var(--radius-sm);
+    border-radius:10px;
     padding:13px 15px;
     font-weight:600;
     color:var(--text-dark);
@@ -839,22 +889,46 @@
     font-size:14px;
     color:#33404f;
   }
-  .checkbox-field input{width:17px; height:17px; margin-top:2px; flex-shrink:0;}
+  .checkbox-field input[type="checkbox"]{
+    appearance:none;
+    -webkit-appearance:none;
+    position:relative;
+    width:19px; height:19px;
+    margin-top:1px;
+    flex-shrink:0;
+    border-radius:6px;
+    border:1.5px solid var(--border);
+    background:var(--white);
+    cursor:pointer;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .checkbox-field input[type="checkbox"]:checked{background:var(--navy-dark); border-color:var(--navy-dark);}
+  .checkbox-field input[type="checkbox"]:checked::after{
+    content:'';
+    position:absolute;
+    left:5px; top:3px;
+    width:8px; height:5px;
+    border-left:2px solid var(--white);
+    border-bottom:2px solid var(--white);
+    transform:rotate(-45deg);
+  }
+  .checkbox-field input[type="checkbox"]:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
   .submit-btn{
     width:100%;
     padding:16px;
-    background:var(--gold);
+    background:linear-gradient(180deg, #e6bd3c, var(--gold));
     color:var(--navy-dark);
     font-weight:800;
     font-size:15.5px;
     border:none;
-    border-radius:var(--radius-sm);
+    border-radius:12px;
     cursor:pointer;
-    box-shadow:0 4px 14px rgba(212,160,24,0.28);
-    transition:background .15s ease, box-shadow .15s ease;
+    box-shadow:0 3px 0 var(--gold-dark), 0 6px 16px rgba(184,134,11,0.25);
+    transition:transform .12s ease, box-shadow .12s ease;
   }
-  .submit-btn:hover{background:var(--gold-dark); box-shadow:0 6px 18px rgba(212,160,24,0.36);}
-  .submit-btn:disabled{opacity:.6; cursor:not-allowed;}
+  .submit-btn:hover{transform:translateY(-1px); box-shadow:0 4px 0 var(--gold-dark), 0 8px 18px rgba(184,134,11,0.3);}
+  .submit-btn:active{transform:translateY(1px); box-shadow:0 1px 0 var(--gold-dark), 0 3px 8px rgba(184,134,11,0.25);}
+  .submit-btn:disabled{opacity:.6; cursor:not-allowed; transform:none;}
 
   /* FLOATING APPLY TAB */
   .float-apply{
@@ -1027,7 +1101,7 @@
     .badge{margin:0; padding:9px 16px; font-size:13px;}
     .hero p.sub{font-size:16.5px; margin:0; max-width:none;}
     .hero-ctas{margin:0; width:100%;}
-    .hero-ctas .btn-navy{width:100%; justify-content:center;}
+    .hero-ctas .btn-primary{width:100%; justify-content:center;}
     .hero .btn-lg{padding:18px 26px; font-size:15.5px;}
     .tagline{margin-bottom:24px; font-size:15px;}
 
@@ -1119,7 +1193,7 @@
     </h1>
     <p class="sub">PeerPods breaks trending, in-demand courses into small <strong>"pods"</strong> — learn the basics, run a real simulation of the work, and decide with confidence before you spend years or serious money on it.</p>
     <div class="hero-ctas">
-      <a href="#register" class="btn-primary btn-navy btn-lg">Start With Your First Pod →</a>
+      <a href="#register" class="btn-primary btn-lg">Start With Your First Pod →</a>
     </div>
   </div>
 </section>
@@ -1344,12 +1418,20 @@
         <div class="field">
           <label>Choose Your Plan <span class="req">*</span></label>
           <div class="phase-grid">
-            <div class="phase-card selected" data-phase="Single Pod" onclick="selectPhase(this)">
+            <label class="phase-card selected" data-phase="Single Pod">
+              <input type="radio" name="podPlan" value="Single Pod" checked onchange="selectPhase(this.closest('.phase-card'))">
+              <span class="phase-radio-dot"></span>
+              <span class="phase-icon-shape single"></span>
               <h3>Single Pod</h3>
-            </div>
-            <div class="phase-card" data-phase="3-Pod Bundle" onclick="selectPhase(this)">
+              <p class="phase-sub">Try it solo</p>
+            </label>
+            <label class="phase-card" data-phase="3-Pod Bundle">
+              <input type="radio" name="podPlan" value="3-Pod Bundle" onchange="selectPhase(this.closest('.phase-card'))">
+              <span class="phase-radio-dot"></span>
+              <span class="phase-icon-shape bundle"><span></span><span></span><span></span></span>
               <h3>3-Pod Bundle</h3>
-            </div>
+              <span class="phase-value-badge">Best value</span>
+            </label>
           </div>
         </div>
         <div class="field">
@@ -1386,17 +1468,6 @@
             <label>Pod 3</label>
             <select id="domainBundle3" class="pod-select"></select>
           </div>
-        </div>
-        <div class="field">
-          <label>Year of Study</label>
-          <select id="yearOfStudy">
-            <option value="" disabled selected>Select your year...</option>
-            <option>1st Year</option>
-            <option>2nd Year</option>
-            <option>3rd Year</option>
-            <option>4th Year</option>
-            <option>Graduate</option>
-          </select>
         </div>
         <div class="checkbox-field">
           <input type="checkbox" id="hasInfluencerCode" onchange="toggleInfluencerField()">
@@ -1620,8 +1691,14 @@
 
   var selectedPhase = "Single Pod";
   function selectPhase(el){
-    document.querySelectorAll('.phase-card').forEach(function(c){ c.classList.remove('selected'); });
+    document.querySelectorAll('.phase-card').forEach(function(c){
+      c.classList.remove('selected');
+      var r = c.querySelector('input[type="radio"]');
+      if (r) r.checked = false;
+    });
     el.classList.add('selected');
+    var radio = el.querySelector('input[type="radio"]');
+    if (radio) radio.checked = true;
     selectedPhase = el.getAttribute('data-phase');
     updatePodFieldsVisibility();
   }
@@ -1728,7 +1805,6 @@
       email: document.getElementById('email').value.trim(),
       phone: document.getElementById('phone').value.trim(),
       domains: domains,
-      yearOfStudy: document.getElementById('yearOfStudy').value,
       phase: selectedPhase,
       influencerCode: influencerCheck.code || '',
       submittedAt: new Date().toISOString()
@@ -1738,10 +1814,7 @@
       await addDoc(collection(db, 'applications'), application);
       document.getElementById('formSuccess').style.display = 'flex';
       document.getElementById('applicationForm').reset();
-      document.querySelectorAll('.phase-card').forEach(function(c){ c.classList.remove('selected'); });
-      document.querySelector('.phase-card[data-phase="Single Pod"]').classList.add('selected');
-      selectedPhase = "Single Pod";
-      updatePodFieldsVisibility();
+      selectPhase(document.querySelector('.phase-card[data-phase="Single Pod"]'));
       document.getElementById('influencerCodeField').style.display = 'none';
       clearInfluencerError();
       document.getElementById('formSuccess').scrollIntoView({behavior:'smooth', block:'center'});
