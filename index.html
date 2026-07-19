@@ -21,9 +21,15 @@
 <meta name="twitter:description" content="Try trending careers before you commit. PeerPods gives students bite-sized 'pods' — learn the basics, run a real simulation, then meet a mentor.">
 <meta name="twitter:image" content="https://peerpods.in/logo.png">
 
-<meta name="theme-color" content="#0f1c3f">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<meta name="theme-color" content="#0e1240">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 
 <script type="application/ld+json">
@@ -43,16 +49,26 @@
 <style>
   :root{
     --navy:#1e293b;
-    --navy-dark:#0f1c3f;
+    --navy-dark:#0e1240;
+    --navy-hover:#181d5c;
     --navy-mid:#16273f;
-    --gold:#d4a018;
+    --gold:#ffc93c;
+    --gold-hover:#ffd968;
     --gold-dark:#b8860b;
     --cream:#f7f4ee;
     --white:#ffffff;
     --text-dark:#0f1c2e;
-    --text-gray:#5b6472;
+    --text-gray:#565a72;
     --text-muted:#8b93a1;
     --border:#e4e0d6;
+
+    --blue:#3b4ce0;
+    --blue-light:#eaf1ff;
+    --green:#1f9d55;
+    --green-light:#e9f7ee;
+    --purple:#4b3fd6;
+    --purple-light:#eeecfb;
+    --gold-light:#fdf3dd;
 
     --radius-sm:8px;
     --radius-md:14px;
@@ -67,7 +83,7 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     color:var(--text-dark);
     background:var(--white);
     line-height:1.55;
@@ -99,9 +115,9 @@
   .btn-primary{
     background:var(--gold);
     color:var(--navy-dark);
-    box-shadow:0 4px 14px rgba(212,160,24,0.28);
+    box-shadow:0 4px 14px rgba(255,201,60,0.35);
   }
-  .btn-primary:hover{background:var(--gold-dark); transform:translateY(-1px); box-shadow:0 6px 18px rgba(212,160,24,0.36);}
+  .btn-primary:hover{background:var(--gold-hover); transform:translateY(-1px); box-shadow:0 6px 18px rgba(255,201,60,0.45);}
   .btn-outline{
     background:transparent;
     border-color:rgba(15,28,46,0.22);
@@ -132,6 +148,13 @@
     border-radius:6px;
     display:block;
   }
+  .logo-text{
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    color:var(--white);
+  }
+  .logo-text .accent{color:var(--gold);}
   .nav-links{
     display:flex;
     align-items:center;
@@ -172,75 +195,72 @@
 
   /* HERO */
   .hero{
-    background:linear-gradient(180deg, var(--navy-dark) 0%, #0a1330 100%);
-    color:var(--white);
-    text-align:center;
+    background:var(--white);
+    color:var(--text-dark);
     padding:88px 24px 72px;
+  }
+  .hero-inner{
+    max-width:600px;
+    margin:0 auto;
+    text-align:left;
   }
   .badge{
     display:inline-flex;
     align-items:center;
-    gap:9px;
-    border:1px solid rgba(255,255,255,0.18);
-    background:rgba(255,255,255,0.04);
-    border-radius:var(--radius-sm);
-    padding:9px 18px;
-    font-size:13.5px;
+    gap:8px;
+    border:none;
+    background:var(--purple-light);
+    border-radius:999px;
+    padding:9px 16px;
+    font-size:13px;
     font-weight:600;
-    color:#dfe3e9;
-    margin-bottom:34px;
+    color:var(--purple);
+    margin-bottom:28px;
   }
-  .badge .dot{
-    width:7px;height:7px;border-radius:50%;background:var(--gold);
+  .badge .icon{width:14px;height:14px; color:var(--purple);}
+  .hero-headline{
+    font-size:58px;
+    font-weight:900;
+    letter-spacing:-0.03em;
+    line-height:0.98;
+    margin:0 0 24px;
   }
-  .hero h1{
-    font-size:54px;
-    font-weight:800;
-    letter-spacing:-1.5px;
-    max-width:900px;
-    margin:0 auto 26px;
-    line-height:1.12;
-    color:var(--white);
-  }
-  .hero h1 .accent{color:var(--gold);}
+  .hero-headline .hl-line{display:block;}
+  .hero-headline .hl-dark{color:var(--navy-dark);}
+  .hero-headline .hl-gradient{color:var(--blue);}
   .hero p.sub{
-    font-size:17.5px;
-    color:#b9c1cc;
-    max-width:660px;
-    margin:0 auto 28px;
+    font-size:16.5px;
+    line-height:1.55;
+    color:var(--text-gray);
+    font-weight:400;
+    max-width:38ch;
+    margin:0 0 32px;
   }
+  .hero p.sub strong{color:var(--navy-dark); font-weight:600;}
   .tagline{
     font-size:17px;
     font-weight:700;
     margin-bottom:40px;
     letter-spacing:.2px;
   }
-  .tagline .g1{color:var(--gold);}
-  .tagline .g2{color:#5cc2ef;}
-  .tagline .g3{color:var(--white);}
+  .tagline .g1{color:var(--navy-dark);}
+  .tagline .g2{color:var(--navy-dark);}
+  .tagline .g3{color:var(--gold-dark);}
 
-  .pill-row{
+  .hero-ctas{
     display:flex;
     align-items:center;
-    justify-content:center;
-    gap:12px;
+    justify-content:flex-start;
+    gap:22px;
     flex-wrap:wrap;
+  }
+  .btn-navy{
+    background:var(--navy-dark);
     color:var(--white);
-    margin-top:44px;
+    border-radius:12px;
+    box-shadow:0 4px 14px rgba(14,18,64,0.28);
   }
-  .pill{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    border:1px solid rgba(255,255,255,0.14);
-    background:rgba(255,255,255,0.04);
-    border-radius:var(--radius-sm);
-    padding:10px 18px;
-    font-size:14px;
-    font-weight:600;
-  }
-  .pill .icon{width:16px;height:16px; color:var(--gold);}
-  .pill-arrow{color:#8b93a1; font-size:15px;}
+  .btn-navy:hover{background:var(--navy-hover); box-shadow:0 6px 18px rgba(14,18,64,0.36);}
 
   /* SECTION */
   .section{padding:96px 24px;}
@@ -299,30 +319,96 @@
   .card h3{font-size:19px; font-weight:700; margin-bottom:10px; color:var(--navy-dark);}
   .card p{color:var(--text-gray); font-size:14.5px; line-height:1.65;}
 
+  /* EXPLORE / EXPERIENCE / DECIDE GRAPHIC */
+  .explore-graphic{
+    max-width:760px;
+    margin:52px auto 0;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-md);
+    padding:36px 30px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    gap:0;
+  }
+  .explore-step{
+    flex:1 1 0;
+    text-align:center;
+    min-width:0;
+  }
+  .explore-icon{
+    width:64px;height:64px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 14px;
+  }
+  .explore-icon .icon{width:26px;height:26px;}
+  .explore-gold{background:var(--gold-light); color:var(--gold-dark);}
+  .explore-blue{background:var(--blue-light); color:var(--blue);}
+  .explore-green{background:var(--green-light); color:var(--green);}
+  .explore-label{font-size:17px; font-weight:800; margin-bottom:8px;}
+  .explore-label-gold{color:var(--gold-dark);}
+  .explore-label-blue{color:var(--blue);}
+  .explore-label-green{color:var(--green);}
+  .explore-step p{color:var(--text-gray); font-size:13.5px; line-height:1.55; padding:0 6px;}
+  .explore-connector{
+    flex:0 0 auto;
+    width:60px;
+    height:2px;
+    background:repeating-linear-gradient(90deg, var(--border) 0 6px, transparent 6px 12px);
+    margin-top:32px;
+  }
+  @media (max-width:640px){
+    .explore-graphic{flex-direction:column; align-items:center; padding:28px 22px; gap:22px;}
+    .explore-step{width:100%;}
+    .explore-connector{display:none;}
+    .explore-step p{padding:0;}
+  }
+
   /* HOW IT WORKS — collapsible roadmap */
-  .roadmap{max-width:960px; margin:56px auto 0;}
-  .roadmap-item{position:relative; padding-left:66px; padding-bottom:36px;}
+  .roadmap{max-width:960px; margin:44px auto 0;}
+  .roadmap-item{position:relative; padding-left:80px; padding-bottom:26px;}
   .roadmap-item:last-child{padding-bottom:0;}
   .roadmap-item::before{
     content:'';
     position:absolute;
-    left:21px; top:44px; bottom:0;
+    left:27px; top:56px; bottom:0;
     width:2px;
     background:var(--border);
   }
   .roadmap-item:last-child::before{display:none;}
-  .step-num{
+  .step-icon{
     position:absolute;
     left:0; top:0;
-    width:44px;height:44px;
-    background:var(--navy-dark);
-    color:var(--gold);
-    font-weight:800;
-    font-size:16px;
-    border-radius:var(--radius-sm);
+    width:56px;height:56px;
+    border-radius:50%;
     display:flex;align-items:center;justify-content:center;
     z-index:1;
   }
+  .step-icon .icon{width:24px;height:24px;}
+  .step-icon.icon-blue{background:var(--blue-light); color:var(--blue);}
+  .step-icon.icon-green{background:var(--green-light); color:var(--green);}
+  .step-icon.icon-purple{background:var(--purple-light); color:var(--purple);}
+  .step-icon.icon-gold{background:var(--gold-light); color:var(--gold-dark);}
+  .step-chip{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    height:22px;
+    padding:0 9px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:800;
+    flex-shrink:0;
+  }
+  .step-chip.chip-blue{background:var(--blue-light); color:var(--blue);}
+  .step-chip.chip-green{background:var(--green-light); color:var(--green);}
+  .step-chip.chip-purple{background:var(--purple-light); color:var(--purple);}
+  .step-chip.chip-gold{background:var(--gold-light); color:var(--gold-dark);}
+  .roadmap-title-row{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+  .roadmap-title-row h3{margin-bottom:0;}
   .roadmap-header{
     display:flex;
     align-items:flex-start;
@@ -332,7 +418,7 @@
     border:none;
     text-align:left;
     cursor:pointer;
-    padding:2px 0 0;
+    padding:6px 0 0;
     font-family:inherit;
   }
   .roadmap-title{flex:1;}
@@ -340,7 +426,7 @@
   .roadmap-title p{color:var(--text-gray); font-size:14.5px; line-height:1.7; max-width:640px;}
   .roadmap-chevron{
     color:var(--text-muted);
-    margin-top:4px;
+    margin-top:10px;
     flex-shrink:0;
     transition:transform .25s ease;
   }
@@ -352,11 +438,14 @@
   }
   .roadmap-item.open .roadmap-panel{grid-template-rows:1fr;}
   .roadmap-panel-inner{overflow:hidden; min-height:0;}
-  .roadmap-panel-content{padding-top:26px;}
+  .roadmap-panel-content{padding-top:22px;}
   @media (max-width:600px){
-    .roadmap-item{padding-left:50px; padding-bottom:28px;}
-    .roadmap-item::before{left:15px;}
-    .step-num{width:32px;height:32px; font-size:13px;}
+    .roadmap-item{padding-left:58px; padding-bottom:20px;}
+    .roadmap-item::before{left:19px; top:44px;}
+    .step-icon{width:40px;height:40px;}
+    .step-icon .icon{width:18px;height:18px;}
+    .roadmap-title h3{font-size:16.5px;}
+    .roadmap-title p{font-size:13.5px;}
   }
 
   /* POD DISCOVER TILES (step 1) */
@@ -487,18 +576,14 @@
 
   /* WHAT YOU'LL GAIN */
   .split-wrap{
-    max-width:1140px;
+    max-width:760px;
     margin:0 auto;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:24px;
-    align-items:stretch;
   }
   .split-left{
     background:var(--white);
     border:1px solid var(--border);
     border-radius:var(--radius-lg);
-    padding:48px 44px;
+    padding:44px 44px 40px;
   }
   .split-left .eyebrow{text-align:left; margin-bottom:14px;}
   .split-left h2{
@@ -526,31 +611,7 @@
   }
   .gain-icon .icon{width:18px;height:18px;}
   .gain-item p{font-size:15px; color:#33404f; font-weight:500;}
-
-  .split-right{
-    background:var(--white);
-    border:1.5px solid var(--gold-dark);
-    border-radius:var(--radius-lg);
-    padding:52px 44px;
-    text-align:center;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    box-shadow:var(--shadow-md);
-  }
-  .split-right .eyebrow{color:var(--gold-dark); margin-bottom:10px;}
-  .big-number{
-    font-size:64px;
-    font-weight:800;
-    line-height:1;
-    margin-bottom:8px;
-    letter-spacing:-1px;
-    color:var(--navy-dark);
-  }
-  .big-number .gold{color:var(--gold-dark);}
-  .split-right h3{font-size:22px; font-weight:700; margin-bottom:16px; color:var(--navy-dark);}
-  .split-right p{color:var(--text-gray); font-size:14.5px; max-width:380px; margin:0 auto 28px; line-height:1.65;}
+  .split-left .btn-primary{margin-top:30px;}
 
   /* TESTIMONIALS MARQUEE */
   .marquee-wrap{
@@ -625,7 +686,26 @@
   }
   .price-icon .icon{width:21px;height:21px;}
   .price-card h3{font-size:19px; font-weight:800; color:var(--navy-dark); margin-bottom:6px;}
-  .price-amount{font-size:42px; font-weight:800; color:var(--navy-dark); margin:14px 0 4px;}
+  .price-offer-tag{
+    display:inline-block;
+    background:var(--gold-light);
+    color:var(--gold-dark);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.4px;
+    text-transform:uppercase;
+    padding:4px 11px;
+    border-radius:999px;
+    margin-top:12px;
+  }
+  .price-strike{
+    font-size:19px;
+    font-weight:600;
+    color:var(--text-muted);
+    text-decoration:line-through;
+    margin-right:8px;
+  }
+  .price-amount{font-size:42px; font-weight:800; color:var(--navy-dark); margin:10px 0 4px;}
   .price-amount .rupee{font-size:26px; vertical-align:2px; margin-right:2px;}
   .price-per{font-size:13px; color:var(--text-gray); margin-bottom:18px;}
   .price-card p.desc{color:var(--text-gray); font-size:14px; line-height:1.6; margin-bottom:24px;}
@@ -653,24 +733,28 @@
   .app-header p{color:var(--text-gray); font-size:15.5px; max-width:640px; margin:0 auto;}
 
   .phase-grid{
-    max-width:900px;
-    margin:44px auto 0;
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:18px;
-    padding:0 24px;
+    gap:12px;
+    margin-bottom:28px;
   }
   .phase-card{
     border:1.5px solid var(--border);
     border-radius:var(--radius-md);
-    padding:26px;
+    padding:16px 16px 18px;
     cursor:pointer;
     transition:border-color .15s ease, background .15s ease;
   }
   .phase-card.selected{border-color:var(--gold-dark); background:#fdf8ee;}
-  .phase-icon{color:var(--gold-dark); margin-bottom:14px;}
-  .phase-card h3{font-size:17px; font-weight:700; margin-bottom:9px; color:var(--navy-dark);}
-  .phase-card p{color:var(--text-gray); font-size:14px; line-height:1.6;}
+  .phase-icon{color:var(--gold-dark); margin-bottom:10px;}
+  .phase-icon .icon{width:20px;height:20px;}
+  .phase-card h3{font-size:15px; font-weight:700; margin-bottom:6px; color:var(--navy-dark);}
+  .phase-price{font-size:13.5px; font-weight:800; color:var(--navy-dark); margin-bottom:6px;}
+  .price-strike-mini{font-size:12px; font-weight:600; color:var(--text-muted); text-decoration:line-through; margin-right:5px;}
+  .phase-card p{color:var(--text-gray); font-size:12.5px; line-height:1.5;}
+  @media (max-width:480px){
+    .phase-grid{grid-template-columns:1fr;}
+  }
 
   .form-card-wrap{
     max-width:620px;
@@ -869,33 +953,45 @@
     .nav-links{display:none;}
     .nav-toggle{display:inline-flex;}
     .card-grid-3, .mentor-grid, .phase-grid, .pricing-grid{grid-template-columns:1fr 1fr;}
-    .split-wrap{grid-template-columns:1fr;}
-    .hero h1{font-size:36px;}
+    .hero-headline{font-size:42px;}
   }
   @media (max-width: 600px){
     .card-grid-3, .phase-grid, .pricing-grid{grid-template-columns:1fr;}
-    .hero h1{font-size:29px;}
-    header.navbar{padding:14px 16px;}
+    header.navbar{padding:16px 20px;}
     .logo-img{height:26px;}
+    .logo-text{font-size:19px;}
     .nav-right{gap:10px;}
     .nav-toggle{padding:4px;}
     .nav-toggle .icon{width:20px; height:20px;}
     .section{padding:44px 20px;}
     .btn-primary, .btn-outline{white-space:normal; text-align:center;}
-    .nav-right .btn-primary{padding:9px 14px; font-size:13px; white-space:nowrap;}
-    .hero .btn-lg{padding:15px 22px; font-size:15px;}
+    .nav-right .btn-primary{padding:10px 16px; font-size:13.5px; border-radius:9px; white-space:nowrap;}
     .testimonial-card{width:260px;}
     .footer-contact{flex-direction:column; align-items:center; gap:14px;}
 
-    .hero{padding:40px 20px 36px;}
-    .badge{margin-bottom:22px; padding:7px 14px; font-size:12.5px;}
-    .hero p.sub{font-size:15.5px; margin-bottom:20px;}
+    .hero{
+      min-height:calc(100vh - 72px);
+      min-height:calc(100svh - 72px);
+      display:flex;
+      padding:28px 20px;
+      box-sizing:border-box;
+    }
+    .hero-inner{
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:20px;
+    }
+    .hero-headline{font-size:12.5vw; letter-spacing:-0.03em; margin:0;}
+    .badge{margin:0; padding:9px 16px; font-size:13px;}
+    .hero p.sub{font-size:16.5px; margin:0; max-width:none;}
+    .hero-ctas{margin:0; width:100%;}
+    .hero-ctas .btn-navy{width:100%; justify-content:center;}
+    .hero .btn-lg{padding:18px 26px; font-size:15.5px;}
     .tagline{margin-bottom:24px; font-size:15px;}
-    .pill-row{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:26px;}
-    .pill{justify-content:center; padding:9px 10px; font-size:12.5px;}
-    .pill-arrow{display:none;}
 
-    .card, .price-card, .split-left, .split-right, .form-card{padding:22px 20px;}
+    .card, .price-card, .split-left, .form-card{padding:22px 20px;}
     .card-icon, .price-icon{width:42px; height:42px; margin-bottom:14px;}
     .app-header{padding:44px 20px 12px;}
     h2.section-title{font-size:26px;}
@@ -943,10 +1039,11 @@
   <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
   <symbol id="i-youtube" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></symbol>
   <symbol id="i-chevron-down" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 21 12 6 21 6 3" fill="currentColor" stroke="none"/></symbol>
 </svg>
 
 <header class="navbar">
-  <a href="#" class="logo"><img src="logo-transparent.png" alt="PeerPods" class="logo-img"></a>
+  <a href="#" class="logo"><span class="logo-text">Peer<span class="accent">Pods</span>.</span></a>
   <nav class="nav-links">
     <a href="#what-is-peerpods">What is PeerPods</a>
     <a href="#how-it-works">How It Works</a>
@@ -971,44 +1068,43 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="badge"><span class="dot"></span> Now Enrolling — Pods for Trending Careers</div>
-  <h1>Experience <span class="accent">Before You Decide</span>.</h1>
-  <p class="sub">PeerPods breaks trending, in-demand courses into small "pods" — learn the basics, run a real simulation of the work, and decide with confidence before you spend years or serious money on it.</p>
-  <div class="tagline"><span class="g1">Explore.</span> <span class="g2">Experience.</span> <span class="g3">Decide.</span></div>
-  <a href="#register" class="btn-primary btn-lg">Start With Your First Pod →</a>
-  <div class="pill-row">
-    <div class="pill"><svg class="icon"><use href="#i-search"/></svg> Discover Your Fit</div>
-    <span class="pill-arrow">→</span>
-    <div class="pill"><svg class="icon"><use href="#i-book"/></svg> Learn Basics</div>
-    <span class="pill-arrow">→</span>
-    <div class="pill"><svg class="icon"><use href="#i-flask"/></svg> Simulate the Work</div>
-    <span class="pill-arrow">→</span>
-    <div class="pill"><svg class="icon"><use href="#i-users"/></svg> Meet a Mentor</div>
+  <div class="hero-inner">
+    <div class="badge"><svg class="icon"><use href="#i-sparkle"/></svg> Now Enrolling — Pods for Trending Careers</div>
+    <h1 class="hero-headline">
+      <span class="hl-line hl-dark">Explore.</span>
+      <span class="hl-line hl-dark">Experience.</span>
+      <span class="hl-line hl-gradient">Decide.</span>
+    </h1>
+    <p class="sub">PeerPods breaks trending, in-demand courses into small <strong>"pods"</strong> — learn the basics, run a real simulation of the work, and decide with confidence before you spend years or serious money on it.</p>
+    <div class="hero-ctas">
+      <a href="#register" class="btn-primary btn-navy btn-lg">Start With Your First Pod →</a>
+    </div>
   </div>
 </section>
 
 <!-- WHAT IS PEERPODS -->
 <section class="section" id="what-is-peerpods">
-  <div class="eyebrow">WHAT IS PEERPODS</div>
-  <h2 class="section-title">Pods: courses you can try before you commit to them.</h2>
-  <p class="section-sub">Most students commit years — and lakhs of rupees — to a field they've never actually experienced. PeerPods flips that. We break trending, in-demand courses into small "pods": short, structured experiences you can complete in days, not years.</p>
-  <p class="section-sub">Every pod teaches you the basics, drops you into a hands-on simulation of the real work, and — if you like what you feel — connects you with a mentor already working in that field, before you spend serious time or money going deeper.</p>
+  <h2 class="section-title">What is PeerPods?</h2>
+  <p class="section-sub">PeerPods is a career exploration platform where students discover careers, learn the fundamentals, complete real-world simulations, and connect with mentors—all before investing years into a degree or course.</p>
+  <div class="tagline" style="text-align:center; margin-bottom:0;"><span class="g1">Explore</span> → <span class="g2">Experience</span> → <span class="g3">Decide</span></div>
 
-  <div class="card-grid-3">
-    <div class="card">
-      <div class="card-icon"><svg class="icon"><use href="#i-package"/></svg></div>
-      <h3>Micro Courses</h3>
-      <p>Bite-sized modules covering exactly what a beginner needs to know about a trending field — no fluff, no semester-long syllabus.</p>
+  <div class="explore-graphic">
+    <div class="explore-step">
+      <div class="explore-icon explore-gold"><svg class="icon"><use href="#i-search"/></svg></div>
+      <div class="explore-label explore-label-gold">Explore</div>
+      <p>Discover careers that interest you</p>
     </div>
-    <div class="card">
-      <div class="card-icon"><svg class="icon"><use href="#i-flask"/></svg></div>
-      <h3>Real Simulations</h3>
-      <p>Every pod ends with a task modeled on real work in that field, so you feel the job — not just read about it.</p>
+    <div class="explore-connector"></div>
+    <div class="explore-step">
+      <div class="explore-icon explore-blue"><svg class="icon"><use href="#i-rocket"/></svg></div>
+      <div class="explore-label explore-label-blue">Experience</div>
+      <p>Learn, simulate &amp; understand real work</p>
     </div>
-    <div class="card">
-      <div class="card-icon"><svg class="icon"><use href="#i-users"/></svg></div>
-      <h3>Mentor Access</h3>
-      <p>Curious enough to go further? Get connected with a working professional in that domain before committing bigger time or money.</p>
+    <div class="explore-connector"></div>
+    <div class="explore-step">
+      <div class="explore-icon explore-green"><svg class="icon"><use href="#i-target"/></svg></div>
+      <div class="explore-label explore-label-green">Decide</div>
+      <p>Make confident choices about your future</p>
     </div>
   </div>
 </section>
@@ -1021,10 +1117,10 @@
 
   <div class="roadmap" id="roadmap">
     <div class="roadmap-item" data-step="1">
-      <div class="step-num">1</div>
+      <div class="step-icon icon-blue"><svg class="icon"><use href="#i-search"/></svg></div>
       <button class="roadmap-header" onclick="toggleRoadmapStep(this)">
         <div class="roadmap-title">
-          <h3>Discover Your Fit</h3>
+          <div class="roadmap-title-row"><span class="step-chip chip-blue">01</span><h3>Discover Your Fit</h3></div>
           <p>Browse our pods across trending fields and pick the one that's pulling at your curiosity. Not sure? Tap "Learn More" on any pod to see exactly what's inside before you choose.</p>
         </div>
         <svg class="icon roadmap-chevron"><use href="#i-chevron-down"/></svg>
@@ -1039,10 +1135,10 @@
     </div>
 
     <div class="roadmap-item" data-step="2">
-      <div class="step-num">2</div>
+      <div class="step-icon icon-green"><svg class="icon"><use href="#i-book"/></svg></div>
       <button class="roadmap-header" onclick="toggleRoadmapStep(this)">
         <div class="roadmap-title">
-          <h3>Learn the Basics</h3>
+          <div class="roadmap-title-row"><span class="step-chip chip-green">02</span><h3>Learn the Basics</h3></div>
           <p>Every pod opens with a short, focused crash course — just enough foundation to understand the tools, vocabulary, and core skills of that field, taught in plain language with no jargon-dumping.</p>
         </div>
         <svg class="icon roadmap-chevron"><use href="#i-chevron-down"/></svg>
@@ -1061,10 +1157,10 @@
     </div>
 
     <div class="roadmap-item" data-step="3">
-      <div class="step-num">3</div>
+      <div class="step-icon icon-purple"><svg class="icon"><use href="#i-bar-chart"/></svg></div>
       <button class="roadmap-header" onclick="toggleRoadmapStep(this)">
         <div class="roadmap-title">
-          <h3>Simulation</h3>
+          <div class="roadmap-title-row"><span class="step-chip chip-purple">03</span><h3>Simulation</h3></div>
           <p>Then you do the job — a real, hands-on task modeled on actual work in that field. This is where "maybe I'd like this" turns into "I actually know what this feels like."</p>
         </div>
         <svg class="icon roadmap-chevron"><use href="#i-chevron-down"/></svg>
@@ -1079,10 +1175,10 @@
     </div>
 
     <div class="roadmap-item" data-step="4">
-      <div class="step-num">4</div>
+      <div class="step-icon icon-gold"><svg class="icon"><use href="#i-user"/></svg></div>
       <button class="roadmap-header" onclick="toggleRoadmapStep(this)">
         <div class="roadmap-title">
-          <h3>Mentor Meet</h3>
+          <div class="roadmap-title-row"><span class="step-chip chip-gold">04</span><h3>Mentor Meet</h3></div>
           <p>Liked what you experienced? We connect you with a mentor already working in that exact field — someone who's lived the day-to-day, not just the highlight reel — before you invest bigger time or money into it.</p>
         </div>
         <svg class="icon roadmap-chevron"><use href="#i-chevron-down"/></svg>
@@ -1125,13 +1221,6 @@
         <div class="gain-icon"><svg class="icon"><use href="#i-sparkle"/></svg></div>
         <p>Confidence to either dive in — or move on without regret</p>
       </div>
-    </div>
-
-    <div class="split-right">
-      <div class="eyebrow">THE OUTCOME</div>
-      <div class="big-number"><span class="gold">1</span> pod</div>
-      <h3>From curious to clear.</h3>
-      <p>Every pod is built to get you from "I think I might like this" to "I know exactly what this job feels like" — fast.</p>
       <a href="#pricing" class="btn-primary">See Pricing ↓</a>
     </div>
   </div>
@@ -1156,7 +1245,8 @@
     <div class="price-card">
       <div class="price-icon"><svg class="icon"><use href="#i-package"/></svg></div>
       <h3>Single Pod</h3>
-      <div class="price-amount"><span class="rupee">₹</span>999</div>
+      <div class="price-offer-tag">Introductory Offer</div>
+      <div class="price-amount"><span class="price-strike">₹1,999</span><span class="rupee">₹</span>999</div>
       <div class="price-per">one-time, per pod</div>
       <p class="desc">Already know which field you're curious about? Start with one pod and get the full experience.</p>
       <ul class="price-features">
@@ -1172,7 +1262,8 @@
       <div class="price-badge">MOST POPULAR</div>
       <div class="price-icon"><svg class="icon"><use href="#i-layers"/></svg></div>
       <h3>3-Pod Bundle</h3>
-      <div class="price-amount"><span class="rupee">₹</span>2,499</div>
+      <div class="price-offer-tag">Introductory Offer</div>
+      <div class="price-amount"><span class="price-strike">₹4,999</span><span class="rupee">₹</span>2,499</div>
       <div class="price-per">one-time, for 3 pods</div>
       <p class="desc">Still deciding between a few fields? Explore three pods across different domains and compare how each one actually feels.</p>
       <ul class="price-features">
@@ -1195,24 +1286,28 @@
     <p>Fill in your details below. We will match you with the right pod and mentor, and reach out within 2–3 business days.</p>
   </div>
 
-  <div class="phase-grid">
-    <div class="phase-card selected" data-phase="Single Pod" onclick="selectPhase(this)">
-      <div class="phase-icon"><svg class="icon"><use href="#i-package"/></svg></div>
-      <h3>Single Pod — ₹999</h3>
-      <p>I know which pod I want. Sign me up for one field to explore.</p>
-    </div>
-    <div class="phase-card" data-phase="3-Pod Bundle" onclick="selectPhase(this)">
-      <div class="phase-icon"><svg class="icon"><use href="#i-layers"/></svg></div>
-      <h3>3-Pod Bundle — ₹2,499</h3>
-      <p>I want to explore three pods across different fields before I commit.</p>
-    </div>
-  </div>
-
   <div class="form-card-wrap">
     <div class="form-card">
       <h3>Tell us about yourself</h3>
       <div class="form-success" id="formSuccess"><svg class="icon"><use href="#i-check-circle"/></svg> Application submitted! We'll reach out within 2–3 business days.</div>
       <form id="applicationForm" onsubmit="return handleApplicationSubmit(event);">
+        <div class="field">
+          <label>Choose Your Plan <span class="req">*</span></label>
+          <div class="phase-grid">
+            <div class="phase-card selected" data-phase="Single Pod" onclick="selectPhase(this)">
+              <div class="phase-icon"><svg class="icon"><use href="#i-package"/></svg></div>
+              <h3>Single Pod</h3>
+              <div class="phase-price"><span class="price-strike-mini">₹1,999</span>₹999</div>
+              <p>One pod of your choice to explore.</p>
+            </div>
+            <div class="phase-card" data-phase="3-Pod Bundle" onclick="selectPhase(this)">
+              <div class="phase-icon"><svg class="icon"><use href="#i-layers"/></svg></div>
+              <h3>3-Pod Bundle</h3>
+              <div class="phase-price"><span class="price-strike-mini">₹4,999</span>₹2,499</div>
+              <p>Three pods across different fields.</p>
+            </div>
+          </div>
+        </div>
         <div class="field">
           <label>Full Name <span class="req">*</span></label>
           <input type="text" id="fullName" placeholder="e.g. Riya Sharma" required>
